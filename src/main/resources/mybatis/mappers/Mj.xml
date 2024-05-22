@@ -6,17 +6,14 @@
 	<!-- <![CDATA[]]> -->
 	
 	<!-- 리스트 -->
-	<select id="selectList" resultType="com.javaex.vo.MjVo">
+	<!-- <select id="selectList" resultType="com.javaex.vo.MjVo">
 		<![CDATA[
-			select person_id as personId,
-					name,
-					hp,
-					company,
-			from person
+			select 
+			from odo
 		]]>
 	</select>
 	
-	<!-- 등록 -->
+	등록
 	<insert id="insert" parameterType="com.javaex.vo.MjVo">
 		<![CDATA[
 			insert into person
@@ -24,7 +21,7 @@
 		]]>
 	</insert>
 	
-	<!-- 삭제 -->
+	삭제
 	<delete id="delete" parameterMap="com.javaex.vo.MjVo">
 		<![CDATA[
 			delete
@@ -34,7 +31,7 @@
 	</delete>
 	
 	
-	<!-- 수정폼 -->
+	수정폼
 	<select id="selectOne" parameterType="int" resultType="map">
 		<![CDATA[
 			Select person_id as personId,
@@ -45,7 +42,7 @@
 		]]>
 	</select>
 	
-	<!-- 수정 -->
+	수정
 	<update id="update" parameterType="com.javaex.vo.MjVo">
 		<![CDATA[
 			update person
@@ -54,6 +51,6 @@
 			compamy=#{company}
 			where person_id = #{personId}		
 		]]>
-	</update>
+	</update> -->
 	
 </mapper>
