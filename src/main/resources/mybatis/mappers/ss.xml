@@ -4,6 +4,12 @@
 <mapper namespace="ss">
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
-
+	<select id="checkId" parameterType="String" resultType="com.javaex.vo.UserJoinVo">
+		<![CDATA[
+			select	user_id
+			from user
+			where user_id = #{id}
+		]]>
+	</select>
 
 </mapper>
