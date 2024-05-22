@@ -9,6 +9,7 @@
 	<mappers>
 		<mapper resource="mybatis/mappers/test.xml" />
 		<mapper resource="mybatis/mappers/hs.xml" />
+		<mapper resource="mybatis/mappers/Mj.xml" />
 	</mappers>
 
 
