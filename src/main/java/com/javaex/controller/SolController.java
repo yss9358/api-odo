@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SolController {
 
-	@GetMapping("/odo/list")
+	@GetMapping("/odo/company/join")
 	public void test() {
 		System.out.println("test");
 	}
