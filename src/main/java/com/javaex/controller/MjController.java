@@ -1,8 +1,10 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +42,24 @@ public class MjController {
 		System.out.println("MjController.delete");
 		
 		int count = mjService.exeDelete(no);
+		
+		return count;
+	}
+	
+	//수정폼
+	public Map<String, Object> modifyform(@PathVariable(value="no")int no) {
+		System.out.println("MjController.modifyform");
+		
+		Map<String, Object> pMap = mjService.exeMform(no);
+		
+		return pMap;
+	}
+	
+	//수정
+	public int modify(@RequestBody MjVo mjVo) {
+		System.out.println("MjController.modify");
+		
+		int count = mjService.exeModify(mjVo);
 		
 		return count;
 	}

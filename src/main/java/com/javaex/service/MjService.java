@@ -1,6 +1,7 @@
 package com.javaex.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,23 @@ public class MjService {
 		System.out.println("MjService.exeDelete");
 		
 		int count = mjDao.personDelete(no);
+		
+		return count;
+	}
+	
+	//수정폼
+	public Map<String, Object> exeMform(int no) {
+		
+		Map<String, Object> pMap = mjDao.personMform(no);
+		
+		return pMap;
+	}
+	
+	//수정
+	public int exeModify(MjVo mjVo) {
+		System.out.println("MjService.exeModify");
+		
+		int count = mjDao.personModify(mjVo);
 		
 		return count;
 	}

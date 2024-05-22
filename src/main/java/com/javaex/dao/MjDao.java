@@ -1,6 +1,7 @@
 package com.javaex.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,27 @@ public class MjDao {
 	
 	//삭제
 	public int personDelete(int no) {
-		System.out.println("MjDao.PersonDelete");
+		System.out.println("MjDao.personDelete");
 		
 		int count = sqlSession.delete("Mj.delete",no);
+		
+		return count;
+	}
+	
+	//수정폼
+	public Map<String, Object> personMform(int no){
+		System.out.println("MjDao.personMform");
+		
+		Map<String, Object> pMap = sqlSession.selectOne("Mj.selectOne", no);
+		
+		return pMap;
+	}
+	
+	//수정
+	public int personModify(MjVo mjVo) {
+		System.out.println("MjDao.personModify");
+		
+		int count = sqlSession.update("Mj.update",mjVo);
 		
 		return count;
 	}
