@@ -3,7 +3,46 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hs">
 
-	<!-- 쿼리문작성 -->
+	<!-- 무료베스트 리스트 가져오기 -->
+	<select id="selectFreeBestList" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+		select  class_no classNo,
+				class_name className,
+		        substr(class_name_address,1,5) classNameAdd,
+		        class_image classImg,
+		        class_price classPrice
+		from class
+		where class_price = 0
+		limit 4
+   ]]>
+	</select>
 
+	<!-- 유료베스트 리스트 가져오기 -->
+	<select id="selectPayBestList" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+		select  class_no classNo,
+				class_name className,
+		        substr(class_name_address,1,5) classNameAdd,
+		        class_image classImg,
+		        class_price classPrice
+		from class
+		where class_price != 0
+		limit 4
+   ]]>
+	</select>
+
+	<!-- 신규 리스트 가져오기 -->
+	<select id="selectNewList" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+		select  class_no classNo,
+				class_name className,
+		        substr(class_name_address,1,5) classNameAdd,
+		        class_image classImg,
+		        class_price classPrice
+		from class
+		order by class_no desc
+		limit 0, 4
+   ]]>
+	</select>
 
 </mapper>

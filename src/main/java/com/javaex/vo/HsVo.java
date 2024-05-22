@@ -293,7 +293,17 @@ public class HsVo {
 	public void setReviewCount(int reviewCount) {
 		this.reviewCount = reviewCount;
 	}
-	//메소드
+
+	@Override
+	public String toString() {
+		return "HsVo [classNo=" + classNo + ", className=" + className + ", classNameAdd=" + classNameAdd
+				+ ", classImg=" + classImg + ", classPrice=" + classPrice + ", reviewPointAvg=" + reviewPointAvg
+				+ ", reviewCount=" + reviewCount + "]";
+	}
+
+
+	
+	
 	
 }
 
