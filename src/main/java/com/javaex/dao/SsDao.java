@@ -12,9 +12,21 @@ public class SsDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void checkId(String id) {
-		System.out.println("dao : "+ id);
+	// 아이디 중복확인
+	public UserJoinVo checkId(String id) {
 		UserJoinVo vo = sqlSession.selectOne("ss.checkId", id);
-		System.out.println(vo);
+		return vo;
 	}
+	
+	// 일반회원 회원가입
+	public int insertUser(UserJoinVo vo) {
+		return sqlSession.insert("ss.insertUser",vo);
+	}
+	
+	// 일반회원 로그인
+	public UserJoinVo loginByIdPw(UserJoinVo vo) {
+		return sqlSession.selectOne("ss.loginByIdPw", vo);
+		
+	}
+	
 }

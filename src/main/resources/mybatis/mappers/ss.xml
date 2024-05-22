@@ -4,11 +4,32 @@
 <mapper namespace="ss">
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
+	
+	<!-- 아이디 중복확인 -->
 	<select id="checkId" parameterType="String" resultType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
-			select	user_id
+			select	user_id userId
 			from user
 			where user_id = #{id}
+		]]>
+	</select>
+	
+	<!-- 일반회원 회원가입 -->
+	<insert id="insertUser" parameterType="com.javaex.vo.UserJoinVo">
+		<![CDATA[
+			insert into user
+			values(null, #{userId}, #{userPw}, #{userNickname}, #{userHp}, #{userBirth}, #{userGender}, false, false)
+		]]>
+	</insert>
+	
+	<!-- 일반회원 로그인 -->
+	<select id="loginByIdPw" parameterType="com.javaex.vo.UserJoinVo" resultType="com.javaex.vo.UserJoinVo">
+		<![CDATA[
+			select	user_no userNo,
+					user_nickname userNickname
+			from user
+			where user_id = #{userId}
+			and user_pw = #{userPw}
 		]]>
 	</select>
 
