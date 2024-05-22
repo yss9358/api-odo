@@ -53,7 +53,7 @@ public class MjController {
 	}
 	
 	//수정폼
-	@GetMapping("/odo/")
+	@GetMapping("/odo/{no}")
 	public Map<String, Object> modifyform(@PathVariable(value="no")int no) {
 		System.out.println("MjController.modifyform");
 		
