@@ -5,5 +5,55 @@
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
 	
+	<!-- 리스트 -->
+	<select id="selectList" resultType="com.javaex.vo.MjVo">
+		<![CDATA[
+			select person_id as personId,
+					name,
+					hp,
+					company,
+			from person
+		]]>
+	</select>
+	
+	<!-- 등록 -->
+	<insert id="insert" parameterType="com.javaex.vo.MjVo">
+		<![CDATA[
+			insert into person
+			values(null, #{name}, #{hp}, #{company})
+		]]>
+	</insert>
+	
+	<!-- 삭제 -->
+	<delete id="delete" parameterMap="com.javaex.vo.MjVo">
+		<![CDATA[
+			delete
+			from person
+			where person_id=#{no}
+		]]>
+	</delete>
+	
+	
+	<!-- 수정폼 -->
+	<select id="selectOne" parameterType="int" resultType="map">
+		<![CDATA[
+			Select person_id as personId,
+					name,
+					hp,
+					company,
+					where person_id = #{no}
+		]]>
+	</select>
+	
+	<!-- 수정 -->
+	<update id="update" parameterType="com.javaex.vo.MjVo">
+		<![CDATA[
+			update person
+			set name=#{name},
+				hp = #{hp},
+			compamy=#{company}
+			where person_id = #{personId}		
+		]]>
+	</update>
 	
 </mapper>

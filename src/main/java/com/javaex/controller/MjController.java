@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +23,7 @@ public class MjController {
 	private MjService mjService;
 	
 	//전체 리스트 불러오기
+	@GetMapping("/odo/")
 	public List<MjVo> list(){
 		System.out.println("MjController.list");
 		
@@ -29,6 +33,7 @@ public class MjController {
 	}
 	
 	//등록
+	@PostMapping("/odo/")
 	public int wirte(@RequestBody MjVo MjVo) {
 		System.out.println("MjController.write");
 		
@@ -38,6 +43,7 @@ public class MjController {
 	}
 	
 	//삭제
+	@DeleteMapping("/odo/")
 	public int delete(@RequestParam(value="personId")int no) {
 		System.out.println("MjController.delete");
 		
@@ -47,6 +53,7 @@ public class MjController {
 	}
 	
 	//수정폼
+	@GetMapping("/odo/")
 	public Map<String, Object> modifyform(@PathVariable(value="no")int no) {
 		System.out.println("MjController.modifyform");
 		
