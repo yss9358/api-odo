@@ -17,14 +17,24 @@ public class HsController {
 	@Autowired
 	private HsService hsService;
 	
-	//카테고리 검색 리스트
+	
+	//2차 카테고리 리스트
+	@GetMapping("odo/subcategories")
+	public JsonResult getsubCateList(@RequestParam(value="cate2No") int no) {
+
+		List<HsVo> cate2List = hsService.execate2List(no);
+		
+		return JsonResult.success(cate2List);
+	}//
+	
+	//1차 카테고리 검색 리스트
 	@GetMapping("odo/categories")
 	public JsonResult getcateList(@RequestParam(value="cate1No") int no) {
 		
 		List<HsVo> cate1List = hsService.execate1List(no);
 		
 		return JsonResult.success(cate1List);
-	}
+	}//
 
 	// 메인 페이지 리스트
 	@GetMapping("odo/mains")
@@ -33,6 +43,6 @@ public class HsController {
 		List<List<HsVo>> listOfLists = hsService.exegetList();
 
 		return JsonResult.success(listOfLists);
-	}
+	}//
 
 }

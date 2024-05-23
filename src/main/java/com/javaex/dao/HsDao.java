@@ -15,13 +15,21 @@ public class HsDao {
 	private SqlSession sqlSession;
 	
 	
-	//
+	//2차 카테고리 리스트
+	public List<HsVo> selectCate2List(int no) {
+		
+		List<HsVo> cate2List = sqlSession.selectList("hs.selectCate2List", no);
+		
+		return cate2List;
+	}//
+	
+	//1차 카테고리 리스트
 	public List<HsVo> selectCate1List(int no) {
 		
 		List<HsVo> cate1List = sqlSession.selectList("hs.selectCate1List", no);
 		
 		return cate1List;
-	}
+	}//
 	
 	//무료베스트클래스 리스트
 	public List<HsVo> selectFreeBestList() {
@@ -29,7 +37,7 @@ public class HsDao {
 		List<HsVo> fbList = sqlSession.selectList("hs.selectFreeBestList");
 		
 		return fbList;
-	}
+	}//
 
 	//유료베스트클래스 리스트
 	public List<HsVo> selectPayBestList() {
@@ -37,7 +45,7 @@ public class HsDao {
 		List<HsVo> pbList = sqlSession.selectList("hs.selectPayBestList");
 		
 		return pbList;
-	}
+	}//
 	
 	//신규베스트클래스 리스트
 	public List<HsVo> selectNewBestList() {
@@ -45,6 +53,6 @@ public class HsDao {
 		List<HsVo> nList = sqlSession.selectList("hs.selectNewList");
 		
 		return nList;
-	}
+	}//
 	
 }
