@@ -4,7 +4,25 @@
 <mapper namespace="jh">
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
-	
+	<select id="wishclass" resultType="com.javaex.vo.WishClassVo">
+		select	class_name className,
+				class_intro classIntro,
+		        class_price classPrice,
+		        class_image classImage,
+		        class_name_address classAddress
+		from wish_class, class
+		where wish_class.class_no = class.class_no
+		and wish_class.user_no = 1;
+	</select>
 
+	<select id="wishcompany1">
+		select	company_image companyImage,
+				company_name companyName,
+		        wish_company.company_no companyNo
+		from wish_company, company
+		where wish_company.company_no = company.company_no
+		and wish_company.user_no = 1;
+	
+	</select>
 
 </mapper>
