@@ -1,5 +1,6 @@
 package com.javaex.vo;
 
+
 public class UserJoinVo {
 
 	private int userNo;

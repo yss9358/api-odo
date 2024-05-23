@@ -2,6 +2,7 @@ package com.javaex.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,9 +48,18 @@ public class SsController {
 	}
 	
 	// 카카오 로그인
-	@GetMapping("/odo/ss/oauth/kakao")
-	public void kakaoLogin() {
+	@GetMapping("/odo/user/oauth")
+	public String kakaoLogin() {
 		System.out.println("kakao");
+		String url = "http://kauth.kakao.com/oauth/authorize?client_id=4946b7c22ba5fb9b866b344e8f2f4224&redirect_uri=http://localhost:8080/login/user&response_type=code";
+		System.out.println(url);
+		return url;
+	}
+	
+	// 카카오 로그인 토큰 가져오기 
+	@GetMapping("/odo/ss/token/{code}")
+	public void kakaoToken(@PathVariable(value="code") String code) {
+		ssService.requestToken(code);
 	}
 	
 	

@@ -42,5 +42,15 @@ public class SsService {
 		}
 	}
 	
+	// 카카오 로그인 토큰 가져오기 
+	public void requestToken(String code) {
+		
+//		https://henniee.tistory.com/221
+		System.out.println("ser");
+		System.out.println(code);
+		
+		
+	}
+	
 	
 }
