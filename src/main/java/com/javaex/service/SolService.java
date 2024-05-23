@@ -29,8 +29,13 @@ public class SolService {
 	//회원가입
 	public int exeInsertCompany(SolVo solVo) {
 		System.out.println("SolService.exeInsertCompany");
-		solDao.insertCompany(solVo);
-		return 0;
+		return solDao.insertCompany(solVo);
+	}
+	
+	//로그인
+	public SolVo exeLogin(SolVo solVo) {
+		SolVo authCompany = solDao.login(solVo);
+		return authCompany;
 	}
 
 	// 파일업로드
