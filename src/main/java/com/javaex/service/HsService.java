@@ -16,13 +16,21 @@ public class HsService {
 	private HsDao hsDao;
 	
 	
-	//
+	//2차 카테고리 리스트
+	public List<HsVo> execate2List(int no) {
+		
+		List<HsVo> cate2List = hsDao.selectCate2List(no);
+		
+		return cate2List;
+	}//
+	
+	//1차 카테고리 리스트
 	public List<HsVo> execate1List(int no) {
 		
 		List<HsVo> cate1List = hsDao.selectCate1List(no);
 		
 		return cate1List;
-	}
+	}//
 	
 	//메인페이지 리스트
 	public List<List<HsVo>> exegetList() {
@@ -46,5 +54,5 @@ public class HsService {
 		listOfLists.add(nList);
 		
 		return listOfLists;
-	}
+	}//
 }

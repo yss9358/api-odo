@@ -27,4 +27,6 @@ public class JhController {
 		
 		js.wishCompany();
 	}
+	
+	
 }

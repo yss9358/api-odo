@@ -3,6 +3,35 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hs">
 
+	<!-- 2차카테고리 리스트 가져오기 -->
+	<select id="selectCate2List" parameterType="int" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+		select  c.class_no classNo,
+				c.class_name className,
+		        substr(c.class_name_address,1,5) classNameAdd,
+		        c.class_image classImg,
+		        c.class_price classPrice
+		from class c join cate2 c2
+		where c.cate2_no = c2.cate2_no 
+		and c2.cate2_no = #{no}
+   ]]>
+	</select>
+
+	<!-- 1차카테고리 리스트 가져오기 -->
+	<select id="selectCate1List" parameterType="int" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+		select  c.class_no classNo,
+				c.class_name className,
+		        substr(c.class_name_address,1,5) classNameAdd,
+		        c.class_image classImg,
+		        c.class_price classPrice
+		from class c join cate2 c2 join cate1 c1
+		where c.cate2_no = c2.cate2_no 
+		and c2.cate1_no = c1.cate1_no 
+		and c1.cate1_no = #{no}
+   ]]>
+	</select>
+
 	<!-- 무료베스트 리스트 가져오기 -->
 	<select id="selectFreeBestList" resultType="com.javaex.vo.HsVo">
    <![CDATA[
@@ -45,19 +74,5 @@
    ]]>
 	</select>
 
-	<!-- 1차카테고리 리스트 가져오기 -->
-	<select id="selectCate1List" parameterType="int" resultType="com.javaex.vo.HsVo">
-   <![CDATA[
-		select  c.class_no classNo,
-				c.class_name className,
-		        substr(c.class_name_address,1,5) classNameAdd,
-		        c.class_image classImg,
-		        c.class_price classPrice
-		from class c join cate2 c2 join cate1 c1
-		where c.cate2_no = c2.cate2_no 
-		and c2.cate1_no = c1.cate1_no 
-		and c1.cate1_no = #{no}
-   ]]>
-	</select>
 
 </mapper>
