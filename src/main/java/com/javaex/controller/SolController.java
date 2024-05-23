@@ -2,6 +2,7 @@ package com.javaex.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,9 @@ public class SolController {
 	private SolService solservice;
 
 	@PostMapping("join")
-	public JsonResult companyJoin(@RequestBody SolVo solVo) {
+	public JsonResult companyJoin(@ModelAttribute SolVo solVo) {
 		System.out.println("SolController.companyJoin()");
+		String saveName = solservice.exeCompanyImg(solVo.getCompanyFile());
 		
 		return null;
 	}
