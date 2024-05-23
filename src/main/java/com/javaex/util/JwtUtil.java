@@ -22,7 +22,7 @@ public class JwtUtil {
     public static void createTokenAndSetHeader(HttpServletResponse response, String tokenSuject) {
         //토큰생성
     	String token = createToken(tokenSuject);
-        System.out.println(token);
+//        System.out.println(token);
     	//응답해더에 등록
     	addResponseHeaderToken(response, token);
     }

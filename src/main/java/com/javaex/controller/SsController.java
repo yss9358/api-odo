@@ -38,7 +38,6 @@ public class SsController {
 	@PostMapping("/odo/ss/userlogin")
 	public JsonResult userLogin(@RequestBody UserJoinVo vo, HttpServletResponse response) {
 		UserJoinVo authVo = ssService.exeLogin(vo);
-		System.out.println(authVo);
 		if(authVo != null) {
 			JwtUtil.createTokenAndSetHeader(response, ""+authVo.getUserNo());
 			return JsonResult.success(authVo);
