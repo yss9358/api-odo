@@ -9,6 +9,7 @@ public class UserJoinVo {
 	private String userHp;
 	private String userBirth;
 	private String userGender;
+	private String userImage;
 	private boolean userKakao;
 	private boolean userNaver;
 	
@@ -17,7 +18,7 @@ public class UserJoinVo {
 	}
 
 	public UserJoinVo(int userNo, String userId, String userPw, String userNickname, String userHp, String userBirth,
-			String userGender, boolean userKakao, boolean userNaver) {
+			String userGender, String userImage, boolean userKakao, boolean userNaver) {
 		this.userNo = userNo;
 		this.userId = userId;
 		this.userPw = userPw;
@@ -25,6 +26,7 @@ public class UserJoinVo {
 		this.userHp = userHp;
 		this.userBirth = userBirth;
 		this.userGender = userGender;
+		this.userImage = userImage;
 		this.userKakao = userKakao;
 		this.userNaver = userNaver;
 	}
@@ -85,6 +87,14 @@ public class UserJoinVo {
 		this.userGender = userGender;
 	}
 
+	public String getUserImage() {
+		return userImage;
+	}
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
+
 	public boolean isUserKakao() {
 		return userKakao;
 	}
@@ -105,12 +115,7 @@ public class UserJoinVo {
 	public String toString() {
 		return "UserJoinVo [userNo=" + userNo + ", userId=" + userId + ", userPw=" + userPw + ", userNickname="
 				+ userNickname + ", userHp=" + userHp + ", userBirth=" + userBirth + ", userGender=" + userGender
-				+ ", userKakao=" + userKakao + ", userNaver=" + userNaver + "]";
-	}
-	
-	
-	
-	
-	
+				+ ", userImage=" + userImage + ", userKakao=" + userKakao + ", userNaver=" + userNaver + "]";
+	}	
 	
 }

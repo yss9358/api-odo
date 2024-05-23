@@ -18,7 +18,7 @@
 	<insert id="insertUser" parameterType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
 			insert into user
-			values(null, #{userId}, #{userPw}, #{userNickname}, #{userHp}, #{userBirth}, #{userGender}, false, false)
+			values(null, #{userId}, #{userPw}, #{userNickname}, #{userHp}, #{userBirth}, #{userGender}, null, false, false)
 		]]>
 	</insert>
 	
@@ -28,6 +28,7 @@
 			select	user_no userNo,
 					user_nickname userNickname,
 					user_id userId,
+					user_image userImage,
 					user_kakao userKakao,
 					user_naver userNaver
 			from user
