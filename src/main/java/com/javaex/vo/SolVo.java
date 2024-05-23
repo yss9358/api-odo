@@ -12,14 +12,16 @@ public class SolVo {
 	private String companyNameAddress;//도로명주소
 	private String companyNumAddress;//지번주소
 	private String companyDetailAddress;//상세주소
-	private String companyLatitude;//위도
-	private String companyLongitude;//경도
+	private double companyLatitude;//위도
+	private double companyLongitude;//경도
 	private String companyHp;//핸드폰번호
 	private String companyIntro;//회사소개
 	private String companyImage;//대표이미지
+	
+	
 	private MultipartFile companyFile;//대표이미지
-	
-	
+
+
 	public SolVo() {
 		super();
 	}
@@ -115,22 +117,22 @@ public class SolVo {
 	}
 
 
-	public String getCompanyLatitude() {
+	public double getCompanyLatitude() {
 		return companyLatitude;
 	}
 
 
-	public void setCompanyLatitude(String companyLatitude) {
+	public void setCompanyLatitude(double companyLatitude) {
 		this.companyLatitude = companyLatitude;
 	}
 
 
-	public String getCompanyLongitude() {
+	public double getCompanyLongitude() {
 		return companyLongitude;
 	}
 
 
-	public void setCompanyLongitude(String companyLongitude) {
+	public void setCompanyLongitude(double companyLongitude) {
 		this.companyLongitude = companyLongitude;
 	}
 
@@ -184,6 +186,7 @@ public class SolVo {
 				+ ", companyLongitude=" + companyLongitude + ", companyHp=" + companyHp + ", companyIntro="
 				+ companyIntro + ", companyImage=" + companyImage + ", companyFile=" + companyFile + "]";
 	}
+
 	
 	
 }

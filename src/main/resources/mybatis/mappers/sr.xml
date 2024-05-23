@@ -4,11 +4,25 @@
 <mapper namespace="sr">
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
+	
+	<!-- 아이디 중복체크 -->
 	<select id="companyId" parameterType="string" resultType="string">
 	<![CDATA[
 		select company_id from company
 		where company_id = #{companyid}
 	]]> 
 	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="companyInsert" parameterType="solVo">
+	<![CDATA[
+		insert into company 
+		values(null, #{companyName}, #{companyId}, #{companyPass}, #{companyBn}, 
+		#{companyImage}, 
+		#{companyZipCode}, #{companyNameAddress}, #{companyNumAddress}, #{companyDetailAddress}, 
+		#{companyLatitude}, #{companyLongitude}, 
+		#{companyHp}, #{companyIntro})
+	]]>
+	</insert>
 	
 </mapper>

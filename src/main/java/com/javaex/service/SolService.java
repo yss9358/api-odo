@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.SolDao;
+import com.javaex.vo.SolVo;
 
 @Service
 public class SolService {
@@ -19,9 +20,17 @@ public class SolService {
 	@Autowired
 	private SolDao solDao;
 
+	//아이디 중복확인
 	public String exeId(String id) {
 		System.out.println("SolService.exeId()");
 		return solDao.selectCompanyId(id);
+	}
+	
+	//회원가입
+	public int exeInsertCompany(SolVo solVo) {
+		System.out.println("SolService.exeInsertCompany");
+		solDao.insertCompany(solVo);
+		return 0;
 	}
 
 	// 파일업로드
