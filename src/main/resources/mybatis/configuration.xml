@@ -11,6 +11,7 @@
 		<mapper resource="mybatis/mappers/hs.xml" />
 		<mapper resource="mybatis/mappers/Mj.xml" />
 		<mapper resource="mybatis/mappers/ss.xml" />
+		<mapper resource="mybatis/mappers/jh.xml" />
 	</mappers>
 
 

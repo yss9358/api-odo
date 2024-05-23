@@ -26,7 +26,8 @@
 	<select id="loginByIdPw" parameterType="com.javaex.vo.UserJoinVo" resultType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
 			select	user_no userNo,
-					user_nickname userNickname
+					user_nickname userNickname,
+					user_id userId
 			from user
 			where user_id = #{userId}
 			and user_pw = #{userPw}

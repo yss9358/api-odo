@@ -38,13 +38,22 @@ public class SsController {
 	@PostMapping("/odo/ss/userlogin")
 	public JsonResult userLogin(@RequestBody UserJoinVo vo, HttpServletResponse response) {
 		UserJoinVo authVo = ssService.exeLogin(vo);
+		System.out.println(authVo);
 		if(authVo != null) {
 			JwtUtil.createTokenAndSetHeader(response, ""+authVo.getUserNo());
 			return JsonResult.success(authVo);
 		} else {
 			return JsonResult.fail("아이디와 비밀번호를 확인하세요.");
 		}
-		
 	}
+	
+	// 카카오 로그인
+	@GetMapping("/odo/ss/oauth/kakao")
+	public void kakaoLogin() {
+		System.out.println("kakao");
+	}
+	
+	
+	
 	
 }
