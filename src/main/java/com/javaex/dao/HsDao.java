@@ -17,7 +17,6 @@ public class HsDao {
 	
 	//
 	public List<HsVo> selectCate1List(int no) {
-		System.out.println("HsDao.selectCate1List()");
 		
 		List<HsVo> cate1List = sqlSession.selectList("hs.selectCate1List", no);
 		

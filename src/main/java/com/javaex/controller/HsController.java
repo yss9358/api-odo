@@ -20,10 +20,8 @@ public class HsController {
 	//카테고리 검색 리스트
 	@GetMapping("odo/categories")
 	public JsonResult getcateList(@RequestParam(value="cate1No") int no) {
-		System.out.println("HsController.getcateList()");
 		
 		List<HsVo> cate1List = hsService.execate1List(no);
-		System.out.println(cate1List);
 		
 		return JsonResult.success(cate1List);
 	}

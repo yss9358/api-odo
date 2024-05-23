@@ -18,7 +18,6 @@ public class HsService {
 	
 	//
 	public List<HsVo> execate1List(int no) {
-		System.out.println("hsDao.execate1List()");
 		
 		List<HsVo> cate1List = hsDao.selectCate1List(no);
 		
