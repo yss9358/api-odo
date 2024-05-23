@@ -15,9 +15,18 @@ public class HsService {
 	@Autowired
 	private HsDao hsDao;
 	
+	
+	//
+	public List<HsVo> execate1List(int no) {
+		System.out.println("hsDao.execate1List()");
+		
+		List<HsVo> cate1List = hsDao.selectCate1List(no);
+		
+		return cate1List;
+	}
+	
 	//메인페이지 리스트
 	public List<List<HsVo>> exegetList() {
-		System.out.println("HsService.exegetList()");
 		
 		//무료 베스트 클래스 리스트
 		List<HsVo> fbList = hsDao.selectFreeBestList();

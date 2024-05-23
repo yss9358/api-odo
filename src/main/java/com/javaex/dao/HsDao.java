@@ -14,9 +14,18 @@ public class HsDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	
+	//
+	public List<HsVo> selectCate1List(int no) {
+		System.out.println("HsDao.selectCate1List()");
+		
+		List<HsVo> cate1List = sqlSession.selectList("hs.selectCate1List", no);
+		
+		return cate1List;
+	}
+	
 	//무료베스트클래스 리스트
 	public List<HsVo> selectFreeBestList() {
-		System.out.println("HsDao.selectFreeBestList()");
 		
 		List<HsVo> fbList = sqlSession.selectList("hs.selectFreeBestList");
 		
@@ -25,7 +34,6 @@ public class HsDao {
 
 	//유료베스트클래스 리스트
 	public List<HsVo> selectPayBestList() {
-		System.out.println("HsDao.selectPayBestList()");
 		
 		List<HsVo> pbList = sqlSession.selectList("hs.selectPayBestList");
 		
@@ -34,7 +42,6 @@ public class HsDao {
 	
 	//신규베스트클래스 리스트
 	public List<HsVo> selectNewBestList() {
-		System.out.println("HsDao.selectNewBestList()");
 		
 		List<HsVo> nList = sqlSession.selectList("hs.selectNewList");
 		
