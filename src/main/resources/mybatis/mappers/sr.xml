@@ -4,6 +4,11 @@
 <mapper namespace="sr">
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
-	
+	<select id="companyId" parameterType="string" resultType="string">
+	<![CDATA[
+		select company_id from company
+		where company_id = #{companyid}
+	]]> 
+	</select>
 	
 </mapper>
