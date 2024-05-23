@@ -12,17 +12,36 @@
 		        class_name_address classAddress
 		from wish_class, class
 		where wish_class.class_no = class.class_no
-		and wish_class.user_no = 1;
+		and wish_class.user_no = 1
 	</select>
 
-	<select id="wishcompany1">
+	<select id="wishcompany1" resultType="com.javaex.vo.WishCompanyVo">
 		select	company_image companyImage,
 				company_name companyName,
 		        wish_company.company_no companyNo
 		from wish_company, company
 		where wish_company.company_no = company.company_no
-		and wish_company.user_no = 1;
+		and wish_company.user_no = 1
+	</select>
 	
+	<select id="classCount" parameterType="int" resultType="int">
+		select	count(class_no)
+		from class
+		where company_no = #{no}
+	</select>
+	
+	<select id="reviewCount" parameterType="int" resultType="int">
+		select	count(review_no)
+		from company, class, review
+		where company.company_no = class.company_no
+		and review.class_no = class.class_no
+		and company.company_no = #{no}
+	</select>
+	
+	<select id="wishCount" parameterType="int" resultType="int">
+		select	count(w_company_no)
+		from wish_company
+		where company_no = #{no}
 	</select>
 
 </mapper>
