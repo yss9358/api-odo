@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaex.service.HsService;
@@ -15,11 +16,19 @@ public class HsController {
 
 	@Autowired
 	private HsService hsService;
+	
+	//카테고리 검색 리스트
+	@GetMapping("odo/categories")
+	public JsonResult getcateList(@RequestParam(value="cate1No") int no) {
+		
+		List<HsVo> cate1List = hsService.execate1List(no);
+		
+		return JsonResult.success(cate1List);
+	}
 
 	// 메인 페이지 리스트
 	@GetMapping("odo/mains")
 	public JsonResult getList() {
-		System.out.println("HsController.getList()");
 
 		List<List<HsVo>> listOfLists = hsService.exegetList();
 

@@ -1,15 +1,12 @@
 package com.javaex.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaex.service.MjService;
@@ -22,36 +19,6 @@ public class MjController {
 	@Autowired
 	private MjService mjService;
 	
-	//전체 리스트 불러오기
-	@GetMapping("/odo/")
-	public List<MjVo> list(){
-		System.out.println("MjController.list");
-		
-		List<MjVo> MjList = mjService.exeList();
-		
-		return MjList;
-	}
-	
-	//등록
-	@PostMapping("/odo/")
-	public int wirte(@RequestBody MjVo MjVo) {
-		System.out.println("MjController.write");
-		
-		int count = mjService.exeWrite(MjVo);
-		
-		return count;
-	}
-	
-	//삭제
-	@DeleteMapping("/odo/")
-	public int delete(@RequestParam(value="personId")int no) {
-		System.out.println("MjController.delete");
-		
-		int count = mjService.exeDelete(no);
-		
-		return count;
-	}
-	
 	//수정폼
 	@GetMapping("/odo/{no}")
 	public Map<String, Object> modifyform(@PathVariable(value="no")int no) {
@@ -63,6 +30,7 @@ public class MjController {
 	}
 	
 	//수정
+	@PutMapping("/odo/modify")
 	public int modify(@RequestBody MjVo mjVo) {
 		System.out.println("MjController.modify");
 		

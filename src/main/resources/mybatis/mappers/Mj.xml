@@ -5,44 +5,19 @@
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
 	
-	<!-- 리스트 -->
-	<!-- <select id="selectList" resultType="com.javaex.vo.MjVo">
+	<!-- 수정폼 -->
+	<!--<select id="selectOne" parameterType="int" resultType="map">
 		<![CDATA[
-			select 
-			from odo
+			Select 	user_no
+					user_nickname,
+					user_hp,
+					user_birth,
+					user_pw
+			where user_no = #{user_no}
 		]]>
-	</select>
+	</select>-->
 	
-	등록
-	<insert id="insert" parameterType="com.javaex.vo.MjVo">
-		<![CDATA[
-			insert into person
-			values(null, #{name}, #{hp}, #{company})
-		]]>
-	</insert>
-	
-	삭제
-	<delete id="delete" parameterMap="com.javaex.vo.MjVo">
-		<![CDATA[
-			delete
-			from person
-			where person_id=#{no}
-		]]>
-	</delete>
-	
-	
-	수정폼
-	<select id="selectOne" parameterType="int" resultType="map">
-		<![CDATA[
-			Select person_id as personId,
-					name,
-					hp,
-					company,
-					where person_id = #{no}
-		]]>
-	</select>
-	
-	수정
+	<!--수정
 	<update id="update" parameterType="com.javaex.vo.MjVo">
 		<![CDATA[
 			update person
@@ -51,6 +26,6 @@
 			compamy=#{company}
 			where person_id = #{personId}		
 		]]>
-	</update> -->
+	</update>-->
 	
 </mapper>
