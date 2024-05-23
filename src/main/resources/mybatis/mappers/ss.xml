@@ -27,7 +27,9 @@
 		<![CDATA[
 			select	user_no userNo,
 					user_nickname userNickname,
-					user_id userId
+					user_id userId,
+					user_kakao userKakao,
+					user_naver userNaver
 			from user
 			where user_id = #{userId}
 			and user_pw = #{userPw}
