@@ -25,7 +25,6 @@ public class JhDao {
 	
 	//업체 위시리스트 이름, 이미지, 번호 가져오기
 	public List<WishCompanyVo> wishCompany() {
-		System.out.println("!11");
 		List<WishCompanyVo> wishCompany =  sqlSession.selectList("jh.wishcompany1");
 		
 		return wishCompany;
