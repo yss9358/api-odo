@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaex.service.SsService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
+import com.javaex.vo.CouponVo;
 import com.javaex.vo.UserJoinVo;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -47,14 +50,24 @@ public class SsController {
 		}
 	}
 	
-	// 카카오 로그인
-	@GetMapping("/odo/user/oauth")
-	public String kakaoLogin() {
-		System.out.println("kakao");
-		String url = "http://kauth.kakao.com/oauth/authorize?client_id=4946b7c22ba5fb9b866b344e8f2f4224&redirect_uri=http://localhost:8080/login/user&response_type=code";
-		System.out.println(url);
-		return url;
+	// 쿠폰정보 가져오기
+	@GetMapping("/odo/ss/usercoupon/{no}")
+	public JsonResult couponList(@PathVariable(value="no") int no) {
+		List<CouponVo> list = ssService.exeCheckCoupon(no);
+		return JsonResult.success(list);
 	}
+	
+	
+	
+	
+//	// 카카오 로그인
+//	@GetMapping("/odo/user/oauth")
+//	public String kakaoLogin() {
+//		System.out.println("kakao");
+//		String url = "http://kauth.kakao.com/oauth/authorize?client_id=4946b7c22ba5fb9b866b344e8f2f4224&redirect_uri=http://localhost:8080/kak&response_type=code";
+//		System.out.println(url);
+//		return url;
+//	}
 	
 	// 카카오 로그인 토큰 가져오기 
 	@GetMapping("/odo/ss/token/{code}")

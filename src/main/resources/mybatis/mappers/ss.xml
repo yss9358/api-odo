@@ -36,5 +36,20 @@
 			and user_pw = #{userPw}
 		]]>
 	</select>
+	
+	<!-- 회원의 쿠폰정보 가져오기 -->
+	<select id="getCouponByNo" parameterType="int" resultType="com.javaex.vo.CouponVo">
+		<![CDATA[
+			select	c.coupon_no couponNo,
+					c.user_no userNo,
+			        cp.company_name companyName,
+			        c.coupon_price couponPrice,
+			        c.coupon_date couponDate
+			from coupon c, user u, company cp
+			where c.user_no = u.user_no
+			and c.company_no = cp.company_no
+			and u.user_no = #{no}
+		]]>
+	</select>
 
 </mapper>

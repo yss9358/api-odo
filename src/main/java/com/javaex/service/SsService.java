@@ -1,9 +1,13 @@
 package com.javaex.service;
 
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.SsDao;
+import com.javaex.vo.CouponVo;
 import com.javaex.vo.UserJoinVo;
 
 @Service
@@ -42,13 +46,36 @@ public class SsService {
 		}
 	}
 	
+	// 쿠폰정보 가져오기
+	public List<CouponVo> exeCheckCoupon (int no) {
+		return ssDao.getCouponByNo(no);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 카카오 로그인 토큰 가져오기 
 	public void requestToken(String code) {
 		
 //		https://henniee.tistory.com/221
-		System.out.println("ser");
+//		System.out.println("ser");
 		System.out.println(code);
+//		
+//		String accessToken = "";
+//		String refreshToken = "";
+//		
+//		String strUrl = "https://kauth.kakao.com/oauth/token";
+//		KakaoToken kakaoToken = new KakaoToken();
 		
+		
+
 		
 	}
 	
