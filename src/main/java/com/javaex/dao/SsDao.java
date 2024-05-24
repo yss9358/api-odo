@@ -33,6 +33,8 @@ public class SsDao {
 	// 회원 원데이 결제내역 가져오기
 	public void getOneDayPayListByNo(int no) {
 		System.out.println(no);
+		
+		
 //		sqlSession.selectList("ss.getOneDayPayListByNo",no);
 	}
 	
