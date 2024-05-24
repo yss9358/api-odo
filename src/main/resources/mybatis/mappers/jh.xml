@@ -4,16 +4,22 @@
 <mapper namespace="jh">
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
-	<select id="wishclass" resultType="com.javaex.vo.WishClassVo">
+	<select id="wishclass" parameterType="int" resultType="com.javaex.vo.WishClassVo">
 		select	class_name className,
 				class_intro classIntro,
 		        class_price classPrice,
 		        class_image classImage,
-		        class_name_address classAddress
+		        class_name_address classAddress,
+		        w_class_no no
 		from wish_class, class
 		where wish_class.class_no = class.class_no
-		and wish_class.user_no = 1
+		and wish_class.user_no = #{no}
 	</select>
+	
+	<delete id="delwish" parameterType="int">
+		delete from wish_class
+		where w_class_no = #{no}
+	</delete>
 
 	<select id="wishcompany1" resultType="com.javaex.vo.WishCompanyVo">
 		select	company_image companyImage,

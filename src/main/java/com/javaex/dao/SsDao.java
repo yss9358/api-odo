@@ -30,6 +30,17 @@ public class SsDao {
 		return sqlSession.selectOne("ss.loginByIdPw", vo);
 	}
 	
+	// 회원 원데이 결제내역 가져오기
+	public void getOneDayPayListByNo(int no) {
+		System.out.println(no);
+//		sqlSession.selectList("ss.getOneDayPayListByNo",no);
+	}
+	
+	// 회원 정규 결제내역 가져오기
+	public void getRegularPayListByNo(int no) {
+		System.out.println(no);
+	}
+	
 	// 쿠폰정보 가져오기
 	public List<CouponVo> getCouponByNo(int no) {
 		return sqlSession.selectList("ss.getCouponByNo",no);

@@ -2,6 +2,7 @@ package com.javaex.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,9 +47,26 @@ public class SsService {
 		}
 	}
 	
+	// 결제내역 가져오기 
+	public void exePayList(Map<String, Integer> map) {
+		int no = map.get("no");
+		int userNo = map.get("userNo");
+		if(no == 1) { // 1이면 원데이 결제내역 가져오기
+			ssDao.getOneDayPayListByNo(userNo);
+		} else { // 1이 아니면 정규 결제내역 가져오기 
+			ssDao.getRegularPayListByNo(userNo);
+		}
+		
+	}
+	
 	// 쿠폰정보 가져오기
 	public List<CouponVo> exeCheckCoupon (int no) {
-		return ssDao.getCouponByNo(no);
+		List<CouponVo> list = ssDao.getCouponByNo(no);
+		if(list.size() < 1) {
+			return null;
+		} else {
+			return ssDao.getCouponByNo(no);
+		}
 	}
 	
 	

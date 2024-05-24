@@ -4,6 +4,7 @@ public class WishCompanyVo2 {
 
 	private String companyImage;
 	private String companyName;
+	private int no;
 	private int classCount;
 	private int reviewCount;
 	private int wishCount;
@@ -12,10 +13,12 @@ public class WishCompanyVo2 {
 		super();
 	}
 
-	public WishCompanyVo2(String companyImage, String companyName, int classCount, int reviewCount, int wishCount) {
+	public WishCompanyVo2(String companyImage, String companyName, int no, int classCount, int reviewCount,
+			int wishCount) {
 		super();
 		this.companyImage = companyImage;
 		this.companyName = companyName;
+		this.no = no;
 		this.classCount = classCount;
 		this.reviewCount = reviewCount;
 		this.wishCount = wishCount;
@@ -35,6 +38,14 @@ public class WishCompanyVo2 {
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public int getClassCount() {
@@ -63,7 +74,9 @@ public class WishCompanyVo2 {
 
 	@Override
 	public String toString() {
-		return "WishCompanyVo2 [companyImage=" + companyImage + ", companyName=" + companyName + ", classCount="
-				+ classCount + ", reviewCount=" + reviewCount + ", wishCount=" + wishCount + "]";
+		return "WishCompanyVo2 [companyImage=" + companyImage + ", companyName=" + companyName + ", no=" + no
+				+ ", classCount=" + classCount + ", reviewCount=" + reviewCount + ", wishCount=" + wishCount + "]";
 	}
+
+	
 }
