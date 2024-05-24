@@ -7,18 +7,21 @@ public class WishClassVo {
 	private String classIntro;
 	private int classPrice;
 	private String classImage;
+	private int no;
 	
 	public WishClassVo() {
 		super();
 	}
 
-	public WishClassVo(String classAddress, String className, String classIntro, int classPrice, String classImage) {
+	public WishClassVo(String classAddress, String className, String classIntro, int classPrice, String classImage,
+			int no) {
 		super();
 		this.classAddress = classAddress;
 		this.className = className;
 		this.classIntro = classIntro;
 		this.classPrice = classPrice;
 		this.classImage = classImage;
+		this.no = no;
 	}
 
 	public String getClassAddress() {
@@ -61,9 +64,18 @@ public class WishClassVo {
 		this.classImage = classImage;
 	}
 
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
 	@Override
 	public String toString() {
 		return "WishClassVo [classAddress=" + classAddress + ", className=" + className + ", classIntro=" + classIntro
-				+ ", classPrice=" + classPrice + ", classImage=" + classImage + "]";
+				+ ", classPrice=" + classPrice + ", classImage=" + classImage + ", no=" + no + "]";
 	}
+
 }

@@ -1,6 +1,8 @@
 package com.javaex.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +18,22 @@ public class JhDao {
 	SqlSession sqlSession;
 	
 	//클래스 위시리스트 가져오기
-	public List<WishClassVo> wishClass() {
+	public List<WishClassVo> wishClass(int no) {
 		
-		List<WishClassVo> wishClass = sqlSession.selectList("jh.wishclass");
-		
+		List<WishClassVo> wishClass = sqlSession.selectList("jh.wishclass", no);
+		System.out.println(wishClass);
 		return wishClass;
+	}
+	
+	//클래스 위시 제거하기
+	public int delwish(int a) {
+		
+		return sqlSession.delete("jh.delwish", a);
 	}
 	
 	//업체 위시리스트 이름, 이미지, 번호 가져오기
 	public List<WishCompanyVo> wishCompany() {
 		List<WishCompanyVo> wishCompany =  sqlSession.selectList("jh.wishcompany1");
-		
 		return wishCompany;
 	}
 	

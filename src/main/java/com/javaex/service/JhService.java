@@ -19,13 +19,25 @@ public class JhService {
 	JhDao jd;
 	
 	//클래스 위시리스트 가져오기
-	public JsonResult wishClass() {
+	public JsonResult wishClass(int no) {
 		
-		List<WishClassVo> wishClass = jd.wishClass();
+		List<WishClassVo> wishClass = jd.wishClass(no);
 		if(wishClass != null) {
 			return JsonResult.success(wishClass);
 		}else {
 			return JsonResult.fail("위시클래스가 없습니다");
+		}
+	}
+	
+	//클래스 위시 제거하기
+	public JsonResult delwish(int a) {
+		
+		int b = jd.delwish(a);
+		
+		if(b == 1) {
+			return JsonResult.success(b);
+		}else {
+			return JsonResult.fail("삭제를 실패했습니다");
 		}
 	}
 	
@@ -52,7 +64,7 @@ public class JhService {
 			
 			int wishCount = jd.wishCount(no);
 			
-			WishCompanyVo2 wVo = new WishCompanyVo2(companyImage, companyName, classCount, reviewCount, wishCount);
+			WishCompanyVo2 wVo = new WishCompanyVo2(companyImage, companyName, no, classCount, reviewCount, wishCount);
 			
 			wishCompany2.add(wVo);
 		}
