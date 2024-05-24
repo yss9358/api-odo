@@ -1,6 +1,7 @@
 package com.javaex.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,14 @@ public class SolDao {
 	/********************************************
 	 * 클래스
 	 */
-	public List<SolClassVo> selectAllClass(int companyNo){
+	public List<SolClassVo> selectAllClass(Map<Object, String> tempVo){
 		System.out.println("SolDao.selectAllClass()");
-		return sqlSession.selectList("sr.companyClassList", companyNo);
+		return sqlSession.selectList("sr.companyClassList", tempVo);
+	}
+	//클래스 불러오기
+	public SolClassVo selectClass() {
+		System.out.println("SolDao.selectClass()");
+		SolClassVo classVo = sqlSession.selectOne(null, sqlSession);
+		return null;
 	}
 }

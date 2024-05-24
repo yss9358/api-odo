@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,9 +84,15 @@ public class SolService {
 	/**********************************************
 	 * 클래스
 	 */
-	public List<SolClassVo> exeClassList(int companyNo){
+	//기존클래스리스트
+	public List<SolClassVo> exeClassList(Map<Object, String> tempVo){
 		System.out.println("SolService.exeClassList()");
-		return solDao.selectAllClass(companyNo);
+		return solDao.selectAllClass(tempVo);
+	}
+	//클래스불러오기
+	public SolClassVo exeGetClass() {
+		System.out.println("SolService.exeGetClass()");
+		return null;
 	}
 	
 }

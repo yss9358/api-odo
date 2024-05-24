@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="sr">
 	<!-- 쿼리문작성 -->
+	<resultMap type="com.javaex.vo.SolClassVo" id="resultMapClassVo">
+      <result column="class_no" property="classNo"></result>
+      <result column="company_no" property="companyNo"></result>
+      <result column="cate1_no" property="cate1No"></result>
+      <result column="cate2_no" property="cate2No"></result>
+      <result column="class_name" property="className"></result>
+      <result column="class_type" property="classType"></result>
+      <result column="class_intro" property="classIntro"></result>
+      <result column="class_zipcode" property="classZipcode"></result>
+      <result column="class_name_address" property="classNameAddress"></result>
+      <result column="class_num_address" property="classNumAddress"></result>
+      <result column="class_detail_address" property="classDetailAddress"></result>
+      <result column="class_latitude" property="classLatitude"></result>
+      <result column="class_longitutde" property="classLongitutde"></result>
+      <result column="class_image" property="classImage"></result>
+      <result column="class_price" property="classPrice"></result>
+      <result column="class_min" property="classMin"></result>
+      <result column="class_max" property="classMax"></result>
+      <result column="class_info" property="classInfo"></result>
+      <result column="class_url" property="classUrl"></result>
+      <result column="rec_class_no" property="recClassNo"></result>
+   </resultMap>
 	<!-- <![CDATA[]]> -->
 	
 	<!-- 사업자 -->
@@ -39,10 +62,28 @@
 	
 	
 	<!-- 클래스 -->
-	<select id="companyClassList" parameterType="int">
+	<select id="companyClassList" parameterType="map" resultType="classVo">
 	<![CDATA[
-		select class_name className
-		from class where company_no = #{CompanyNo}
+		select class_no classNo, class_name className
+		from class 
+		where company_no = #{no}
+		and class_type = #{type}
+	]]>
+	</select>
+	
+	
+	<!-- 클래스 불러오기 -->
+	<select id="getClass" parameterType="map" resultType="classVo" resultMap="resultMapClassVo">
+	<![CDATA[
+	select class_name, class_intro, 
+		class_name_address, class_num_address, 
+		c.cate2_no, t.cate1_no, 
+		class_price, class_min, class_max,
+		class_info, rec_class_no
+		from class c, cate1 t
+		where company_no = #{companyNo}
+		and class_no = #{classNo}
+		and c.cate2_no = t.cate1_no
 	]]>
 	</select>
 	

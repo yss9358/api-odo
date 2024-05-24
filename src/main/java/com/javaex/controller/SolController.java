@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,11 +75,24 @@ public class SolController {
 	/**********************************************
 	 * 클래스관련 메소드
 	 */
-	
-	public List<SolClassVo> classList(@RequestParam int companyNo){
+	@PostMapping("cclist")
+	public JsonResult classList(@RequestBody Map<Object, String> tempVo){
 		System.out.println("SolController.classList");
-		System.out.println(companyNo);
-//		solservice.exeClassList(companyNo);
+		System.out.println(tempVo.get("type"));
+		List<SolClassVo> classList = solservice.exeClassList(tempVo);
+		System.out.println(classList);
+		if (classList.size() > 0) {
+			return JsonResult.success(classList);
+		} else {
+			return JsonResult.fail("리스트없음");
+		}
+	}
+	
+	//선택한클래스 불러오기
+	@PostMapping("getclass")
+	public JsonResult getSelectClass(@RequestBody Map<Object, String> tempVo) {
+		System.out.println("SolController.getClass()");
+		System.out.println(tempVo);
 		return null;
 	}
 	

@@ -3,6 +3,7 @@ package com.javaex.vo;
 public class SolClassVo {
 	private int classNo;
 	private int companyNo; 
+	private int cate1No;
 	private int cate2No;
 	private String className;
 	private int classType;
@@ -54,6 +55,16 @@ public class SolClassVo {
 
 	public void setCate2No(int cate2No) {
 		this.cate2No = cate2No;
+	}
+
+
+	public int getCate1No() {
+		return cate1No;
+	}
+
+
+	public void setCate1No(int cate1No) {
+		this.cate1No = cate1No;
 	}
 
 
@@ -219,14 +230,17 @@ public class SolClassVo {
 
 	@Override
 	public String toString() {
-		return "SolClassVo [classNo=" + classNo + ", companyNo=" + companyNo + ", cate2No=" + cate2No + ", className="
-				+ className + ", classType=" + classType + ", classIntro=" + classIntro + ", classZipcode="
-				+ classZipcode + ", classNameAddress=" + classNameAddress + ", classNumAddress=" + classNumAddress
-				+ ", classDetailAddress=" + classDetailAddress + ", classLatitude=" + classLatitude
+		return "SolClassVo [classNo=" + classNo + ", companyNo=" + companyNo + ", cate1No=" + cate1No + ", cate2No="
+				+ cate2No + ", className=" + className + ", classType=" + classType + ", classIntro=" + classIntro
+				+ ", classZipcode=" + classZipcode + ", classNameAddress=" + classNameAddress + ", classNumAddress="
+				+ classNumAddress + ", classDetailAddress=" + classDetailAddress + ", classLatitude=" + classLatitude
 				+ ", classLongitutde=" + classLongitutde + ", classImage=" + classImage + ", classPrice=" + classPrice
 				+ ", classMin=" + classMin + ", classMax=" + classMax + ", classInfo=" + classInfo + ", classUrl="
 				+ classUrl + ", recClassNo=" + recClassNo + "]";
 	}
+
+
+
 	
 	
 }
