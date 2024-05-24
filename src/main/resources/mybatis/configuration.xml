@@ -4,7 +4,8 @@
 <configuration>
 
 	<typeAliases>
-		<typeAlias alias="solVo" type="com.javaex.vo.SolVo" />
+		<typeAlias alias="CompanyVo" type="com.javaex.vo.SolCompanyVo" />
+		<typeAlias alias="ClassVo" type="com.javaex.vo.SolClassVo" />
 	</typeAliases>
 
 	<mappers>

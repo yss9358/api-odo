@@ -2,7 +2,7 @@ package com.javaex.vo;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class SolVo {
+public class SolCompanyVo {
 	private int companyNo;	//기업번호
 	private String companyName;//기업이름
 	private String companyId;	//아이디
@@ -22,7 +22,7 @@ public class SolVo {
 	private MultipartFile companyFile;//대표이미지
 
 
-	public SolVo() {
+	public SolCompanyVo() {
 		super();
 	}
 

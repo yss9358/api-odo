@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.SolDao;
-import com.javaex.vo.SolVo;
+import com.javaex.vo.SolClassVo;
+import com.javaex.vo.SolCompanyVo;
 
 @Service
 public class SolService {
@@ -20,6 +22,11 @@ public class SolService {
 	@Autowired
 	private SolDao solDao;
 
+	/***********************************
+	 * 사업자
+	 * @param id
+	 * @return
+	 */
 	//아이디 중복확인
 	public String exeId(String id) {
 		System.out.println("SolService.exeId()");
@@ -27,14 +34,14 @@ public class SolService {
 	}
 	
 	//회원가입
-	public int exeInsertCompany(SolVo solVo) {
+	public int exeInsertCompany(SolCompanyVo solVo) {
 		System.out.println("SolService.exeInsertCompany");
 		return solDao.insertCompany(solVo);
 	}
 	
 	//로그인
-	public SolVo exeLogin(SolVo solVo) {
-		SolVo authCompany = solDao.login(solVo);
+	public SolCompanyVo exeLogin(SolCompanyVo solVo) {
+		SolCompanyVo authCompany = solDao.login(solVo);
 		return authCompany;
 	}
 
@@ -71,5 +78,14 @@ public class SolService {
 		}
 		return saveName;
 	}
-
+	
+	
+	/**********************************************
+	 * 클래스
+	 */
+	public List<SolClassVo> exeClassList(int companyNo){
+		System.out.println("SolService.exeClassList()");
+		return solDao.selectAllClass(companyNo);
+	}
+	
 }

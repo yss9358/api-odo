@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaex.service.SolService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
-import com.javaex.vo.SolVo;
-import com.javaex.vo.UserJoinVo;
+import com.javaex.vo.SolClassVo;
+import com.javaex.vo.SolCompanyVo;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -24,11 +26,17 @@ public class SolController {
 	@Autowired
 	private SolService solservice;
 
+	/**********************************************
+	 * 사업자관련 메소드
+	 * @param vo
+	 * @param response
+	 * @return
+	 */
 	// 사업자 로그인
 	@PostMapping("login")
-	public JsonResult companyLogin(@RequestBody SolVo vo, HttpServletResponse response) {
+	public JsonResult companyLogin(@RequestBody SolCompanyVo vo, HttpServletResponse response) {
 		System.out.println("SolController.companyLogin()");
-		SolVo authCompany = solservice.exeLogin(vo);
+		SolCompanyVo authCompany = solservice.exeLogin(vo);
 		if (authCompany != null) {
 			JwtUtil.createTokenAndSetHeader(response, ""+authCompany.getCompanyNo());
 			return JsonResult.success("");
@@ -39,7 +47,7 @@ public class SolController {
 
 	// 사업자가입
 	@PostMapping("join")
-	public JsonResult companyJoin(@ModelAttribute SolVo solVo) {
+	public JsonResult companyJoin(@ModelAttribute SolCompanyVo solVo) {
 		System.out.println("SolController.companyJoin()");
 		String saveName = solservice.exeCompanyImg(solVo.getCompanyFile());
 		solVo.setCompanyImage(saveName);
@@ -63,4 +71,19 @@ public class SolController {
 		}
 	}
 
+	/**********************************************
+	 * 클래스관련 메소드
+	 */
+	
+	public List<SolClassVo> classList(@RequestParam int companyNo){
+		System.out.println("SolController.classList");
+		System.out.println(companyNo);
+//		solservice.exeClassList(companyNo);
+		return null;
+	}
+	
+	
+	
+	
+	
 }

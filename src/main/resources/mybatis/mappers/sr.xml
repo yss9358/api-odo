@@ -5,6 +5,7 @@
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
 	
+	<!-- 사업자 -->
 	<!-- 아이디 중복체크 -->
 	<select id="companyId" parameterType="string" resultType="string">
 	<![CDATA[
@@ -14,7 +15,7 @@
 	</select>
 	
 	<!-- 회원가입 -->
-	<insert id="companyInsert" parameterType="solVo">
+	<insert id="companyInsert" parameterType="CompanyVo">
 	<![CDATA[
 		insert into company 
 		values(null, #{companyName}, #{companyId}, #{companyPass}, #{companyBn}, 
@@ -26,12 +27,22 @@
 	</insert>
 	
 	<!-- 사업자 로그인 -->
-	<select id="companyLogin" parameterType="solVo" resultType="solVo">
+	<select id="companyLogin" parameterType="CompanyVo" resultType="CompanyVo">
 	<![CDATA[
 		select company_no companyNo, company_id companyId, company_pw companyPass
 		from company
 		where company_id = #{companyId}
 		and company_pw = #{companyPass}
+	]]>
+	</select>
+	
+	
+	
+	<!-- 클래스 -->
+	<select id="companyClassList" parameterType="int">
+	<![CDATA[
+		select class_name className
+		from class where company_no = #{CompanyNo}
 	]]>
 	</select>
 	
