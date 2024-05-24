@@ -92,8 +92,13 @@ public class SolController {
 	@PostMapping("getclass")
 	public JsonResult getSelectClass(@RequestBody Map<Object, String> tempVo) {
 		System.out.println("SolController.getClass()");
-		System.out.println(tempVo);
-		return null;
+		SolClassVo classVo = solservice.exeGetClass(tempVo);
+		System.out.println(classVo);
+		if(classVo != null) {
+			return JsonResult.success(classVo);
+		} else {
+			return JsonResult.fail("정보 불러오기 실패");
+		}
 	}
 	
 	

@@ -75,15 +75,16 @@
 	<!-- 클래스 불러오기 -->
 	<select id="getClass" parameterType="map" resultType="classVo" resultMap="resultMapClassVo">
 	<![CDATA[
-	select class_name, class_intro, 
-		class_name_address, class_num_address, 
-		c.cate2_no, t.cate1_no, 
-		class_price, class_min, class_max,
-		class_info, rec_class_no
-		from class c, cate1 t
-		where company_no = #{companyNo}
-		and class_no = #{classNo}
-		and c.cate2_no = t.cate1_no
+	select c.class_no, c.company_no, c.class_name, c.class_intro, 
+		c.class_zipcode, c.class_name_address, c.class_num_address, 
+		c.cate2_no, t.cate1_no, c.class_type,
+		c.class_price, c.class_min, c.class_max,
+		c.class_info, c.rec_class_no
+		from class c, cate1 t, cate2 t2
+		where c.company_no = #{companyNo}
+		and c.class_no = #{classNo}
+		and c.cate2_no = t2.cate2_no
+		and t.cate1_no = t2.cate1_no
 	]]>
 	</select>
 	

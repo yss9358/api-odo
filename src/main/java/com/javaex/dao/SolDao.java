@@ -48,9 +48,9 @@ public class SolDao {
 		return sqlSession.selectList("sr.companyClassList", tempVo);
 	}
 	//클래스 불러오기
-	public SolClassVo selectClass() {
+	public SolClassVo selectClass(Map<Object, String> tempVo) {
 		System.out.println("SolDao.selectClass()");
-		SolClassVo classVo = sqlSession.selectOne(null, sqlSession);
-		return null;
+		System.out.println(tempVo);
+		return sqlSession.selectOne("sr.getClass", tempVo);
 	}
 }
