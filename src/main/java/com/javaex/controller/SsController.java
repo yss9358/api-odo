@@ -1,6 +1,8 @@
 package com.javaex.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,12 +52,28 @@ public class SsController {
 		}
 	}
 	
+	// 회원 결제내역 가져오기
+	@GetMapping("/odo/ss/getpaylist")
+	public void getPayList(@RequestParam(value="no") int no,@RequestParam(value="userNo") int userNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("no", no); // 원데이,정규 구분
+		map.put("userNo", userNo); // 유저번호
+		ssService.exePayList(map);
+		
+		
+		
+	}
+	
+	
 	// 쿠폰정보 가져오기
 	@GetMapping("/odo/ss/usercoupon/{no}")
 	public JsonResult couponList(@PathVariable(value="no") int no) {
 		List<CouponVo> list = ssService.exeCheckCoupon(no);
 		return JsonResult.success(list);
 	}
+	
+	
+	
 	
 	
 	

@@ -37,6 +37,14 @@
 		]]>
 	</select>
 	
+	<!-- 원데이 결제내역 가져오기 -->
+	<select id="getOneDayPayListByNo" parameterType="int" resultType="com.javaex.vo.MyPayVo">
+		<![CDATA[
+			
+		]]>
+	</select>
+	
+	
 	<!-- 회원의 쿠폰정보 가져오기 -->
 	<select id="getCouponByNo" parameterType="int" resultType="com.javaex.vo.CouponVo">
 		<![CDATA[
