@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +30,12 @@ public class HsController {
 	
 	//1차 카테고리 검색 리스트
 	@GetMapping("odo/categories")
-	public JsonResult getcateList(@RequestParam(value="cate1No") int no) {
+	public JsonResult getcateList(@RequestParam(value="cate1No") int no,
+			@RequestParam(value="crtPage", required = false, defaultValue = "1") int crtPage) {
 		
-		List<HsVo> cate1List = hsService.execate1List(no);
+		Map<String, Object> pMap = hsService.execate1List(no, crtPage);
 		
-		return JsonResult.success(cate1List);
+		return JsonResult.success(pMap);
 	}//
 
 	// 메인 페이지 리스트
