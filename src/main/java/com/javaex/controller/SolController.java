@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaex.service.SolService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
+import com.javaex.vo.SolCateVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
 
@@ -29,6 +31,7 @@ public class SolController {
 
 	/**********************************************
 	 * 사업자관련 메소드
+	 * 
 	 * @param vo
 	 * @param response
 	 * @return
@@ -39,7 +42,7 @@ public class SolController {
 		System.out.println("SolController.companyLogin()");
 		SolCompanyVo authCompany = solservice.exeLogin(vo);
 		if (authCompany != null) {
-			JwtUtil.createTokenAndSetHeader(response, ""+authCompany.getCompanyNo());
+			JwtUtil.createTokenAndSetHeader(response, "" + authCompany.getCompanyNo());
 			return JsonResult.success("");
 		} else {
 			return JsonResult.fail("아이디와 비밀번호를 확인하세요.");
@@ -76,33 +79,51 @@ public class SolController {
 	 * 클래스관련 메소드
 	 */
 	@PostMapping("cclist")
-	public JsonResult classList(@RequestBody Map<Object, String> tempVo){
+	public JsonResult classList(@RequestBody Map<Object, String> tempVo) {
 		System.out.println("SolController.classList");
-		System.out.println(tempVo.get("type"));
+//		System.out.println(tempVo.get("type"));
 		List<SolClassVo> classList = solservice.exeClassList(tempVo);
-		System.out.println(classList);
+//		System.out.println(classList);
 		if (classList.size() > 0) {
 			return JsonResult.success(classList);
 		} else {
 			return JsonResult.fail("리스트없음");
 		}
 	}
-	
-	//선택한클래스 불러오기
+
+	// 선택한클래스 불러오기
 	@PostMapping("getclass")
 	public JsonResult getSelectClass(@RequestBody Map<Object, String> tempVo) {
 		System.out.println("SolController.getClass()");
 		SolClassVo classVo = solservice.exeGetClass(tempVo);
-		System.out.println(classVo);
-		if(classVo != null) {
+//		System.out.println(classVo);
+		if (classVo != null) {
 			return JsonResult.success(classVo);
 		} else {
 			return JsonResult.fail("정보 불러오기 실패");
 		}
 	}
-	
-	
-	
-	
-	
+
+	// 카테고리 불러오기
+	@PostMapping("getcate")
+	public JsonResult getCate() {
+		System.out.println("SolController.getCate()");
+		List<SolCateVo> cateList = solservice.exeGetCate();
+//			System.out.println(cateList);
+		if (cateList != null) {
+			return JsonResult.success(cateList);
+		} else {
+			return JsonResult.fail("불러오기 실패");
+		}
+	}
+
+	@GetMapping("getcate2/{no}")
+	public JsonResult getCate2(@PathVariable int no) {
+		System.out.println("SolController.getCate2()");
+//		System.out.println(no);
+		List<SolCateVo> cateList = solservice.exeGetCate2(no);
+		System.out.println(cateList);
+		return null;
+	}
+
 }

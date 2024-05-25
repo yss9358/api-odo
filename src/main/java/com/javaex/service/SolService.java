@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.SolDao;
+import com.javaex.vo.SolCateVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
 
@@ -94,6 +95,16 @@ public class SolService {
 		System.out.println("SolService.exeGetClass()");
 //		return null;
 		return solDao.selectClass(tempVo);
+	}
+	//카테고리 불러오기
+	public List<SolCateVo> exeGetCate(){
+		System.out.println("SolService.exeGetCate");
+		return solDao.selectAllCate();
+	}
+	//2차카테고리
+	public List<SolCateVo> exeGetCate2(int no){
+		System.out.println("SolService.exeGetCate2S");
+		return solDao.selectCate2(no);
 	}
 	
 }

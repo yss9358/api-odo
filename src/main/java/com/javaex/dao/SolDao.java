@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.SolCateVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
 
@@ -52,5 +53,15 @@ public class SolDao {
 		System.out.println("SolDao.selectClass()");
 		System.out.println(tempVo);
 		return sqlSession.selectOne("sr.getClass", tempVo);
+	}
+	//카테고리 불러오기
+	public List<SolCateVo> selectAllCate(){
+		System.out.println("SolDao.selectAllCate()");
+		return sqlSession.selectList("sr.selectAllCate1");
+	}
+	//2차카테고리
+	public List<SolCateVo> selectCate2(int no){
+		System.out.println("SolDao.selectCate2");
+		return sqlSession.selectList("sr.selectCate2", no);
 	}
 }

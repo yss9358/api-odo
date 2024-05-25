@@ -8,7 +8,9 @@
       <result column="class_no" property="classNo"></result>
       <result column="company_no" property="companyNo"></result>
       <result column="cate1_no" property="cate1No"></result>
+      <result column="cate1_name" property="cate1Name"></result>
       <result column="cate2_no" property="cate2No"></result>
+      <result column="cate2_name" property="cate2Name"></result>
       <result column="class_name" property="className"></result>
       <result column="class_type" property="classType"></result>
       <result column="class_intro" property="classIntro"></result>
@@ -25,6 +27,12 @@
       <result column="class_info" property="classInfo"></result>
       <result column="class_url" property="classUrl"></result>
       <result column="rec_class_no" property="recClassNo"></result>
+   </resultMap>
+   <resultMap type="com.javaex.vo.SolCateVo" id="resultMapCateVo">
+      <result column="cate1_no" property="cate1No"></result>
+      <result column="cate2_no" property="cate2No"></result>
+      <result column="cate1_name" property="cate1Name"></result>
+      <result column="cate2_name" property="cate2Name"></result>
    </resultMap>
 	<!-- <![CDATA[]]> -->
 	
@@ -80,11 +88,29 @@
 		c.cate2_no, t.cate1_no, c.class_type,
 		c.class_price, c.class_min, c.class_max,
 		c.class_info, c.rec_class_no
-		from class c, cate1 t, cate2 t2
-		where c.company_no = #{companyNo}
-		and c.class_no = #{classNo}
-		and c.cate2_no = t2.cate2_no
-		and t.cate1_no = t2.cate1_no
+	from class c, cate1 t, cate2 t2
+	where c.company_no = #{companyNo}
+	and c.class_no = #{classNo}
+	and c.cate2_no = t2.cate2_no
+	and t.cate1_no = t2.cate1_no
+	]]>
+	</select>
+	<!-- 1차 카테고리 불러오기 -->
+	<select id="selectAllCate1" resultType="com.javaex.vo.SolCateVo" resultMap="resultMapCateVo">
+	<![CDATA[
+	select c2.cate1_no, c1.cate1_name
+	from cate1 c1, cate2 c2
+	where c1.cate1_no=c2.cate1_no
+	group by c1.cate1_no
+	]]>
+	</select>
+	<!-- 2차카테고리 불러오기 -->
+	<select id="selectCate2" parameterType="int" resultType="com.javaex.vo.SolCateVo">
+	<![CDATA[
+	select c2.cate2_no, c2.cate2_name
+	from cate1 c1, cate2 c2
+	where c1.cate1_no=c2.cate1_no
+	and c1.cate1_no = #{cate1No}
 	]]>
 	</select>
 	
