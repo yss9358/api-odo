@@ -6,26 +6,25 @@
 	<!-- <![CDATA[]]> -->
 	
 	<!-- 수정폼 -->
-	<!--<select id="selectOne" parameterType="int" resultType="map">
+	<select id="selectOne" parameterType="int" resultType="map">
 		<![CDATA[
-			Select 	user_no
+			Select 	user_no,
 					user_nickname,
 					user_hp,
 					user_birth,
 					user_pw
 			where user_no = #{user_no}
 		]]>
-	</select>-->
+	</select>
 	
-	<!--수정
+	<!--수정-->
 	<update id="update" parameterType="com.javaex.vo.MjVo">
 		<![CDATA[
-			update person
-			set name=#{name},
-				hp = #{hp},
-			compamy=#{company}
-			where person_id = #{personId}		
+			update user
+			set user_nickname=#{name},
+				user_hp = #{hp}
+			where user_birth = #{birth}		
 		]]>
-	</update>-->
+	</update>
 	
 </mapper>

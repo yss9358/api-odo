@@ -3,73 +3,72 @@ package com.javaex.vo;
 public class MjVo {
 	
 	//필드
-	int user_no;
-	String user_nickname;
-	String user_hp;
-	String user_birth;
-	String user_pw;
-	
+	private int userno;
+	private String name;
+	private String hp;
+	private String birth;
+	private String userpw;
 	
 	//생성자
 	public MjVo() {
 		super();
 	}
-
-	public MjVo(int user_no, String user_nickname, String user_hp, String user_birth, String user_pw) {
+	
+	public MjVo(int userno, String name, String hp, String birth, String userpw) {
 		super();
-		this.user_no = user_no;
-		this.user_nickname = user_nickname;
-		this.user_hp = user_hp;
-		this.user_birth = user_birth;
-		this.user_pw = user_pw;
+		this.userno = userno;
+		this.name = name;
+		this.hp = hp;
+		this.birth = birth;
+		this.userpw = userpw;
 	}
 	
 	//메소드-gs
-	public int getUser_no() {
-		return user_no;
+	public int getUserno() {
+		return userno;
 	}
 
-	public void setUser_no(int user_no) {
-		this.user_no = user_no;
+	public void setUserno(int userno) {
+		this.userno = userno;
 	}
 
-	public String getUser_nickname() {
-		return user_nickname;
+	public String getname() {
+		return name;
 	}
 
-	public void setUser_nickname(String user_nickname) {
-		this.user_nickname = user_nickname;
+	public void setname(String name) {
+		this.name = name;
 	}
 
-	public String getUser_hp() {
-		return user_hp;
+	public String gethp() {
+		return hp;
 	}
 
-	public void setUser_hp(String user_hp) {
-		this.user_hp = user_hp;
+	public void sethp(String hp) {
+		this.hp = hp;
 	}
 
-	public String getUser_birth() {
-		return user_birth;
+	public String getbirth() {
+		return birth;
 	}
 
-	public void setUser_birth(String user_birth) {
-		this.user_birth = user_birth;
+	public void setbirth(String birth) {
+		this.birth = birth;
 	}
 
-	public String getUser_pw() {
-		return user_pw;
+	public String getUserpw() {
+		return userpw;
 	}
 
-	public void setUser_pw(String user_pw) {
-		this.user_pw = user_pw;
+	public void setUserpw(String userpw) {
+		this.userpw = userpw;
 	}
 	
 	//메소드-일반
 	@Override
 	public String toString() {
-		return "MjVo [user_no=" + user_no + ", user_nickname=" + user_nickname + ", user_hp=" + user_hp
-				+ ", user_birth=" + user_birth + ", user_pw=" + user_pw + "]";
+		return "MjVo [userno=" + userno + ", name=" + name + ", hp=" + hp + ", birth="
+				+ birth + ", userpw=" + userpw + "]";
 	}
 
 }
