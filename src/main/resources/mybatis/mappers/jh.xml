@@ -56,5 +56,28 @@
 		delete from wish_company
 		where w_company_no = #{no}	
 	</delete>
+	
+	<select id="paymentPage" parameterType="int" resultType="com.javaex.vo.PaymentVo">
+		select	class_name className,
+				class_intro classIntro,
+		        company_name companyName,
+		        start_date startDate,
+		        end_date endDate,
+		        class_price classPrice,
+		        class_image classImage,
+		        company.company_no companyNo
+		from schedule, class, company
+		where schedule.class_no = class.class_no
+		and class.company_no = company.company_no
+		and schedule_no = #{no}
+	</select>
+	
+	<select id="paymentPage2" parameterType="Map" resultType="Map">
+		select	coupon_price,
+				coupon_no
+		from coupon
+		where company_no = #{b}
+		and user_no = #{no}
+	</select>
 
 </mapper>

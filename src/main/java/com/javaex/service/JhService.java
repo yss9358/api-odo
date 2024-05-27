@@ -1,13 +1,16 @@
 package com.javaex.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.JhDao;
 import com.javaex.util.JsonResult;
+import com.javaex.vo.PaymentVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
 import com.javaex.vo.WishCompanyVo2;
@@ -87,6 +90,28 @@ public class JhService {
 		}else {
 			return JsonResult.fail("삭제를 실패했습니다");
 		}
+	}
+	
+	//결제페이지
+	public Map<String, Object> paymentPage(int a, int no) {
+		
+		PaymentVo pv = jd.paymentPage(a);
+		
+		int b = pv.getCompanyNo();
+		
+		Map<String, Integer> Map = new HashMap<>();
+		
+		Map.put("b", b);
+		Map.put("no", no);
+		
+		List<Integer> couponList = jd.paymentPage2(Map);
+		
+		Map<String, Object> payment = new HashMap<>();
+		payment.put("pv", pv);
+		payment.put("couponList", couponList);
+		System.out.println(pv);
+		
+		return payment;
 	}
 	
 }

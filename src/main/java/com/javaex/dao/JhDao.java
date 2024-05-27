@@ -1,6 +1,5 @@
 package com.javaex.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.PaymentVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
 
@@ -60,4 +60,22 @@ public class JhDao {
 		
 		return sqlSession.delete("jh.delWishCompany", a);
 	}
+	
+	//결제페이지
+	public PaymentVo paymentPage(int a) {
+		
+		PaymentVo pv = sqlSession.selectOne("jh.paymentPage", a);
+		
+		return pv;
+	}
+	
+	//결제페이지 쿠폰리스트
+	public List<Integer> paymentPage2(Map<String, Integer> Map) {
+		
+		
+		List<Integer> couponList = sqlSession.selectList("jh.paymentPage2", Map);
+		
+		return couponList;
+	}
+	
 }
