@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.JhDao;
 import com.javaex.util.JsonResult;
+import com.javaex.vo.PayVo;
 import com.javaex.vo.PaymentVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
@@ -112,6 +113,22 @@ public class JhService {
 		System.out.println(pv);
 		
 		return payment;
+	}
+	
+	//결제
+	public JsonResult pay(PayVo pv) {
+		
+		int a = jd.pay(pv);
+		
+		int b = jd.useCoupon(pv.getCouponNo());
+		
+		if(a > 0 && b > 0) {
+			String o = "성공";
+			
+			return JsonResult.success(o);
+		}else {
+			return JsonResult.fail("실패");
+		}
 	}
 	
 }

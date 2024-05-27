@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaex.service.JhService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
+import com.javaex.vo.PayVo;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 public class JhController {
@@ -83,5 +83,13 @@ public class JhController {
 		}
 		
 	}
-
+	
+	//결제
+	@PutMapping("odo/pay")
+	public void pay(HttpServletRequest request, @RequestBody PayVo pv) {
+		int no = JwtUtil.getNoFromHeader(request);
+		
+		pv.setUserNo(no);
+		js.pay(pv);
+	}
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.PayVo;
 import com.javaex.vo.PaymentVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
@@ -76,6 +77,19 @@ public class JhDao {
 		List<Integer> couponList = sqlSession.selectList("jh.paymentPage2", Map);
 		
 		return couponList;
+	}
+	
+	//결제
+	public int pay(PayVo pv) {
+		System.out.println(pv);
+		
+		return sqlSession.insert("jh.pay", pv);
+	}
+	
+	//쿠폰사용처리
+	public int useCoupon(int no) {
+		
+		return sqlSession.update("jh.useCoupon", no);
 	}
 	
 }

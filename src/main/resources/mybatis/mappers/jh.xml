@@ -77,7 +77,19 @@
 				coupon_no
 		from coupon
 		where company_no = #{b}
+		and coupon_state = 0
 		and user_no = #{no}
 	</select>
+	
+	<insert id="pay" parameterType="com.javaex.vo.PayVo">
+		insert into pay
+		value(null, #{userNo}, #{scheduleNo}, #{couponNo}, datetime(now()), #{payType}, #{total});
+	</insert>
+	
+	<update id="useCoupon" parameterType="int">
+		update coupon
+		set coupon_state = 1
+		where coupon_no = #{no}
+	</update>
 
 </mapper>
