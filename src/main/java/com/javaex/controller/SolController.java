@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.SolService;
 import com.javaex.util.JsonResult;
@@ -117,13 +118,40 @@ public class SolController {
 		}
 	}
 
+	// 2차 카테고리 리스트
 	@GetMapping("getcate2/{no}")
 	public JsonResult getCate2(@PathVariable int no) {
 		System.out.println("SolController.getCate2()");
-//		System.out.println(no);
 		List<SolCateVo> cateList = solservice.exeGetCate2(no);
-		System.out.println(cateList);
-		return null;
+		if (cateList != null) {
+			return JsonResult.success(cateList);
+		} else {
+			return JsonResult.fail(null);
+		}
+
+	}
+
+	//상세이미지 저장
+	@PostMapping("file")
+	public JsonResult classinfoFile(@RequestParam(value = "file") MultipartFile file) {
+		System.out.println("SolController.classinfoFile");
+
+//		System.out.println(file.getOriginalFilename());
+		String saveName = solservice.exeCompanyImg(file);
+		return JsonResult.success(saveName);
+	}//
+
+	/***********************************************
+	 * 클래스 추가/수정
+	 */
+	@PostMapping("iclass")
+	public JsonResult classAdd(@ModelAttribute SolClassVo vo) {
+		System.out.println("SolController.classAdd");
+		System.out.println(vo.getClassImageFile().getOriginalFilename());
+//		String saveName = solservice.exeCompanyImg(vo.getClassImageFile());
+//		vo.setClassImage(saveName);
+		System.out.println(vo);
+		return JsonResult.success("");
 	}
 
 }

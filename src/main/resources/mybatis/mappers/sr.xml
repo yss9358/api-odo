@@ -100,12 +100,12 @@
 	<![CDATA[
 	select c2.cate1_no, c1.cate1_name
 	from cate1 c1, cate2 c2
-	where c1.cate1_no=c2.cate1_no
+	where c1.cate1_no = c2.cate1_no
 	group by c1.cate1_no
 	]]>
 	</select>
 	<!-- 2차카테고리 불러오기 -->
-	<select id="selectCate2" parameterType="int" resultType="com.javaex.vo.SolCateVo">
+	<select id="selectCate2" parameterType="int" resultType="com.javaex.vo.SolCateVo" resultMap="resultMapCateVo">
 	<![CDATA[
 	select c2.cate2_no, c2.cate2_name
 	from cate1 c1, cate2 c2

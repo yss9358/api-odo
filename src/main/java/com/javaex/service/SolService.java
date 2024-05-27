@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.SolDao;
 import com.javaex.vo.SolCateVo;
+import com.javaex.vo.SolClassHendleVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
 
@@ -47,39 +48,7 @@ public class SolService {
 		return authCompany;
 	}
 
-	// 파일업로드
-	public String exeCompanyImg(MultipartFile file) {
-		String osName = System.getProperty("os.name").toLowerCase();
-		String saveDir;
-		if (osName.contains("linux")) {
-			saveDir = "/app/upload/"; // Linux 경로. username을 실제 사용자 이름으로 변경하세요.
-
-		} else {
-			saveDir = ".\\uploadImages\\";
-		}
-		
-		String orgName = file.getOriginalFilename();
-		String exName = orgName.substring(orgName.lastIndexOf("."));
-		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
-		String filePath = saveDir + File.separator + saveName;
-		System.out.println(saveName);
-		
-		try {
-			byte[] fileData;
-			fileData = file.getBytes();
-
-			OutputStream os = new FileOutputStream(filePath);
-			BufferedOutputStream bos = new BufferedOutputStream(os);
-
-			bos.write(fileData);
-			bos.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return saveName;
-	}
+	
 	
 	
 	/**********************************************
@@ -107,4 +76,49 @@ public class SolService {
 		return solDao.selectCate2(no);
 	}
 	
+	/***********************************************
+	 * 클래스 등록/수정
+	 * @return
+	 */
+	//클래스 등록
+	public int exeInsertClass(SolClassHendleVo vo) {
+		System.out.println("SolService.exeInsertClass");
+		return 0;
+	}
+	
+	
+	
+	// 파일업로드
+		public String exeCompanyImg(MultipartFile file) {
+			String osName = System.getProperty("os.name").toLowerCase();
+			String saveDir;
+			if (osName.contains("linux")) {
+				saveDir = "/app/upload/"; // Linux 경로. username을 실제 사용자 이름으로 변경하세요.
+
+			} else {
+				saveDir = ".\\uploadImages\\";
+			}
+			
+			String orgName = file.getOriginalFilename();
+			String exName = orgName.substring(orgName.lastIndexOf("."));
+			String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+			String filePath = saveDir + File.separator + saveName;
+//			System.out.println(saveName);
+			
+			try {
+				byte[] fileData;
+				fileData = file.getBytes();
+
+				OutputStream os = new FileOutputStream(filePath);
+				BufferedOutputStream bos = new BufferedOutputStream(os);
+
+				bos.write(fileData);
+				bos.close();
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return saveName;
+		}
 }
