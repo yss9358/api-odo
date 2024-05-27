@@ -2,16 +2,6 @@ package com.javaex.vo;
 
 public class HsVo {
 
-	//회사 필드
-	private int comNo;
-	private String comName;
-	private String comImg;
-	private String comNameAdd;
-	private String comNumAdd;
-	private String comDetailAdd;
-	private String latitude;
-	private String longtitude;
-	
 	//1차카테고리필드
 	private int cate1No;
 	private String cate1Name;
@@ -70,70 +60,6 @@ public class HsVo {
 
 	
 	//메소드 - g/s
-	public int getComNo() {
-		return comNo;
-	}
-	
-	public void setComNo(int comNo) {
-		this.comNo = comNo;
-	}
-	
-	public String getComName() {
-		return comName;
-	}
-	
-	public void setComName(String comName) {
-		this.comName = comName;
-	}
-	
-	public String getComImg() {
-		return comImg;
-	}
-	
-	public void setComImg(String comImg) {
-		this.comImg = comImg;
-	}
-	
-	public String getComNameAdd() {
-		return comNameAdd;
-	}
-	
-	public void setComNameAdd(String comNameAdd) {
-		this.comNameAdd = comNameAdd;
-	}
-	
-	public String getComNumAdd() {
-		return comNumAdd;
-	}
-	
-	public void setComNumAdd(String comNumAdd) {
-		this.comNumAdd = comNumAdd;
-	}
-	
-	public String getComDetailAdd() {
-		return comDetailAdd;
-	}
-	
-	public void setComDetailAdd(String comDetailAdd) {
-		this.comDetailAdd = comDetailAdd;
-	}
-	
-	public String getLatitude() {
-		return latitude;
-	}
-	
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-	
-	public String getLongtitude() {
-		return longtitude;
-	}
-	
-	public void setLongtitude(String longtitude) {
-		this.longtitude = longtitude;
-	}
-	
 	public int getCate1No() {
 		return cate1No;
 	}

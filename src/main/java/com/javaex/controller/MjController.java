@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +20,7 @@ public class MjController {
 	private MjService mjService;
 	
 	//수정폼
-	@GetMapping("/odo/modify/{no}")
+	@GetMapping("/odo/mypage/modify/{no}")
 	public Map<String, Object> modifyform(@PathVariable(value="no")int no) {
 		System.out.println("MjController.modifyform");
 		
