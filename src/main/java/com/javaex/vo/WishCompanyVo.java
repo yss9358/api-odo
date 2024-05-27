@@ -5,16 +5,18 @@ public class WishCompanyVo {
 	private String companyImage;
 	private String companyName;
 	private int companyNo;
+	private int no;
 	
 	public WishCompanyVo() {
 		super();
 	}
 
-	public WishCompanyVo(String companyImage, String companyName, int companyNo) {
+	public WishCompanyVo(String companyImage, String companyName, int companyNo, int no) {
 		super();
 		this.companyImage = companyImage;
 		this.companyName = companyName;
 		this.companyNo = companyNo;
+		this.no = no;
 	}
 
 	public String getCompanyImage() {
@@ -41,11 +43,17 @@ public class WishCompanyVo {
 		this.companyNo = companyNo;
 	}
 
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
 	@Override
 	public String toString() {
 		return "WishCompanyVo [companyImage=" + companyImage + ", companyName=" + companyName + ", companyNo="
-				+ companyNo + "]";
+				+ companyNo + ", no=" + no + "]";
 	}
-	
-	
 }

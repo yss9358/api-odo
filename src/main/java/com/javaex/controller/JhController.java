@@ -33,11 +33,11 @@ public class JhController {
 
 	// 유저의 클래스 위시 삭제하기
 	@DeleteMapping("odo/wishclass")
-	public JsonResult delwishclass(HttpServletRequest request, @RequestBody int a) {
+	public JsonResult delWishClass(HttpServletRequest request, @RequestBody int a) {
 		int no = JwtUtil.getNoFromHeader(request);
 
 		if (no > 0) {
-			return js.delwish(a);
+			return js.delWish(a);
 		} else {
 			return JsonResult.fail("fail");
 		}
@@ -50,10 +50,23 @@ public class JhController {
 		int no = JwtUtil.getNoFromHeader(request);
 
 		if (no > 0) {
-			return js.wishCompany();
+			return js.wishCompany(no);
 		} else {
 			return JsonResult.fail("fail");
 		}
+	}
+	
+	//유저의 업체 위시리스트 삭제하기
+	@DeleteMapping("odo/wishcompany")
+	public JsonResult delWishCompany(HttpServletRequest request, @RequestBody int a) {
+		int no = JwtUtil.getNoFromHeader(request);
+		
+		if(no > 0) {
+			return js.delWishCompany(a);
+		}else {
+			return JsonResult.fail("fail");
+		}
+		
 	}
 
 }

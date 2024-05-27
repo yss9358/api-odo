@@ -24,10 +24,11 @@
 	<select id="wishcompany1" resultType="com.javaex.vo.WishCompanyVo">
 		select	company_image companyImage,
 				company_name companyName,
-		        wish_company.company_no companyNo
+		        wish_company.company_no companyNo,
+                w_company_no no
 		from wish_company, company
 		where wish_company.company_no = company.company_no
-		and wish_company.user_no = 1
+		and wish_company.user_no = #{no}
 	</select>
 	
 	<select id="classCount" parameterType="int" resultType="int">
@@ -38,9 +39,10 @@
 	
 	<select id="reviewCount" parameterType="int" resultType="int">
 		select	count(review_no)
-		from company, class, review
-		where company.company_no = class.company_no
-		and review.class_no = class.class_no
+		from review, schedule, class, company
+		where review.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.company_no = company.company_no
 		and company.company_no = #{no}
 	</select>
 	
@@ -49,5 +51,10 @@
 		from wish_company
 		where company_no = #{no}
 	</select>
+	
+	<delete id="delWishCompany" parameterType="int">
+		delete from wish_company
+		where w_company_no = #{no}	
+	</delete>
 
 </mapper>

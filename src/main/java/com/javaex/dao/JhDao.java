@@ -26,14 +26,14 @@ public class JhDao {
 	}
 	
 	//클래스 위시 제거하기
-	public int delwish(int a) {
+	public int delWish(int a) {
 		
 		return sqlSession.delete("jh.delwish", a);
 	}
 	
 	//업체 위시리스트 이름, 이미지, 번호 가져오기
-	public List<WishCompanyVo> wishCompany() {
-		List<WishCompanyVo> wishCompany =  sqlSession.selectList("jh.wishcompany1");
+	public List<WishCompanyVo> wishCompany(int no) {
+		List<WishCompanyVo> wishCompany =  sqlSession.selectList("jh.wishcompany1", no);
 		return wishCompany;
 	}
 	
@@ -53,5 +53,11 @@ public class JhDao {
 	public int wishCount(int no) {
 		
 		return sqlSession.selectOne("jh.wishCount", no);
+	}
+	
+	//업체 위시리스트 제거
+	public int delWishCompany(int a) {
+		
+		return sqlSession.delete("jh.delWishCompany", a);
 	}
 }

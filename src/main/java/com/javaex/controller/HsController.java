@@ -19,16 +19,17 @@ public class HsController {
 	private HsService hsService;
 	
 	
-	//2차 카테고리 리스트
+	//검색페이지 - 2차 카테고리 리스트
 	@GetMapping("odo/subcategories")
-	public JsonResult getsubCateList(@RequestParam(value="cate2No") int no) {
+	public JsonResult getsubCateList(@RequestParam(value="cate2No") int no,
+			@RequestParam(value="crtPage", required = false, defaultValue = "1") int crtPage) {
 
-		List<HsVo> cate2List = hsService.execate2List(no);
+		Map<String, Object> pMap = hsService.execate2List(no, crtPage);
 		
-		return JsonResult.success(cate2List);
+		return JsonResult.success(pMap);
 	}//
 	
-	//1차 카테고리 검색 리스트
+	//검색페이지 - 1차 카테고리 검색 리스트
 	@GetMapping("odo/categories")
 	public JsonResult getcateList(@RequestParam(value="cate1No") int no,
 			@RequestParam(value="crtPage", required = false, defaultValue = "1") int crtPage) {
@@ -38,7 +39,7 @@ public class HsController {
 		return JsonResult.success(pMap);
 	}//
 
-	// 메인 페이지 리스트
+	// 메인 페이지 - 리스트
 	@GetMapping("odo/mains")
 	public JsonResult getList() {
 

@@ -4,7 +4,7 @@
 <mapper namespace="hs">
 
 	<!-- 2차카테고리 리스트 가져오기 -->
-	<select id="selectCate2List" parameterType="int" resultType="com.javaex.vo.HsVo">
+	<select id="selectCate2List" parameterType="map" resultType="com.javaex.vo.HsVo">
    <![CDATA[
 		select  c.class_no classNo,
 				c.class_name className,
@@ -13,8 +13,20 @@
 		        c.class_price classPrice
 		from class c join cate2 c2
 		where c.cate2_no = c2.cate2_no 
-		and c2.cate2_no = #{no}
+		and c2.cate2_no = #{cate2No}
+		limit #{startRowNo}, #{listCnt}
    ]]>
+	</select>
+
+	<!-- 전체 글갯수 -->
+	<select id="selectTotalCnt2" parameterType="int" resultType="int">
+		<![CDATA[
+			select count(*) count
+			from class c join cate2 c2 join cate1 c1
+			where c.cate2_no = c2.cate2_no 
+			and c2.cate1_no = c1.cate1_no
+			and c2.cate2_no = #{no}
+		]]>
 	</select>
 
 	<!-- 전체 글갯수 -->
@@ -24,7 +36,7 @@
 			from class c join cate2 c2 join cate1 c1
 			where c.cate2_no = c2.cate2_no 
 			and c2.cate1_no = c1.cate1_no
-			and c1.cate1_no = #{cate1No}
+			and c1.cate1_no = #{no}
 		]]>
 	</select>
 
