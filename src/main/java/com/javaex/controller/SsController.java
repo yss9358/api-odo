@@ -16,8 +16,10 @@ import com.javaex.service.SsService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
 import com.javaex.vo.CouponVo;
+import com.javaex.vo.MyPayVo;
 import com.javaex.vo.UserJoinVo;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -54,14 +56,20 @@ public class SsController {
 	
 	// 회원 결제내역 가져오기
 	@GetMapping("/odo/ss/getpaylist")
-	public void getPayList(@RequestParam(value="no") int no,@RequestParam(value="userNo") int userNo) {
+	public JsonResult getPayList(@RequestParam(value="classType") int classType, HttpServletRequest request) {
+		int userNo = JwtUtil.getNoFromHeader(request);
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("no", no); // 원데이,정규 구분
-		map.put("userNo", userNo); // 유저번호
-		ssService.exePayList(map);
-		
-		
-		
+		map.put("classType", classType);
+		map.put("userNo", userNo);
+		List<MyPayVo> list = ssService.exePayList(map);
+//		System.out.println(list);
+		return JsonResult.success(list);
+	}
+	
+	// 리뷰쓸때 클래스정보 가져오기
+	@GetMapping("odo/ss/getclassone")
+	public void getClassOne(@RequestParam(value="scheduleNo") int no) {
+		ssService.exeGetClassOne(no);
 	}
 	
 	

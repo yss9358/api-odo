@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.CouponVo;
+import com.javaex.vo.MyPayVo;
 import com.javaex.vo.UserJoinVo;
 
 @Repository
@@ -31,17 +32,14 @@ public class SsDao {
 	}
 	
 	// 회원 원데이 결제내역 가져오기
-	public void getOneDayPayListByNo(int no) {
-		System.out.println(no);
-		
-		
-//		sqlSession.selectList("ss.getOneDayPayListByNo",no);
+	public List<MyPayVo> getOneDayPayListByNo(int userNo) {
+		return sqlSession.selectList("ss.getOneDayPayListByNo",userNo);
 	}
 	
 	// 회원 정규 결제내역 가져오기
-	public void getRegularPayListByNo(int no) {
-		System.out.println(no);
-	}
+	public List<MyPayVo> getRegularPayListByNo(int userNo) {
+		return sqlSession.selectList("ss.getRegularPayListByNo",userNo);
+	} 
 	
 	// 쿠폰정보 가져오기
 	public List<CouponVo> getCouponByNo(int no) {

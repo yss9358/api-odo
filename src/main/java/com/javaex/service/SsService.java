@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.SsDao;
 import com.javaex.vo.CouponVo;
+import com.javaex.vo.MyPayVo;
 import com.javaex.vo.UserJoinVo;
 
 @Service
@@ -47,17 +48,33 @@ public class SsService {
 		}
 	}
 	
-	// 결제내역 가져오기 
-	public void exePayList(Map<String, Integer> map) {
-		int no = map.get("no");
-		int userNo = map.get("userNo");
-		if(no == 1) { // 1이면 원데이 결제내역 가져오기
-			ssDao.getOneDayPayListByNo(userNo);
-		} else { // 1이 아니면 정규 결제내역 가져오기 
-			ssDao.getRegularPayListByNo(userNo);
+	// 회원 결제내역 가져오기 
+	public List<MyPayVo> exePayList(Map<String, Integer> map) {		
+		if(map.get("classType") == 1) {
+//			클래스타입이 1이면 원데이클래스 정보
+			List<MyPayVo> list = ssDao.getOneDayPayListByNo(map.get("userNo"));
+			if(list == null) {
+				return null;
+			} else {
+				return list;
+			}
+		} else {
+//			클래스타입이 1이 아니면 정규,상시클래스 정보
+			List<MyPayVo> list = ssDao.getRegularPayListByNo(map.get("userNo"));
+			if(list == null) {
+				return null;
+			} else {
+				return list;
+			}
 		}
-		
 	}
+	
+	
+	// 리뷰쓸때 클래스정보 가져오기
+	public void exeGetClassOne(int no) {
+		System.out.println(no);
+	}
+	
 	
 	// 쿠폰정보 가져오기
 	public List<CouponVo> exeCheckCoupon (int no) {
