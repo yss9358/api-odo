@@ -19,6 +19,14 @@ public class HsController {
 	private HsService hsService;
 	
 	
+	//클래스 상세 페이지 정보 리스트
+	@GetMapping("odo/classdetails")
+	public void getClassDetails(@RequestParam(value="classNo") int no) {
+		
+		hsService.exeGetClassDeatilsList(no);
+		
+	}
+	
 	//검색페이지 - 2차 카테고리 리스트
 	@GetMapping("odo/subcategories")
 	public JsonResult getsubCateList(@RequestParam(value="cate2No") int no,
