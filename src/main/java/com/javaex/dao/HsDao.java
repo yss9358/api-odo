@@ -15,6 +15,14 @@ public class HsDao {
 	@Autowired
 	private SqlSession sqlSession;
 
+	// 글 전체 갯수2
+	public int selectTotalCnt2(int no) {
+
+		int totalCount = sqlSession.selectOne("hs.selectTotalCnt2", no);
+
+		return totalCount;
+	}
+
 	// 글 전체 갯수
 	public int selectTotalCnt(int no) {
 
@@ -24,9 +32,9 @@ public class HsDao {
 	}
 
 	// 2차 카테고리 리스트
-	public List<HsVo> selectCate2List(int no) {
+	public List<HsVo> selectCate2List(Map<String, Integer> limitMap) {
 
-		List<HsVo> cate2List = sqlSession.selectList("hs.selectCate2List", no);
+		List<HsVo> cate2List = sqlSession.selectList("hs.selectCate2List", limitMap);
 
 		return cate2List;
 	}//
