@@ -38,9 +38,10 @@
 	
 	<select id="reviewCount" parameterType="int" resultType="int">
 		select	count(review_no)
-		from company, class, review
-		where company.company_no = class.company_no
-		and review.class_no = class.class_no
+		from review, schedule, class, company
+		where review.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.company_no = company.company_no
 		and company.company_no = #{no}
 	</select>
 	
