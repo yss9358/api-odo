@@ -16,6 +16,12 @@ public class HsService {
 
 	@Autowired
 	private HsDao hsDao;
+	
+	
+	//클래스 상세 페이지 정보 리스트
+	public void exeGetClassDeatilsList(int no) {
+		System.out.println("HsService.exeGetClassDeatilsList()");
+	}
 
 	// 검색페이지 - 2차 카테고리 리스트
 	public Map<String, Object> execate2List(int no, int crtPage) {
