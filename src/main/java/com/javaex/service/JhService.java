@@ -30,9 +30,9 @@ public class JhService {
 	}
 	
 	//클래스 위시 제거하기
-	public JsonResult delwish(int a) {
+	public JsonResult delWish(int a) {
 		
-		int b = jd.delwish(a);
+		int b = jd.delWish(a);
 		
 		if(b == 1) {
 			return JsonResult.success(b);
@@ -42,10 +42,10 @@ public class JhService {
 	}
 	
 	//업체 위시리스트 가져오기
-	public JsonResult wishCompany() {
+	public JsonResult wishCompany(int no) {
 		
 		//업체이미지, 이름, 업체 번호 가져오기
-		List<WishCompanyVo> wishCompany = jd.wishCompany();
+		List<WishCompanyVo> wishCompany = jd.wishCompany(no);
 		
 		List<WishCompanyVo2> wishCompany2 = new ArrayList<>();
 		
@@ -56,7 +56,9 @@ public class JhService {
 			
 			String companyName = wishCompany.get(i).getCompanyName();
 			
-			int no = wishCompany.get(i).getCompanyNo();
+			int companyNo = wishCompany.get(i).getCompanyNo();
+			
+			int no2 = wishCompany.get(i).getNo();
 			
 			int classCount = jd.classCount(no);
 			
@@ -64,7 +66,7 @@ public class JhService {
 			
 			int wishCount = jd.wishCount(no);
 			
-			WishCompanyVo2 wVo = new WishCompanyVo2(companyImage, companyName, no, classCount, reviewCount, wishCount);
+			WishCompanyVo2 wVo = new WishCompanyVo2(companyImage, companyName, companyNo, no2, classCount, reviewCount, wishCount);
 			
 			wishCompany2.add(wVo);
 		}
@@ -72,6 +74,18 @@ public class JhService {
 			return JsonResult.success(wishCompany2);
 		}else {
 			return JsonResult.fail("위시업체가 없습니다");
+		}
+	}
+	
+	//업체 위시리스트 제거
+	public JsonResult delWishCompany(int a) {
+		
+		int b = jd.delWishCompany(a);
+		
+		if(b == 1) {
+			return JsonResult.success(b);
+		}else {
+			return JsonResult.fail("삭제를 실패했습니다");
 		}
 	}
 	
