@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.HsDao;
+import com.javaex.vo.ClassDetailVo;
 import com.javaex.vo.HsVo;
 
 @Service
@@ -18,9 +19,56 @@ public class HsService {
 	private HsDao hsDao;
 	
 	
+	//도로명주소 가져오기
+	public String exeGetNameAdd(int no) {
+		
+		String nameAdd = hsDao.selectNameAdd(no);
+		
+		return nameAdd;
+	}
+	
 	//클래스 상세 페이지 정보 리스트
-	public void exeGetClassDeatilsList(int no) {
-		System.out.println("HsService.exeGetClassDeatilsList()");
+	public Map<String, Object> exeGetClassDeatils(int no) {
+		
+		//클래스 정보
+		ClassDetailVo classDetailVo = hsDao.selectClassDetail(no);
+		
+		//클래스 일정/시간 리스트
+		List<ClassDetailVo> schList = hsDao.selectScheduleList(no);
+		
+		//현재클래스의 운영회사 번호
+		int companyNo = classDetailVo.getCompanyNo();
+		
+		//현재클래스의 운영회사 정보
+		ClassDetailVo companyInfo = hsDao.selectComInfo(companyNo);
+		
+		//해당클래스 운영회사 클래스 수
+		int comClassCnt = hsDao.selectComClassCnt(companyNo);
+		
+		//해당클래스 운영회사 후기 수
+		int comReviewCnt = hsDao.selectComReviewCnt(companyNo);
+		
+		//해당클래스 운영회사 찜 수
+		int comWishCnt = hsDao.selectComWishCnt(companyNo);
+		
+		//해당클래스 후기 리스트
+		List<ClassDetailVo> classReviewList = hsDao.selectClassReviewList(no);
+		
+		//해당클래스 총 후기 수
+		int classReviewCnt = hsDao.selectClassReviewCnt(no);
+		
+		//모두 Map으로 묶는다
+		Map<String, Object> cMap = new HashMap<String, Object>();
+		cMap.put("classDetailVo", classDetailVo);
+		cMap.put("schList", schList);
+		cMap.put("companyInfo", companyInfo);
+		cMap.put("comClassCnt", comClassCnt);
+		cMap.put("comReviewCnt", comReviewCnt);
+		cMap.put("comWishCnt", comWishCnt);
+		cMap.put("classReviewList", classReviewList);
+		cMap.put("classReviewCnt", classReviewCnt);
+		
+		return cMap;
 	}
 
 	// 검색페이지 - 2차 카테고리 리스트

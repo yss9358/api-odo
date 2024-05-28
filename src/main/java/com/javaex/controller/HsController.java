@@ -17,33 +17,42 @@ public class HsController {
 
 	@Autowired
 	private HsService hsService;
-	
-	
-	//클래스 상세 페이지 정보 리스트
-	@GetMapping("odo/classdetails")
-	public void getClassDetails(@RequestParam(value="classNo") int no) {
+
+	// 클래스 상세 페이지 정보
+	@GetMapping("odo/classdetails/nameadd")
+	public JsonResult getNameAdd(@RequestParam(value = "classNo") int no) {
+
+		String nameAdd = hsService.exeGetNameAdd(no);
 		
-		hsService.exeGetClassDeatilsList(no);
-		
+		return JsonResult.success(nameAdd);
 	}
-	
-	//검색페이지 - 2차 카테고리 리스트
+
+	// 클래스 상세 페이지 정보
+	@GetMapping("odo/classdetails")
+	public JsonResult getClassDetails(@RequestParam(value = "classNo") int no) {
+
+		Map<String, Object> cMap = hsService.exeGetClassDeatils(no);
+
+		return JsonResult.success(cMap);
+	}
+
+	// 검색페이지 - 2차 카테고리 리스트
 	@GetMapping("odo/subcategories")
-	public JsonResult getsubCateList(@RequestParam(value="cate2No") int no,
-			@RequestParam(value="crtPage", required = false, defaultValue = "1") int crtPage) {
+	public JsonResult getsubCateList(@RequestParam(value = "cate2No") int no,
+			@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
 
 		Map<String, Object> pMap = hsService.execate2List(no, crtPage);
-		
+
 		return JsonResult.success(pMap);
 	}//
-	
-	//검색페이지 - 1차 카테고리 검색 리스트
+
+	// 검색페이지 - 1차 카테고리 검색 리스트
 	@GetMapping("odo/categories")
-	public JsonResult getcateList(@RequestParam(value="cate1No") int no,
-			@RequestParam(value="crtPage", required = false, defaultValue = "1") int crtPage) {
-		
+	public JsonResult getcateList(@RequestParam(value = "cate1No") int no,
+			@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
+
 		Map<String, Object> pMap = hsService.execate1List(no, crtPage);
-		
+
 		return JsonResult.success(pMap);
 	}//
 

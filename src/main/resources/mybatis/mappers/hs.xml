@@ -3,6 +3,121 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hs">
 
+
+	<!-- 클래스 상세 정보 가져오기 -->
+	<select id="selectNameAdd" parameterType="int" resultType="String">
+   <![CDATA[
+		select  class_name_address classNameAdd
+		from class
+		where class_no = #{no}
+   ]]>
+	</select>
+
+	<!-- 해당클래스 후기 수 가져오기 -->
+	<select id="selectClassReviwCnt" parameterType="int" resultType="int">
+   <![CDATA[
+		select count(*) count
+		from class c
+		join schedule sch on c.class_no = sch.class_no
+		join review r on sch.schedule_no = r.schedule_no
+		where c.class_no = #{no}
+   ]]>
+	</select>
+
+	<!-- 해당클래스 후기 리스트 가져오기 -->
+	<select id="selectClassReviewList" parameterType="int" resultType="com.javaex.vo.ClassDetailVo">
+   <![CDATA[
+		select  r.review_image reviewImg,
+				u.user_no userNo,
+				u.user_image userImg,
+		        u.user_nickname userNickname,
+		        r.review_point reviewPoint,
+		        r.review_content reviewContent,
+		        r.review_no reviewNo
+		from class c
+		join schedule sch on c.class_no = sch.class_no
+		join review r on sch.schedule_no = r.schedule_no
+		join user u on r.user_no = u.user_no
+		where c.class_no = #{no}
+		order by review_no desc
+		limit 4;
+   ]]>
+	</select>
+
+	<!-- 해당클래스 운영회사 후기 수 가져오기 -->
+	<select id="selectComWishCnt" parameterType="int" resultType="int">
+   <![CDATA[
+		select count(*) count
+		from company com
+		join wish_company wc on com.company_no = wc.company_no
+		where com.company_no = #{no}
+   ]]>
+	</select>
+
+	<!-- 해당클래스 운영회사 후기 수 가져오기 -->
+	<select id="selectComReviewCnt" parameterType="int" resultType="int">
+   <![CDATA[
+		SELECT count(*) count
+		FROM company AS com
+		JOIN class AS cl ON com.company_no = cl.company_no
+		JOIN schedule as sch on cl.class_no = sch.class_no
+		join review as re on sch.schedule_no = re.schedule_no
+		where com.company_no = #{no}
+   ]]>
+	</select>
+
+	<!-- 해당클래스 운영회사 클래스 수 가져오기 -->
+	<select id="selectComClassCnt" parameterType="int" resultType="int">
+   <![CDATA[
+		select count(*) count
+		from company com join class cl
+		where com.company_no = cl.company_no
+		and com.company_no = #{no}
+   ]]>
+	</select>
+
+	<!-- 해당클래스 운영회사 정보 가져오기 -->
+	<select id="selectComInfo" parameterType="int" resultType="com.javaex.vo.ClassDetailVo">
+   <![CDATA[
+		select  company_image companyImg,
+				company_name companyName
+		from company
+		where company_no = #{no}
+   ]]>
+	</select>
+
+	<!-- 클래스 스케줄 리스트 가져오기 -->
+	<select id="selectScheduleList" parameterType="int" resultType="com.javaex.vo.ClassDetailVo">
+   <![CDATA[
+		select  sch.schedule_no scheduleNo,
+		      sch.start_date startDate,
+		      sch.end_date endDate
+		from schedule sch
+		join class c on sch.class_no = c.class_no
+		where c.class_no = #{no}
+   ]]>
+	</select>
+
+	<!-- 클래스 상세 정보 가져오기 -->
+	<select id="selectClassDetail" parameterType="int" resultType="com.javaex.vo.ClassDetailVo">
+   <![CDATA[
+		select  cl.class_image classImg,
+				cl.class_name className,
+		        cl.class_price classPrice,
+		        cl.class_intro classIntro,
+		        cl.class_info classInfo,
+		        cl.class_name_address classNameAdd,
+		        cl.class_detail_address classDetailAdd,
+		        com.company_no companyNo
+		from class cl 
+		join company com 
+		on cl.company_no = com.company_no 
+		where cl.class_no = #{no}
+   ]]>
+	</select>
+
+	<!-- ==============카테고리검색페이지============= -->
+
 	<!-- 2차카테고리 리스트 가져오기 -->
 	<select id="selectCate2List" parameterType="map" resultType="com.javaex.vo.HsVo">
    <![CDATA[
@@ -55,6 +170,8 @@
 		limit #{startRowNo}, #{listCnt}
    ]]>
 	</select>
+
+	<!-- ==============메인뷰============= -->
 
 	<!-- 무료베스트 리스트 가져오기 -->
 	<select id="selectFreeBestList" resultType="com.javaex.vo.HsVo">
