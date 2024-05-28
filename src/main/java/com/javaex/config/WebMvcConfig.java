@@ -32,7 +32,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		} else {
 //        	System.out.println("윈도우");
         	// 파일저장디렉토리
-        	saveDir = "file:C:\\uploadImages\\";
+        	saveDir = "C:\\uploadImages\\";
         }
 		
 		registry.addResourceHandler("/upload/**")
