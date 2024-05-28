@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
+import com.javaex.vo.OneClassVo;
 import com.javaex.vo.UserJoinVo;
 
 @Repository
@@ -40,6 +41,11 @@ public class SsDao {
 	public List<MyPayVo> getRegularPayListByNo(int userNo) {
 		return sqlSession.selectList("ss.getRegularPayListByNo",userNo);
 	} 
+	
+	// 리뷰 쓸때 클래스 정보 가져오기
+	public OneClassVo getClassOne(int no) {
+		return sqlSession.selectOne("ss.getClassOne", no);
+	}
 	
 	// 쿠폰정보 가져오기
 	public List<CouponVo> getCouponByNo(int no) {

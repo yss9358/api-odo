@@ -7,17 +7,19 @@ public class CouponVo {
 	private String companyName;
 	private int couponPrice;
 	private String couponDate;
+	private int couponState;
 	
 	public CouponVo() {
 
 	}
 
-	public CouponVo(int couponNo, int userNo, String companyName, int couponPrice, String couponDate) {
+	public CouponVo(int couponNo, int userNo, String companyName, int couponPrice, String couponDate, int couponState) {
 		this.couponNo = couponNo;
 		this.userNo = userNo;
 		this.companyName = companyName;
 		this.couponPrice = couponPrice;
 		this.couponDate = couponDate;
+		this.couponState = couponState;
 	}
 
 	public int getCouponNo() {
@@ -60,10 +62,18 @@ public class CouponVo {
 		this.couponDate = couponDate;
 	}
 
+	public int getCouponState() {
+		return couponState;
+	}
+
+	public void setCouponState(int couponState) {
+		this.couponState = couponState;
+	}
+
 	@Override
 	public String toString() {
 		return "CouponVo [couponNo=" + couponNo + ", userNo=" + userNo + ", companyName=" + companyName
-				+ ", couponPrice=" + couponPrice + ", couponDate=" + couponDate + "]";
+				+ ", couponPrice=" + couponPrice + ", couponDate=" + couponDate + ", couponState=" + couponState + "]";
 	}
-
+	
 }

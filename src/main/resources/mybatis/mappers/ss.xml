@@ -5,6 +5,9 @@
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
 	
+	
+	
+	
 	<!-- 아이디 중복확인 -->
 	<select id="checkId" parameterType="String" resultType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
@@ -142,6 +145,23 @@
 					on c.class_no = avg_review.class_no
 			where p.user_no = #{userNo}
 			and c.class_type <> 1
+		]]>
+	</select>
+	
+	<select id="getClassOne" parameterType="int" resultType="com.javaex.vo.OneClassVo">
+		<![CDATA[
+			select	c.class_no classNo,
+					c.class_image classImage,
+					c.class_name className,
+			        c.class_intro classIntro,
+			        c.class_type classType,
+					s.schedule_no scheduleNo,
+					s.start_date startDate, 
+					s.end_date endDate
+			from schedule s
+			inner join class c
+					on s.class_no = c.class_no
+			where s.schedule_no = #{no}
 		]]>
 	</select>
 	

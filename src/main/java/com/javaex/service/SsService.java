@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.javaex.dao.SsDao;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
+import com.javaex.vo.OneClassVo;
 import com.javaex.vo.UserJoinVo;
 
 @Service
@@ -71,8 +72,8 @@ public class SsService {
 	
 	
 	// 리뷰쓸때 클래스정보 가져오기
-	public void exeGetClassOne(int no) {
-		System.out.println(no);
+	public OneClassVo exeGetClassOne(int no) {
+		return ssDao.getClassOne(no);
 	}
 	
 	

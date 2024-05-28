@@ -17,6 +17,7 @@ import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
+import com.javaex.vo.OneClassVo;
 import com.javaex.vo.UserJoinVo;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,14 +63,15 @@ public class SsController {
 		map.put("classType", classType);
 		map.put("userNo", userNo);
 		List<MyPayVo> list = ssService.exePayList(map);
-//		System.out.println(list);
+		System.out.println(list);
 		return JsonResult.success(list);
 	}
 	
 	// 리뷰쓸때 클래스정보 가져오기
 	@GetMapping("odo/ss/getclassone")
-	public void getClassOne(@RequestParam(value="scheduleNo") int no) {
-		ssService.exeGetClassOne(no);
+	public JsonResult getClassOne(@RequestParam(value="scheduleNo") int no) {
+		OneClassVo vo = ssService.exeGetClassOne(no);
+		return JsonResult.success(vo);
 	}
 	
 	

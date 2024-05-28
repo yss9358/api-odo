@@ -79,7 +79,7 @@ public class JwtUtil {
  		try {
  			JWTVerifier verifier = JWT.require(Algorithm.HMAC512(SECRET_KEY)).build();
  			verifier.verify(token); // 토큰 검증
- 			System.out.println("토큰이 유효합니다.");
+// 			System.out.println("토큰이 유효합니다.");
  			return true; // 유효한 경우 true 반환
  		} catch (JWTVerificationException exception) {
  			// 토큰 검증 실패(유효하지 않은 토큰, 만료된 토큰 등)시 처리
