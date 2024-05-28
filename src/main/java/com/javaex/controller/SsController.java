@@ -63,7 +63,7 @@ public class SsController {
 		map.put("classType", classType);
 		map.put("userNo", userNo);
 		List<MyPayVo> list = ssService.exePayList(map);
-		System.out.println(list);
+//		System.out.println(list);
 		return JsonResult.success(list);
 	}
 	
