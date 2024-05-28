@@ -116,5 +116,57 @@
 		coupon_state = 1
 		where coupon_no = #{no}
 	</update>
+	
+	<select id="payend" parameterType="int" resultType="com.javaex.vo.PayendVo">
+		select	class_image classImage,
+				user_nickname nickname,
+		        company_name companyName, 
+		        class_name className,
+		        start_date startDate,
+		        end_date endDate,
+		        pay_type payType,
+		        pay_price payPirce,
+		        company.company_no companyNo
+		from pay, user, schedule, class, company
+		where pay.user_no = user.user_no
+		and pay.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.company_no = company.company_no
+		and pay_no = #{no}
+	</select>
+	
+	<select id="getCoupon" parameterType="int" resultType="int">
+		select	coupon_price
+		from pay, coupon
+		where pay.coupon_no = coupon.coupon_no
+		and pay_no = #{no}
+	</select>
+	
+	<select id="randClassNo" parameterType="int" resultType="int">
+		select	class_no
+		from class
+		where company_no = #{no}
+		order by rand()
+		limit 5;
+	</select>
+	
+	<select id="reclass" parameterType="int" resultType="com.javaex.vo.ReClassVo">
+		select	class_image classImage,
+				class_name_address classAddress,
+		        class_name className,
+		        class_intro classIntro,
+		        class_price classPrice
+		from company, class
+		where company.company_no = class.company_no
+		and class.class_no = #{no}
+	</select>
 
+	<select id="reclass2" parameterType="int" resultType="com.javaex.vo.ReClassVo">
+		select	avg(review_point) reviewPoint,
+				count(review_no) reviewCount
+		from review, schedule, class
+		where review.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.class_no = #{no}
+	</select>
 </mapper>

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import com.javaex.dao.JhDao;
 import com.javaex.util.JsonResult;
 import com.javaex.vo.PayVo;
+import com.javaex.vo.PayendVo;
 import com.javaex.vo.PaymentVo;
+import com.javaex.vo.ReClassVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
 import com.javaex.vo.WishCompanyVo2;
@@ -147,6 +149,43 @@ public class JhService {
 			return JsonResult.fail("실패");
 		}
 		*/
+	}
+	
+	//결제완료페이지
+	public Map<String, Object> payend(int a) {
+		
+		//가져오기 1번
+		PayendVo pv = jd.payend(a);
+		
+		//할인금액 가져오기 2번
+		int b = jd.getCoupon(a);
+		
+		pv.setCouponPrice(b);
+		
+		//관련 클래스 리스트
+		int c = pv.getCompanyNo();
+		//랜덤으로 클래스 번호 가져오기
+		List<Integer> cList = jd.randClassNo(c);
+		
+		List<ReClassVo> rList = new ArrayList<>();
+		for(int i = 0; i<cList.size(); i++) {
+			int d = cList.get(i);
+			//클래스 정보 가져오기1
+			ReClassVo rc = jd.reclass(d);
+			ReClassVo rc2 = jd.reclass2(d);
+			
+			rc.setReviewPoint(rc2.getReviewPoint());
+			rc.setReviewCount(rc2.getReviewCount());
+			rc.setClassNo(d);
+			rList.add(rc);
+		}
+		System.out.println(rList);
+		
+		Map<String, Object> payMap = new HashMap<>();
+		payMap.put("pv", pv);
+		payMap.put("rList", rList);
+		
+		return payMap;
 	}
 	
 }

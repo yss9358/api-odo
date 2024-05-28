@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.PayVo;
+import com.javaex.vo.PayendVo;
 import com.javaex.vo.PaymentVo;
+import com.javaex.vo.ReClassVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
 
@@ -22,7 +24,7 @@ public class JhDao {
 	public List<WishClassVo> wishClass(int no) {
 		
 		List<WishClassVo> wishClass = sqlSession.selectList("jh.wishclass", no);
-		System.out.println(wishClass);
+		//System.out.println(wishClass);
 		return wishClass;
 	}
 	
@@ -94,4 +96,45 @@ public class JhDao {
 		return sqlSession.update("jh.useCoupon", no);
 	}
 	
+	//결제완료 페이지
+	public PayendVo payend(int a) {
+		PayendVo pv = sqlSession.selectOne("jh.payend", a);
+		return pv;
+	}
+	
+	//쿠폰번호 가져오기
+	public int getCoupon(int a) {
+		
+		if(sqlSession.selectOne("jh.getCoupon", a) == null) {
+			return 0;
+		}else {
+			int b = sqlSession.selectOne("jh.getCoupon", a);
+			System.out.println(b);
+			return b;
+		}
+	}
+	
+	//램던으로 클래스 번호 뽑기
+	public List<Integer> randClassNo(int a) {
+		
+		List<Integer> cList = sqlSession.selectList("jh.randClassNo", a);
+		//System.out.println(cList);
+		return cList;
+	}
+	
+	//클래스 정보가져오기1
+	public ReClassVo reclass(int a) {
+		
+		ReClassVo rc = sqlSession.selectOne("jh.reclass", a);
+		
+		return rc;
+	}
+	
+	//클래스 정보가져오기2
+	public ReClassVo reclass2(int a) {
+		
+		ReClassVo rc2 = sqlSession.selectOne("jh.reclass2", a);
+		
+		return rc2;
+	}
 }

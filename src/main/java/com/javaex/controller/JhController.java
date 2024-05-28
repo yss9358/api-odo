@@ -96,4 +96,18 @@ public class JhController {
 			return JsonResult.fail("fail");
 		}
 	}
+	
+	//결제완료 페이지
+	@GetMapping("odo/payend/{no}")
+	public JsonResult payend(HttpServletRequest request, @PathVariable("no") int a) {
+		int no = JwtUtil.getNoFromHeader(request);
+		
+		if(no > 0) {
+			return JsonResult.success(js.payend(a));
+		}else {
+			return JsonResult.fail("fail");
+		}
+		
+		
+	}
 }
