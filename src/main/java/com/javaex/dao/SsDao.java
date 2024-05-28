@@ -1,6 +1,7 @@
 package com.javaex.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
 import com.javaex.vo.OneClassVo;
+import com.javaex.vo.ReviewVo;
 import com.javaex.vo.UserJoinVo;
 
 @Repository
@@ -45,6 +47,17 @@ public class SsDao {
 	// 리뷰 쓸때 클래스 정보 가져오기
 	public OneClassVo getClassOne(int no) {
 		return sqlSession.selectOne("ss.getClassOne", no);
+	}
+	
+	// 리뷰 작성
+	public int insertReview(ReviewVo vo) {
+		return sqlSession.insert("ss.insertReview", vo);
+	}
+	
+	// 출석정보 가져오기
+	public List<Map<String,Object>> getAttenList(Map<String, Integer> map) {
+		return sqlSession.selectList("ss.getAttenList",map);
+		
 	}
 	
 	// 쿠폰정보 가져오기

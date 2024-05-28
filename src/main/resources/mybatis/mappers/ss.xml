@@ -5,6 +5,13 @@
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
 	
+	<resultMap id="attenMap" type="java.util.Map">
+		<result property="className" column="className"/>
+		<result property="startDate" column="startDate"/>
+		<result property="endDate" column="endDate"/>
+		<result property="attenDate" column="attenDate"/>
+		<result property="attenType" column="attenType"/>
+	</resultMap>
 	
 	
 	
@@ -148,6 +155,7 @@
 		]]>
 	</select>
 	
+	<!-- 리뷰쓸때 클래스 한개 데이터 가져오기 -->
 	<select id="getClassOne" parameterType="int" resultType="com.javaex.vo.OneClassVo">
 		<![CDATA[
 			select	c.class_no classNo,
@@ -162,6 +170,30 @@
 			inner join class c
 					on s.class_no = c.class_no
 			where s.schedule_no = #{no}
+		]]>
+	</select>
+	
+	<!-- 리뷰 작성 -->
+	<insert id="insertReview" parameterType="com.javaex.vo.ReviewVo">
+		<![CDATA[
+			insert into review
+			values(null, #{scheduleNo}, #{userNo}, #{reviewImage}, #{reviewPoint}, #{reviewContent}, #{reviewQ1}, #{reviewQ2}, #{reviewQ3}, now())
+		]]>
+	</insert>
+	
+	<!-- 출석정보 가져오기 -->
+	<select id="getAttenList" parameterType="map" resultMap="attenMap">
+		<![CDATA[
+			select  a.atten_date attenDate,
+					a.atten_type attenType
+			from attendance a
+			inner join schedule s
+					on s.schedule_no = a.schedule_no
+			inner join class c
+					on c.class_no = s.class_no
+			where s.schedule_no = #{scheduleNo}
+			and a.user_no = #{userNo}
+			order by atten_date desc
 		]]>
 	</select>
 	

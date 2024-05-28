@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import com.javaex.util.JwtUtil;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
 import com.javaex.vo.OneClassVo;
+import com.javaex.vo.ReviewVo;
 import com.javaex.vo.UserJoinVo;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,9 +64,12 @@ public class SsController {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("classType", classType);
 		map.put("userNo", userNo);
-		List<MyPayVo> list = ssService.exePayList(map);
-//		System.out.println(list);
-		return JsonResult.success(list);
+		if(userNo != -1) {
+			List<MyPayVo> list = ssService.exePayList(map);
+			return JsonResult.success(list);
+		} else {
+			return JsonResult.fail("다시 로그인해주세요.");
+		}
 	}
 	
 	// 리뷰쓸때 클래스정보 가져오기
@@ -76,8 +81,22 @@ public class SsController {
 	
 	// 리뷰 작성
 	@PostMapping("/odo/ss/writereview")
-	public void writeReveiw() {
-		System.out.println("리뷰작성");
+	public JsonResult writeReveiw(HttpServletRequest request,@ModelAttribute ReviewVo vo) {
+		int userNo = JwtUtil.getNoFromHeader(request);
+		if(userNo != -1) {
+			int count = ssService.exeInsertReview(userNo,vo);
+			return JsonResult.success(count);
+		} else {
+			return JsonResult.fail("다시 로그인 해주세요.");
+		}
+	}
+	
+	// 출석정보 가져오기
+	@GetMapping("/odo/ss/attenlist")
+	public JsonResult attenList(@RequestParam(value="scheduleNo") int scheduleNo, HttpServletRequest request) {
+		int userNo = JwtUtil.getNoFromHeader(request);
+		Map<String,Object> map = ssService.exeGetAttenList(userNo,scheduleNo);
+		return JsonResult.success(map);
 	}
 	
 	// 쿠폰정보 가져오기

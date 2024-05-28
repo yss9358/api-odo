@@ -1,16 +1,25 @@
 package com.javaex.service;
 
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.SsDao;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
 import com.javaex.vo.OneClassVo;
+import com.javaex.vo.ReviewVo;
 import com.javaex.vo.UserJoinVo;
 
 @Service
@@ -75,6 +84,70 @@ public class SsService {
 	public OneClassVo exeGetClassOne(int no) {
 		return ssDao.getClassOne(no);
 	}
+	
+	// 리뷰 작성
+	public int exeInsertReview(int userNo,ReviewVo vo) {
+		vo.setUserNo(userNo);
+		
+		// 파일처리
+		MultipartFile file = vo.getFile();
+		
+		String osName = System.getProperty("os.name").toLowerCase();
+		String saveDir;
+		
+		if (osName.contains("linux")) { 
+			saveDir = "/app/upload";
+		} else {
+			saveDir = "C:\\uploadImages\\";
+		}
+		
+		String orgName = file.getOriginalFilename();
+		String exName = orgName.substring(orgName.lastIndexOf("."));
+		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+		String filePath = saveDir + File.separator + saveName;
+		vo.setReviewImage(saveName);
+		
+		try {
+			byte[] fileData;
+			fileData = file.getBytes();
+
+			OutputStream os = new FileOutputStream(filePath);
+			BufferedOutputStream bos = new BufferedOutputStream(os);
+
+			bos.write(fileData);
+			bos.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+		
+		int count = ssDao.insertReview(vo);
+		
+		if(count == 1) {
+			return count;
+		} else {
+			return -1;
+		}
+		
+	}
+	
+	// 출석정보 가져오기
+	public Map<String,Object> exeGetAttenList(int userNo, int scheduleNo) {
+		OneClassVo vo =  ssDao.getClassOne(scheduleNo);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("userNo", userNo);
+		map.put("scheduleNo", scheduleNo);
+		List<Map<String,Object>> list = ssDao.getAttenList(map);
+		
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("className", vo.getClassName());
+		resultMap.put("startDate", vo.getStartDate());
+		resultMap.put("endDate",vo.getEndDate());
+		resultMap.put("list", list);
+		
+		return resultMap;
+	}
+	
 	
 	
 	// 쿠폰정보 가져오기
