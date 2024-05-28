@@ -2,6 +2,7 @@ package com.javaex.vo;
 
 public class PayVo {
 	
+	private int pay_no;
 	private int scheduleNo;
 	private String payType;
 	private int total;
@@ -12,13 +13,22 @@ public class PayVo {
 		super();
 	}
 
-	public PayVo(int scheduleNo, String payType, int total, int couponNo, int userNo) {
+	public PayVo(int pay_no, int scheduleNo, String payType, int total, int couponNo, int userNo) {
 		super();
+		this.pay_no = pay_no;
 		this.scheduleNo = scheduleNo;
 		this.payType = payType;
 		this.total = total;
 		this.couponNo = couponNo;
 		this.userNo = userNo;
+	}
+
+	public int getPay_no() {
+		return pay_no;
+	}
+
+	public void setPay_no(int pay_no) {
+		this.pay_no = pay_no;
 	}
 
 	public int getScheduleNo() {
@@ -63,7 +73,7 @@ public class PayVo {
 
 	@Override
 	public String toString() {
-		return "PayVo [scheduleNo=" + scheduleNo + ", payType=" + payType + ", total=" + total + ", couponNo="
-				+ couponNo + ", userNo=" + userNo + "]";
+		return "PayVo [pay_no=" + pay_no + ", scheduleNo=" + scheduleNo + ", payType=" + payType + ", total=" + total
+				+ ", couponNo=" + couponNo + ", userNo=" + userNo + "]";
 	}
 }

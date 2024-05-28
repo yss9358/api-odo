@@ -4,91 +4,116 @@
 <mapper namespace="jh">
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
-	<select id="wishclass" parameterType="int" resultType="com.javaex.vo.WishClassVo">
-		select	class_name className,
-				class_intro classIntro,
-		        class_price classPrice,
-		        class_image classImage,
-		        class_name_address classAddress,
-		        w_class_no no
+	<select id="wishclass" parameterType="int"
+		resultType="com.javaex.vo.WishClassVo">
+		select class_name className,
+		class_intro classIntro,
+		class_price classPrice,
+		class_image classImage,
+		class_name_address classAddress,
+		w_class_no no
 		from wish_class, class
 		where wish_class.class_no = class.class_no
 		and wish_class.user_no = #{no}
 	</select>
-	
+
 	<delete id="delwish" parameterType="int">
 		delete from wish_class
-		where w_class_no = #{no}
+		where
+		w_class_no = #{no}
 	</delete>
 
-	<select id="wishcompany1" resultType="com.javaex.vo.WishCompanyVo">
-		select	company_image companyImage,
-				company_name companyName,
-		        wish_company.company_no companyNo,
-                w_company_no no
+	<select id="wishcompany1"
+		resultType="com.javaex.vo.WishCompanyVo">
+		select company_image companyImage,
+		company_name companyName,
+		wish_company.company_no companyNo,
+		w_company_no no
 		from wish_company, company
-		where wish_company.company_no = company.company_no
+		where wish_company.company_no =
+		company.company_no
 		and wish_company.user_no = #{no}
 	</select>
-	
+
 	<select id="classCount" parameterType="int" resultType="int">
-		select	count(class_no)
+		select
+		count(class_no)
 		from class
 		where company_no = #{no}
 	</select>
-	
+
 	<select id="reviewCount" parameterType="int" resultType="int">
-		select	count(review_no)
+		select
+		count(review_no)
 		from review, schedule, class, company
-		where review.schedule_no = schedule.schedule_no
-		and schedule.class_no = class.class_no
+		where
+		review.schedule_no = schedule.schedule_no
+		and schedule.class_no =
+		class.class_no
 		and class.company_no = company.company_no
-		and company.company_no = #{no}
+		and
+		company.company_no = #{no}
 	</select>
-	
+
 	<select id="wishCount" parameterType="int" resultType="int">
-		select	count(w_company_no)
+		select
+		count(w_company_no)
 		from wish_company
 		where company_no = #{no}
 	</select>
-	
+
 	<delete id="delWishCompany" parameterType="int">
-		delete from wish_company
-		where w_company_no = #{no}	
+		delete from
+		wish_company
+		where w_company_no = #{no}
 	</delete>
-	
-	<select id="paymentPage" parameterType="int" resultType="com.javaex.vo.PaymentVo">
-		select	class_name className,
-				class_intro classIntro,
-		        company_name companyName,
-		        start_date startDate,
-		        end_date endDate,
-		        class_price classPrice,
-		        class_image classImage,
-		        company.company_no companyNo
+
+	<select id="paymentPage" parameterType="int"
+		resultType="com.javaex.vo.PaymentVo">
+		select class_name className,
+		class_intro classIntro,
+		company_name companyName,
+		start_date startDate,
+		end_date endDate,
+		class_price classPrice,
+		class_image classImage,
+		company.company_no companyNo
 		from schedule, class, company
-		where schedule.class_no = class.class_no
+		where schedule.class_no =
+		class.class_no
 		and class.company_no = company.company_no
-		and schedule_no = #{no}
+		and schedule_no
+		= #{no}
 	</select>
-	
+
 	<select id="paymentPage2" parameterType="Map" resultType="Map">
-		select	coupon_price,
-				coupon_no
+		select
+		coupon_price,
+		coupon_no
 		from coupon
 		where company_no = #{b}
 		and coupon_state = 0
-		and user_no = #{no}
+		and user_no =
+		#{no}
 	</select>
-	
+
 	<insert id="pay" parameterType="com.javaex.vo.PayVo">
 		insert into pay
-		value(null, #{userNo}, #{scheduleNo}, #{couponNo}, datetime(now()), #{payType}, #{total});
+		value(null, #{userNo}, #{scheduleNo},
+		<if test="couponNo > 0">#{couponNo}</if>
+		<if test="couponNo == 0">null</if>
+		, now(), #{payType}, #{total});
+
+		<selectKey keyProperty="pay_no" resultType="int"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
-	
+
 	<update id="useCoupon" parameterType="int">
 		update coupon
-		set coupon_state = 1
+		set
+		coupon_state = 1
 		where coupon_no = #{no}
 	</update>
 

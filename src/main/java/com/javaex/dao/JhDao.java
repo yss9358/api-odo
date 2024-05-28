@@ -81,14 +81,16 @@ public class JhDao {
 	
 	//결제
 	public int pay(PayVo pv) {
-		System.out.println(pv);
+		//System.out.println(pv);
 		
+		//return 0;
 		return sqlSession.insert("jh.pay", pv);
 	}
 	
 	//쿠폰사용처리
 	public int useCoupon(int no) {
 		
+		//return 0;
 		return sqlSession.update("jh.useCoupon", no);
 	}
 	

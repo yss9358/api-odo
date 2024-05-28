@@ -86,10 +86,14 @@ public class JhController {
 	
 	//결제
 	@PutMapping("odo/pay")
-	public void pay(HttpServletRequest request, @RequestBody PayVo pv) {
+	public JsonResult pay(HttpServletRequest request, @RequestBody PayVo pv) {
 		int no = JwtUtil.getNoFromHeader(request);
 		
-		pv.setUserNo(no);
-		js.pay(pv);
+		if(no > 0) {
+			pv.setUserNo(no);
+			return JsonResult.success(js.pay(pv));
+		}else {
+			return JsonResult.fail("fail");
+		}
 	}
 }

@@ -117,18 +117,36 @@ public class JhService {
 	
 	//결제
 	public JsonResult pay(PayVo pv) {
-		
 		int a = jd.pay(pv);
 		
-		int b = jd.useCoupon(pv.getCouponNo());
+		System.out.println(pv.getCouponNo());
 		
+		if(pv.getCouponNo() == 0) {
+			if(a>0) {
+				int c = pv.getPay_no();	
+				return JsonResult.success(c);
+			}else {
+				return JsonResult.fail("실패");
+			}
+		}else {
+			int b = jd.useCoupon(pv.getCouponNo());
+			if(a > 0 && b > 0) {
+				int c = pv.getPay_no();	
+				return JsonResult.success(c);
+			}else {
+				return JsonResult.fail("실패");
+			}
+		}
+		
+		/*
+		int b = jd.useCoupon(pv.getCouponNo());
 		if(a > 0 && b > 0) {
-			String o = "성공";
-			
-			return JsonResult.success(o);
+			int c = pv.getPay_no();	
+			return JsonResult.success(c);
 		}else {
 			return JsonResult.fail("실패");
 		}
+		*/
 	}
 	
 }
