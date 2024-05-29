@@ -233,7 +233,7 @@ public class HsService {
 		listOfLists.add(pbList);
 		// listOfLists.add(신규베스트클래스리스트)
 		listOfLists.add(nList);
-
+		
 		return listOfLists;
 	}//
 }

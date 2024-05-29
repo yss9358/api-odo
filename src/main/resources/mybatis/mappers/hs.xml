@@ -121,14 +121,20 @@
 	<!-- 2차카테고리 리스트 가져오기 -->
 	<select id="selectCate2List" parameterType="map" resultType="com.javaex.vo.HsVo">
    <![CDATA[
-		select  c.class_no classNo,
-				c.class_name className,
-		        substr(c.class_name_address,1,5) classNameAdd,
+   	   select   c.class_no classNo,
+		        c.class_name className,
+		        substr(c.class_name_address, 1, 5) classNameAdd,
 		        c.class_image classImg,
-		        c.class_price classPrice
-		from class c join cate2 c2
-		where c.cate2_no = c2.cate2_no 
-		and c2.cate2_no = #{cate2No}
+		        c.class_price classPrice,
+		        round(avg(r.review_point)) reviewPointAvg,
+		        count(r.review_point) reviewCount
+		from class c
+		join cate2 c2 on c.cate2_no = c2.cate2_no
+		left join schedule sch on c.class_no = sch.class_no
+		left join review r on sch.schedule_no = r.schedule_no
+		where c2.cate2_no = #{cate2No}
+		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
+		order by avg(r.review_point) desc
 		limit #{startRowNo}, #{listCnt}
    ]]>
 	</select>
@@ -158,15 +164,21 @@
 	<!-- 1차카테고리 리스트 가져오기 -->
 	<select id="selectCate1List" parameterType="map" resultType="com.javaex.vo.HsVo">
    <![CDATA[
-		select  c.class_no classNo,
-				c.class_name className,
-		        substr(c.class_name_address,1,5) classNameAdd,
+	   select   c.class_no classNo,
+		        c.class_name className,
+		        substr(c.class_name_address, 1, 5) classNameAdd,
 		        c.class_image classImg,
-		        c.class_price classPrice
-		from class c join cate2 c2 join cate1 c1
-		where c.cate2_no = c2.cate2_no 
-		and c2.cate1_no = c1.cate1_no 
-		and c1.cate1_no = #{cate1No}
+		        c.class_price classPrice,
+		        round(avg(r.review_point)) reviewPointAvg,
+		        count(r.review_point) reviewCount
+		from class c
+		join cate2 c2 on c.cate2_no = c2.cate2_no
+		join cate1 c1 on c2.cate1_no = c1.cate1_no
+		left join schedule sch on c.class_no = sch.class_no
+		left join review r on sch.schedule_no = r.schedule_no
+		where c1.cate1_no = #{cate1No}
+		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
+		order by avg(r.review_point) desc
 		limit #{startRowNo}, #{listCnt}
    ]]>
 	</select>
@@ -176,13 +188,19 @@
 	<!-- 무료베스트 리스트 가져오기 -->
 	<select id="selectFreeBestList" resultType="com.javaex.vo.HsVo">
    <![CDATA[
-		select  class_no classNo,
-				class_name className,
-		        substr(class_name_address,1,5) classNameAdd,
-		        class_image classImg,
-		        class_price classPrice
-		from class
+		select c.class_no classNo,
+			   c.class_name className,
+			   substr(c.class_name_address, 1, 5) classNameAdd,
+			   c.class_image classImg,
+			   c.class_price classPrice,
+			   round(avg(r.review_point)) reviewPointAvg,
+			   count(r.review_point) reviewCount
+		from class c
+		left join schedule sch on c.class_no = sch.class_no
+		left join review r on sch.schedule_no = r.schedule_no
 		where class_price = 0
+		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
+		order by avg(r.review_point) desc
 		limit 4
    ]]>
 	</select>
@@ -190,13 +208,19 @@
 	<!-- 유료베스트 리스트 가져오기 -->
 	<select id="selectPayBestList" resultType="com.javaex.vo.HsVo">
    <![CDATA[
-		select  class_no classNo,
-				class_name className,
-		        substr(class_name_address,1,5) classNameAdd,
-		        class_image classImg,
-		        class_price classPrice
-		from class
+		select c.class_no classNo,
+			   c.class_name className,
+			   substr(c.class_name_address, 1, 5) classNameAdd,
+			   c.class_image classImg,
+			   c.class_price classPrice,
+			   round(avg(r.review_point)) reviewPointAvg,
+			   count(r.review_point) reviewCount
+		from class c
+		left join schedule sch on c.class_no = sch.class_no
+		left join review r on sch.schedule_no = r.schedule_no
 		where class_price != 0
+		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
+		order by avg(r.review_point) desc
 		limit 4
    ]]>
 	</select>
@@ -204,13 +228,18 @@
 	<!-- 신규 리스트 가져오기 -->
 	<select id="selectNewList" resultType="com.javaex.vo.HsVo">
    <![CDATA[
-		select  class_no classNo,
-				class_name className,
-		        substr(class_name_address,1,5) classNameAdd,
-		        class_image classImg,
-		        class_price classPrice
-		from class
-		order by class_no desc
+	   select c.class_no classNo,
+		       c.class_name className,
+		       substr(c.class_name_address, 1, 5) classNameAdd,
+		       c.class_image classImg,
+		       c.class_price classPrice,
+		       round(avg(r.review_point)) reviewPointAvg,
+		       count(r.review_point) reviewCount
+		from class c
+		left join schedule sch on c.class_no = sch.class_no
+		left join review r on sch.schedule_no = r.schedule_no
+		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
+		order by c.class_no desc
 		limit 0, 4
    ]]>
 	</select>

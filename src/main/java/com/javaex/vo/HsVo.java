@@ -37,7 +37,6 @@ public class HsVo {
 	
 	//메인페이지 클래스 리스트 후기부분 빼고
 	public HsVo(int classNo, String className, String classNameAdd, String classImg, int classPrice) {
-		super();
 		this.classNo = classNo;
 		this.className = className;
 		this.classNameAdd = classNameAdd;
@@ -48,7 +47,6 @@ public class HsVo {
 	//메인페이지 클래스 리스트에 필요한 모든 정보들. 후기테이블이랑 조인해야함.
 	public HsVo(int classNo, String className, String classNameAdd, String classImg, int classPrice, int reviewPointAvg,
 			int reviewCount) {
-		super();
 		this.classNo = classNo;
 		this.className = className;
 		this.classNameAdd = classNameAdd;
