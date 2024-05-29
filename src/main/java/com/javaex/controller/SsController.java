@@ -131,8 +131,8 @@ public class SsController {
 	
 	// 리뷰페이지 - 클래스 리뷰 가져오기
 	@GetMapping("/odo/ss/classreviewlist")
-	public JsonResult classReview(@RequestParam(value="classNo") int classNo) {
-		List<ClassReviewVo> list = ssService.exeGetClassReviewList(classNo);
+	public JsonResult classReview(@RequestParam(value="classNo") int classNo, @RequestParam(value="type") int type) {
+		List<ClassReviewVo> list = ssService.exeGetClassReviewList(classNo,type);
 		return JsonResult.success(list);	
 	}
 	

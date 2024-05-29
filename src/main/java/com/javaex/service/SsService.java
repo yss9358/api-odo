@@ -212,8 +212,11 @@ public class SsService {
 	}
 	
 	// 리뷰페이지 - 클래스 리뷰 가져오기
-	public List<ClassReviewVo> exeGetClassReviewList(int classNo) {
-		return ssDao.getClassReviewList(classNo);
+	public List<ClassReviewVo> exeGetClassReviewList(int classNo, int type) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("classNo", classNo);
+		map.put("type", type);
+		return ssDao.getClassReviewList(map);
 	}
 	
 	// 리뷰페이지 - 클래스 정보 가져오기

@@ -297,7 +297,7 @@
 	</select>
 	
 	<!-- 리뷰페이지 - 클래스 리뷰 가져오기 -->
-	<select id="getClassReviewList" parameterType="int" resultType="com.javaex.vo.ClassReviewVo">
+	<select id="getClassReviewList" parameterType="map" resultType="com.javaex.vo.ClassReviewVo">
 		<![CDATA[
 			select	c.class_no classNo,
 					c.class_type classType,
@@ -318,8 +318,23 @@
 			inner join class c
 					on s.class_no = c.class_no
 			where c.class_no = #{classNo}
-			order by r.review_point desc
 		]]>
+		<if test="type == 0">
+			<![CDATA[
+				order by r.review_point desc
+			]]>
+		</if>
+		<if test="type == 1">
+			<![CDATA[
+				order by r.review_point asc
+			]]>
+		</if>
+		<if test="type ==2">
+			<![CDATA[
+				order by r.review_date desc
+			]]>
+		</if>
+		
 	</select>
 	
 	<!-- 리뷰페이지 - 클래스 정보 가져오기 -->

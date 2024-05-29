@@ -81,8 +81,8 @@ public class SsDao {
 	}
 	
 	// 리뷰페이지 - 클래스 리뷰 가져오기
-	public List<ClassReviewVo> getClassReviewList(int classNo) {
-		return sqlSession.selectList("ss.getClassReviewList", classNo);
+	public List<ClassReviewVo> getClassReviewList(Map<String,Object> map) {
+		return sqlSession.selectList("ss.getClassReviewList", map);
 	}
 	
 	// 리뷰페이지 - 클래스 정보 가져오기
