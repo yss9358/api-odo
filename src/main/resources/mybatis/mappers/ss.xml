@@ -13,6 +13,24 @@
 		<result property="attenType" column="attenType"/>
 	</resultMap>
 	
+	<resultMap id="review" type="java.util.Map">
+		<result property="classNo" column="classNo" />
+		<result property="classImage" column="classImage" />
+		<result property="className" column="className" />
+		<result property="classIntro" column="classIntro" />
+		<result property="classType" column="classType" />
+		<result property="startDate" column="startDate" />
+		<result property="endDate" column="endDate" />
+		<result property="scheduleNo" column="scheduleNo" />
+		<result property="reviewNo" column="reviewNo" />
+		<result property="reviewDate" column="reviewDate" />
+		<result property="reviewPoint" column="reviewPoint" />
+		<result property="reviewQ1" column="reviewQ1" />
+		<result property="reviewQ2" column="reviewQ2" />
+		<result property="reviewQ3" column="reviewQ3" />
+		<result property="reviewContent" column="reviewContent" />
+		<result property="reviewImage" column="reviewImage" />
+	</resultMap>
 	
 	
 	<!-- 아이디 중복확인 -->
@@ -181,6 +199,55 @@
 		]]>
 	</insert>
 	
+	<!-- 작성한 리뷰 정보 가져오기 -->
+	<select id="getReivew" parameterType="map" resultMap="review">
+		<![CDATA[
+			select	c.class_no classNo,
+					c.class_image classImage,
+					c.class_name className,
+					c.class_intro classIntro,
+			        c.class_type classType,
+			        s.start_date startDate,
+			        s.end_date endDate,
+			        s.schedule_no scheduleNo,
+			        r.review_no reviewNo,
+			        r.review_date reviewDate,
+			        r.review_point reviewPoint,
+			        r.review_q1 reviewQ1,
+			        r.review_q2 reviewQ2,
+			        r.review_q3 reviewQ3,
+			        r.review_content reviewContent,
+		         	ifnull(r.review_image, 0) reviewImage
+			from review r
+			inner join schedule s
+					on r.schedule_no = s.schedule_no
+			inner join class c
+					on s.class_no = c.class_no
+			where r.user_no = #{userNo}
+			and r.review_no = #{reviewNo}
+		]]>
+	</select>
+	
+	<!-- 리뷰 수정하기 -->
+	<update id="updateReview" parameterType="com.javaex.vo.ReviewVo">
+		<![CDATA[
+			update review
+			set review_point = #{reviewPoint},
+				review_q1 = #{reviewQ1},
+			    review_q2 = #{reviewQ2},
+			    review_q3 = #{reviewQ3},
+			    review_content = #{reviewContent},
+			    review_date = now()
+		]]>	
+		<if test="file != null">
+			,review_image = #{reviewImage}
+		</if>	    
+		<![CDATA[
+			where user_no = #{userNo}
+			and review_no = #{reviewNo}
+		]]>	
+	</update>
+	
 	<!-- 출석정보 가져오기 -->
 	<select id="getAttenList" parameterType="map" resultMap="attenMap">
 		<![CDATA[
@@ -194,6 +261,17 @@
 			where s.schedule_no = #{scheduleNo}
 			and a.user_no = #{userNo}
 			order by atten_date desc
+		]]>
+	</select>
+	
+	<!-- 출석횟수 가져오기 -->
+	<select id="getAttenCount" parameterType="map" resultType="int">
+		<![CDATA[
+			select	count(atten_type)
+			from attendance
+			where user_no = #{userNo}
+			and schedule_no = #{scheduleNo}
+			and atten_type= '출석'
 		]]>
 	</select>
 	

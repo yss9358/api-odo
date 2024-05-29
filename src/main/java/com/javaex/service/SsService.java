@@ -131,24 +131,74 @@ public class SsService {
 		
 	}
 	
+	// 작성한 리뷰 정보 가져오기
+	public Map<String,Object> exeGetReview(Map<String, Integer> map) {
+		return ssDao.getReview(map);
+	}
+	
+	// 리뷰 수정하기
+	public int exeUpdateReview(int userNo, ReviewVo vo) {
+		vo.setUserNo(userNo);
+		MultipartFile file = vo.getFile();
+
+		if(file != null) {
+			String osName = System.getProperty("os.name").toLowerCase();
+			String saveDir;
+			if (osName.contains("linux")) { 
+				saveDir = "/app/upload";
+			} else {
+				saveDir = "C:\\uploadImages\\";
+			}
+			String orgName = file.getOriginalFilename();
+			String exName = orgName.substring(orgName.lastIndexOf("."));
+			String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+			String filePath = saveDir + File.separator + saveName;
+			vo.setReviewImage(saveName);
+			
+			try {
+				byte[] fileData;
+				fileData = file.getBytes();
+
+				OutputStream os = new FileOutputStream(filePath);
+				BufferedOutputStream bos = new BufferedOutputStream(os);
+
+				bos.write(fileData);
+				bos.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			int count = ssDao.updateReview(vo);
+			return count;
+		} else {
+			int count = ssDao.updateReview(vo);
+			return count;
+		}
+		
+		
+	}
+	
 	// 출석정보 가져오기
 	public Map<String,Object> exeGetAttenList(int userNo, int scheduleNo) {
 		OneClassVo vo =  ssDao.getClassOne(scheduleNo);
+		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("userNo", userNo);
 		map.put("scheduleNo", scheduleNo);
+		
 		List<Map<String,Object>> list = ssDao.getAttenList(map);
+		int attenCount = ssDao.getAttenCount(map);
 		
 		Map<String,Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("className", vo.getClassName());
 		resultMap.put("startDate", vo.getStartDate());
 		resultMap.put("endDate",vo.getEndDate());
 		resultMap.put("list", list);
+		resultMap.put("attenCount", attenCount);
 		
 		return resultMap;
 	}
-	
-	
 	
 	// 쿠폰정보 가져오기
 	public List<CouponVo> exeCheckCoupon (int no) {

@@ -54,10 +54,25 @@ public class SsDao {
 		return sqlSession.insert("ss.insertReview", vo);
 	}
 	
+	// 작성한 리뷰 정보 가져오기
+	public Map<String,Object> getReview(Map<String, Integer> map) {
+		return sqlSession.selectOne("ss.getReivew", map);
+	}
+	
+	// 리뷰 수정하기
+	public int updateReview(ReviewVo vo) {
+		return sqlSession.update("ss.updateReview", vo);
+	}
+	
+	
 	// 출석정보 가져오기
 	public List<Map<String,Object>> getAttenList(Map<String, Integer> map) {
 		return sqlSession.selectList("ss.getAttenList",map);
-		
+	}
+	
+	// 출석횟수 가져오기
+	public int getAttenCount(Map<String, Integer> map) {
+		return sqlSession.selectOne("ss.getAttenCount", map);
 	}
 	
 	// 쿠폰정보 가져오기

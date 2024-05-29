@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -90,6 +91,28 @@ public class SsController {
 			return JsonResult.fail("다시 로그인 해주세요.");
 		}
 	}
+	
+	// 작성한 리뷰 정보 가져오기
+	@GetMapping("/odo/ss/getreview")
+	public JsonResult getReview(	@RequestParam(value="reviewNo") int reviewNo,
+									HttpServletRequest request) {
+		int userNo = JwtUtil.getNoFromHeader(request);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("userNo", userNo);
+		map.put("reviewNo", reviewNo);
+		Map<String, Object> resultMap = ssService.exeGetReview(map);
+		return JsonResult.success(resultMap);
+	}
+	
+	// 리뷰 수정하기
+	@PutMapping("/odo/ss/modifyreview")
+	public JsonResult modifyReview(HttpServletRequest request,@ModelAttribute ReviewVo vo) {
+		int userNo = JwtUtil.getNoFromHeader(request);
+		int count = ssService.exeUpdateReview(userNo,vo);
+		System.out.println(count);
+		return JsonResult.success(count);
+	}
+	
 	
 	// 출석정보 가져오기
 	@GetMapping("/odo/ss/attenlist")
