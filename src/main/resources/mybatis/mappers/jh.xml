@@ -201,4 +201,19 @@
 		and schedule.schedule_no = review.schedule_no
 		and class.class_no = #{no}
 	</select>
+	
+	<select id="companymodify" parameterType="int" resultType="com.javaex.vo.SolCompanyVo">
+		select	company_name companyName,
+				company_image companyImgae,
+		        company_bn companyBn,
+		        company_intro companyIntro,
+		        company_id companyId,
+		        company_zipcode companyZipcode,
+		        company_name_address companyNameAddress,
+		        company_num_address companyNumAddress,
+		        company_detail_address companyDetailAddress,
+		        company_hp companyHp
+		from company
+		where company_no = #{no}
+	</select>
 </mapper>

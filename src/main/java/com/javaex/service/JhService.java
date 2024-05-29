@@ -16,6 +16,7 @@ import com.javaex.vo.PayVo;
 import com.javaex.vo.PayendVo;
 import com.javaex.vo.PaymentVo;
 import com.javaex.vo.ReClassVo;
+import com.javaex.vo.SolCompanyVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
 import com.javaex.vo.WishCompanyVo2;
@@ -227,5 +228,10 @@ public class JhService {
 		
 		return infoMap;
 	}
-
+	
+	//업체수정페이지
+	public SolCompanyVo companymodify(int a) {
+		
+		return jd.companymodify(a);
+	}
 }

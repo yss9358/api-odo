@@ -13,6 +13,7 @@ import com.javaex.vo.PayVo;
 import com.javaex.vo.PayendVo;
 import com.javaex.vo.PaymentVo;
 import com.javaex.vo.ReClassVo;
+import com.javaex.vo.SolCompanyVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
 
@@ -161,5 +162,11 @@ public class JhDao {
 		
 		CompanyInfoVo2 ci2 = sqlSession.selectOne("jh.companyinfo3", a);
 		return ci2;
+	}
+	
+	//업체정보 수정페이지
+	public SolCompanyVo companymodify(int a) {
+		
+		return sqlSession.selectOne("jh.companymodify", a);
 	}
 }

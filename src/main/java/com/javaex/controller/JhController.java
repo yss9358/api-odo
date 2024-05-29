@@ -117,4 +117,17 @@ public class JhController {
 		
 		return js.companyinfo(a);
 	}
+	
+	//업체정보 수정페이지
+	@GetMapping("odo/companymodify")
+	public JsonResult companymodify(HttpServletRequest request) {
+		int no = JwtUtil.getNoFromHeader(request);
+		
+		if(no > 0) {
+			js.companymodify(no);
+			return JsonResult.success(js.companymodify(no));
+		}else {
+			return JsonResult.fail("fail");
+		}
+	}
 }
