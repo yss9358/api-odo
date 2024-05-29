@@ -70,6 +70,16 @@
 	
 	
 	<!-- 클래스 -->
+	<insert id="classInsert">
+	<![CDATA[
+	insert into class
+	values(null, 2,3 ,"소리클래스" ,1 ,"어서옵쇼 솔클~!!~!~!" , 
+		"5542", "서울" ,"방이동", "1004호",37.5151081873838,127.107222748544,
+		"twi1.jpg",10000,3,10, 
+		"소리클래스 상세설명",
+		"url", null)
+	]]>
+	</insert>
 	<select id="companyClassList" parameterType="map" resultType="classVo">
 	<![CDATA[
 		select class_no classNo, class_name className
@@ -89,10 +99,18 @@
 		c.class_price, c.class_min, c.class_max,
 		c.class_info, c.rec_class_no
 	from class c, cate1 t, cate2 t2
-	where c.company_no = #{companyNo}
+	where c.company_no = #{companyNum}
 	and c.class_no = #{classNo}
 	and c.cate2_no = t2.cate2_no
 	and t.cate1_no = t2.cate1_no
+	]]>
+	</select>
+	<select id="rCalss" parameterType="int" resultType="classVo" resultMap="resultMapClassVo">
+	<![CDATA[
+	select class_no, class_name
+	from class 
+	where company_no = #{no}
+	and class_type between 2 and 3
 	]]>
 	</select>
 	<!-- 1차 카테고리 불러오기 -->

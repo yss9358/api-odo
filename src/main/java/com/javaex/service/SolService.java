@@ -65,6 +65,11 @@ public class SolService {
 //		return null;
 		return solDao.selectClass(tempVo);
 	}
+	//기존클래스
+	public List<SolClassVo> exegetRClass(int no){
+		System.out.println("SolService.exegetRClass");
+		return solDao.selectRClass(no);
+	}
 	//카테고리 불러오기
 	public List<SolCateVo> exeGetCate(){
 		System.out.println("SolService.exeGetCate");

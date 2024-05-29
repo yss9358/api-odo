@@ -104,6 +104,20 @@ public class SolController {
 			return JsonResult.fail("정보 불러오기 실패");
 		}
 	}
+	
+	//정규클래스 불러오기
+	@PostMapping("getrclass/{no}")
+	public JsonResult getRClass(@PathVariable int no) {
+		System.out.println("SolController.getRClass");
+		List<SolClassVo> classList = solservice.exegetRClass(no);
+		System.out.println(classList);
+		if(classList != null) {
+			return JsonResult.success(classList);
+		} else {
+			return JsonResult.fail(null);
+		}
+		
+	}
 
 	// 카테고리 불러오기
 	@PostMapping("getcate")
@@ -148,8 +162,8 @@ public class SolController {
 	public JsonResult classAdd(@ModelAttribute SolClassVo vo) {
 		System.out.println("SolController.classAdd");
 		System.out.println(vo.getClassImageFile().getOriginalFilename());
-//		String saveName = solservice.exeCompanyImg(vo.getClassImageFile());
-//		vo.setClassImage(saveName);
+		String saveName = solservice.exeCompanyImg(vo.getClassImageFile());
+		vo.setClassImage(saveName);
 		System.out.println(vo);
 		return JsonResult.success("");
 	}

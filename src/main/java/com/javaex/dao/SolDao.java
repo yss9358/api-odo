@@ -54,6 +54,11 @@ public class SolDao {
 		System.out.println(tempVo);
 		return sqlSession.selectOne("sr.getClass", tempVo);
 	}
+	//정규클래스
+	public List<SolClassVo> selectRClass(int no){
+		System.out.println("SolDao.selectRClass");
+		return sqlSession.selectList("sr.rCalss", no);
+	}
 	//카테고리 불러오기
 	public List<SolCateVo> selectAllCate(){
 		System.out.println("SolDao.selectAllCate()");
