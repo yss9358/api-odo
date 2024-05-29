@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.CompanyInfoVo;
+import com.javaex.vo.CompanyInfoVo2;
 import com.javaex.vo.PayVo;
 import com.javaex.vo.PayendVo;
 import com.javaex.vo.PaymentVo;
@@ -136,5 +138,28 @@ public class JhDao {
 		ReClassVo rc2 = sqlSession.selectOne("jh.reclass2", a);
 		
 		return rc2;
+	}
+	
+	//업체정보1
+	public CompanyInfoVo companyinfo(int a) {
+
+		CompanyInfoVo ci = sqlSession.selectOne("companyinfo1", a);
+		
+		return ci;
+	}
+	
+	//업체정보2 클래스 리스트
+	public List<CompanyInfoVo2> classList(int a) {
+		
+		List<CompanyInfoVo2> ci2 = sqlSession.selectList("jh.companyinfo2", a);
+		//System.out.println(ci2);
+		return ci2;
+	}
+	
+	//업체정보3 클래스리스트2
+	public CompanyInfoVo2 classList2(int a) {
+		
+		CompanyInfoVo2 ci2 = sqlSession.selectOne("jh.companyinfo3", a);
+		return ci2;
 	}
 }

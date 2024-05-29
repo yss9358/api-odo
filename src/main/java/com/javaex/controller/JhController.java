@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,7 +109,12 @@ public class JhController {
 		}else {
 			return JsonResult.fail("fail");
 		}
+	}
+	
+	//업체정보
+	@GetMapping("odo/companyinfo/{no}")
+	public Map<String, Object> companyifno(@PathVariable("no") int a) {
 		
-		
+		return js.companyinfo(a);
 	}
 }

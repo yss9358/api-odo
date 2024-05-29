@@ -169,4 +169,36 @@
 		and schedule.class_no = class.class_no
 		and class.class_no = #{no}
 	</select>
+	
+	<select id="companyinfo1" parameterType="int" resultType="com.javaex.vo.CompanyInfoVo">
+		select	company_name companyName,
+				company_hp companyHp,
+		        company_name_address companyAddress,
+		        company_intro companyIntro,
+		        company_image companyImage
+		from company
+		where company_no = #{no}
+	</select>
+	
+	<select id="companyinfo2" parameterType="int" resultType="com.javaex.vo.CompanyInfoVo2">
+		select	class_no classNo,
+				class_name className,
+		        class_intro classIntro,
+		        class_image classImage
+		from company, class
+		where company.company_no = class.company_no
+		and company.company_no = #{no}
+	</select>
+	
+	<select id="companyinfo3" parameterType="int" resultType="com.javaex.vo.CompanyInfoVo2">
+		select	avg(review_point) reviewPoint,
+				count(review_no) reviewCount,
+		        avg(review_q1) q1,
+		        avg(review_q2) q2,
+		        avg(review_q3) q3
+		from class, schedule, review
+		where class.class_no = schedule.class_no
+		and schedule.schedule_no = review.schedule_no
+		and class.class_no = #{no}
+	</select>
 </mapper>
