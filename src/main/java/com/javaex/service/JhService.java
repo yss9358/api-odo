@@ -1,12 +1,19 @@
 package com.javaex.service;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.JhDao;
 import com.javaex.util.JsonResult;
@@ -216,22 +223,66 @@ public class JhService {
 				q2 = ci3.getQ2();
 				q3 = ci3.getQ3();
 			}
-			CompanyInfoVo2 ci4 = new CompanyInfoVo2(classNo, className, classIntro, classImage, reviewPoint, reviewCount, q1, q2, q3);
+			CompanyInfoVo2 ci4 = new CompanyInfoVo2(classNo, className, classIntro, classImage, reviewPoint,
+					reviewCount, q1, q2, q3);
 			ci2.set(i, ci4);
 		}
 		System.out.println(ci);
 		System.out.println(ci2);
-		
+
 		Map<String, Object> infoMap = new HashMap<>();
 		infoMap.put("ci", ci);
 		infoMap.put("ci2", ci2);
-		
+
 		return infoMap;
 	}
-	
-	//업체수정페이지
+
+	// 업체수정페이지
 	public SolCompanyVo companymodify(int a) {
-		
+
 		return jd.companymodify(a);
+	}
+
+	//업체수정
+	public String update(SolCompanyVo solVo) {
+		
+		//파일 저장
+		MultipartFile file = solVo.getCompanyFile();
+		String osName = System.getProperty("os.name").toLowerCase();
+		String saveDir;
+		if (osName.contains("linux")) {
+			saveDir = "/app/upload/"; // Linux 경로. username을 실제 사용자 이름으로 변경하세요.
+
+		} else {
+			saveDir = "C:\\uploadImages\\";
+		}
+
+		String orgName = file.getOriginalFilename();
+		String exName = orgName.substring(orgName.lastIndexOf("."));
+		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+		String filePath = saveDir + File.separator + saveName;
+
+		try {
+			byte[] fileData;
+			fileData = file.getBytes();
+
+			OutputStream os = new FileOutputStream(filePath);
+			BufferedOutputStream bos = new BufferedOutputStream(os);
+
+			bos.write(fileData);
+			bos.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		solVo.setCompanyImage(saveName);
+		System.out.println(solVo);
+		
+		//db저장
+		jd.update(solVo);
+		
+		
+		
+		return null;
 	}
 }

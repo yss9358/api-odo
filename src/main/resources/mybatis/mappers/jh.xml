@@ -216,4 +216,21 @@
 		from company
 		where company_no = #{no}
 	</select>
+	
+	<update id="update" parameterType="com.javaex.vo.SolCompanyVo">
+		update 	company
+		set		company_bn = #{companyBn},
+				company_name = #{companyName},
+				company_intro = #{companyIntro},
+		        company_pw = #{companyPass},
+		        company_zipcode = #{companyZipCode},
+		        company_name_address = #{companyNameAddress},
+		        company_num_address = #{companyNumAddress},
+		        company_detail_address = #{companyDetailAddress},
+		        company_hp = #{companyHp},
+		        company_latitude = #{companyLatitude},
+		        company_longitude = #{companyLongitude},
+		        company_image = #{companyImage}
+		where company_no = #{companyNo}
+	</update>
 </mapper>

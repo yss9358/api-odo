@@ -169,4 +169,10 @@ public class JhDao {
 		
 		return sqlSession.selectOne("jh.companymodify", a);
 	}
+	
+	//업체정보 수정
+	public void update(SolCompanyVo solVo) {
+		
+		sqlSession.update("jh.update", solVo);
+	}
 }

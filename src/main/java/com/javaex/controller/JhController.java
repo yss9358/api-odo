@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import com.javaex.service.JhService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
 import com.javaex.vo.PayVo;
+import com.javaex.vo.SolCompanyVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -129,5 +131,18 @@ public class JhController {
 		}else {
 			return JsonResult.fail("fail");
 		}
+	}
+	
+	//업체수정
+	@PutMapping("odo/companymodify")
+	public void modify(HttpServletRequest request, @ModelAttribute SolCompanyVo solVo) {
+		int no = JwtUtil.getNoFromHeader(request);
+		
+		solVo.setCompanyNo(no);
+		js.update(solVo);
+		
+		
+		
+		
 	}
 }
