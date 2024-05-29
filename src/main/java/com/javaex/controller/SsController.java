@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaex.service.SsService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
+import com.javaex.vo.ClassReviewVo;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
 import com.javaex.vo.OneClassVo;
@@ -109,10 +110,8 @@ public class SsController {
 	public JsonResult modifyReview(HttpServletRequest request,@ModelAttribute ReviewVo vo) {
 		int userNo = JwtUtil.getNoFromHeader(request);
 		int count = ssService.exeUpdateReview(userNo,vo);
-		System.out.println(count);
 		return JsonResult.success(count);
 	}
-	
 	
 	// 출석정보 가져오기
 	@GetMapping("/odo/ss/attenlist")
@@ -123,14 +122,26 @@ public class SsController {
 	}
 	
 	// 쿠폰정보 가져오기
-	@GetMapping("/odo/ss/usercoupon/{no}")
-	public JsonResult couponList(@PathVariable(value="no") int no) {
-		List<CouponVo> list = ssService.exeCheckCoupon(no);
+	@GetMapping("/odo/ss/usercoupon")
+	public JsonResult couponList(HttpServletRequest request) {
+		int userNo = JwtUtil.getNoFromHeader(request);
+		List<CouponVo> list = ssService.exeCheckCoupon(userNo);
 		return JsonResult.success(list);
 	}
 	
+	// 리뷰페이지 - 클래스 리뷰 가져오기
+	@GetMapping("/odo/ss/classreviewlist")
+	public JsonResult classReview(@RequestParam(value="classNo") int classNo) {
+		List<ClassReviewVo> list = ssService.exeGetClassReviewList(classNo);
+		return JsonResult.success(list);	
+	}
 	
-	
+	// 리뷰페이지 - 클래스 정보 가져오기
+	@GetMapping("/odo/ss/classinfo")
+	public JsonResult classInfo(@RequestParam(value="classNo") int classNo) {
+		Map<String,Object> map = ssService.exeClassInfo(classNo);
+		return JsonResult.success(map);
+	}
 	
 	
 	

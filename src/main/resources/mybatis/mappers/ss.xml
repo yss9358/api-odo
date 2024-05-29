@@ -32,6 +32,12 @@
 		<result property="reviewImage" column="reviewImage" />
 	</resultMap>
 	
+	<resultMap id="classInfo" type="java.util.Map">
+		<result property="classNo" column="classNo"/>
+		<result property="totalCount" column="totalCount"/>
+		<result property="reviewAvg" column="reviewAvg"/>
+	</resultMap>
+	
 	
 	<!-- 아이디 중복확인 -->
 	<select id="checkId" parameterType="String" resultType="com.javaex.vo.UserJoinVo">
@@ -289,5 +295,47 @@
 			and u.user_no = #{no}
 		]]>
 	</select>
+	
+	<!-- 리뷰페이지 - 클래스 리뷰 가져오기 -->
+	<select id="getClassReviewList" parameterType="int" resultType="com.javaex.vo.ClassReviewVo">
+		<![CDATA[
+			select	c.class_no classNo,
+					c.class_type classType,
+					c.class_name className,
+			        c.class_intro classIntro,
+			        u.user_no userNo,
+			        u.user_image userImage,
+			        u.user_nickname userNickname,
+			        r.review_point reviewPoint,
+			        r.review_date reviewDate,
+			        r.review_content reviewContent,
+			        ifnull(r.review_image, null) reviewImage
+			from review r
+			inner join user u
+					on r.user_no = u.user_no
+			inner join schedule s
+					on r.schedule_no = s.schedule_no
+			inner join class c
+					on s.class_no = c.class_no
+			where c.class_no = #{classNo}
+			order by r.review_point desc
+		]]>
+	</select>
+	
+	<!-- 리뷰페이지 - 클래스 정보 가져오기 -->
+	<select id="getClassInfo" parameterType="int" resultMap="classInfo">
+		<![CDATA[
+			select	 s.class_no classNo,
+					count(*) totalCount,
+					ifnull(avg(r.review_point),0) reviewAvg
+			from review r
+			inner join schedule s
+					on r.schedule_no = s.schedule_no
+			where s.class_no = #{classNo}
+			group by s.class_no
+		]]>
+	</select>
+	
+	
 
 </mapper>

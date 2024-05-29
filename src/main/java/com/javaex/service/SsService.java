@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.SsDao;
+import com.javaex.vo.ClassReviewVo;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
 import com.javaex.vo.OneClassVo;
@@ -210,7 +211,15 @@ public class SsService {
 		}
 	}
 	
+	// 리뷰페이지 - 클래스 리뷰 가져오기
+	public List<ClassReviewVo> exeGetClassReviewList(int classNo) {
+		return ssDao.getClassReviewList(classNo);
+	}
 	
+	// 리뷰페이지 - 클래스 정보 가져오기
+	public Map<String,Object> exeClassInfo(int classNo) {
+		return ssDao.getClassInfo(classNo);
+	}
 	
 	
 	

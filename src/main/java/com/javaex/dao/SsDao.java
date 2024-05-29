@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.ClassReviewVo;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
 import com.javaex.vo.OneClassVo;
@@ -64,7 +65,6 @@ public class SsDao {
 		return sqlSession.update("ss.updateReview", vo);
 	}
 	
-	
 	// 출석정보 가져오기
 	public List<Map<String,Object>> getAttenList(Map<String, Integer> map) {
 		return sqlSession.selectList("ss.getAttenList",map);
@@ -78,6 +78,16 @@ public class SsDao {
 	// 쿠폰정보 가져오기
 	public List<CouponVo> getCouponByNo(int no) {
 		return sqlSession.selectList("ss.getCouponByNo",no);
+	}
+	
+	// 리뷰페이지 - 클래스 리뷰 가져오기
+	public List<ClassReviewVo> getClassReviewList(int classNo) {
+		return sqlSession.selectList("ss.getClassReviewList", classNo);
+	}
+	
+	// 리뷰페이지 - 클래스 정보 가져오기
+	public Map<String,Object> getClassInfo(int classNo) {
+		return sqlSession.selectOne("ss.getClassInfo", classNo);
 	}
 	
 }
