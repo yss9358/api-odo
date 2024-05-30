@@ -129,7 +129,7 @@
 		</if>
 		<if test="classType != 1">
 		<![CDATA[
-			and c.class_type <> 1	
+			and c.class_type <> 1
 		]]>
 		</if>
 		<![CDATA[
