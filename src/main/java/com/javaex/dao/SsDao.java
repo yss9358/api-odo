@@ -36,6 +36,11 @@ public class SsDao {
 		return sqlSession.selectOne("ss.loginByIdPw", vo);
 	}
 	
+	// 결제 내역 가져오기 
+	public List<MyPayVo> getPayListByNo(Map<String, Integer> map) {
+		return sqlSession.selectList("ss.getPayListByNo", map);
+	}
+	
 	// 회원 원데이 결제내역 가져오기
 	public List<MyPayVo> getOneDayPayListByNo(int userNo) {
 		return sqlSession.selectList("ss.getOneDayPayListByNo",userNo);

@@ -63,14 +63,24 @@ public class SsController {
 	
 	// 회원 결제내역 가져오기
 	@GetMapping("/odo/ss/getpaylist")
-	public JsonResult getPayList(@RequestParam(value="classType") int classType, HttpServletRequest request) {
+	public JsonResult getPayList(
+			@RequestParam(value="classType") int classType, 
+			HttpServletRequest request,
+			@RequestParam(value="page", required = false, defaultValue="1") int page
+			) {
 		int userNo = JwtUtil.getNoFromHeader(request);
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("classType", classType);
 		map.put("userNo", userNo);
+		map.put("page", page);
 		if(userNo != -1) {
 			List<MyPayVo> list = ssService.exePayList(map);
-			return JsonResult.success(list);
+			if(list != null) {
+				return JsonResult.success(list);
+			} else {
+				return JsonResult.fail("더 이상 불러올 리스트가 없습니다.");
+			}
+			
 		} else {
 			return JsonResult.fail("다시 로그인해주세요.");
 		}

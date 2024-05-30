@@ -71,6 +71,73 @@
 		]]>
 	</select>
 	
+	<!-- 회원의 결제 내역 가져오기  -->
+	<select id="getPayListByNo" parameterType="map" resultType="com.javaex.vo.MyPayVo">
+		<![CDATA[
+			select	p.user_no userNo,
+					c.class_type classType,
+			        c.class_no classNo,
+					c.class_image classImage,
+			        s.end_date endDate,
+			        IFNULL(w.w_class_no,0) wishClassNo,
+					IFNULL(avg_review.avg_review_point,0) starScore,
+					p.pay_no payNo,
+			        p.pay_date payDate,
+			        c.class_name className,
+			        c.class_intro classIntro,
+			        p.pay_price payPrice,
+			        IFNULL(a.attenCount, 0) attenCount,
+			        p.schedule_no scheduleNo,
+			        IFNULL(r.review_no, 0) reviewNo,
+			        c.class_url classUrl,
+			        IFNULL(selfC.class_no,0) recClassNo,
+			        selfC.class_image recClassImage,
+			        selfC.class_name recClassName
+			from pay p
+			inner join schedule s 
+					on p.schedule_no = s.schedule_no
+			inner join class c
+					on s.class_no = c.class_no
+			left join wish_class w
+					on p.user_no = w.user_no and c.class_no = w.class_no
+			left join review r
+					on r.user_no = p.user_no and r.schedule_no = s.schedule_no
+			left join class selfC
+					on c.rec_class_no = selfC.class_no
+			left join (select	schedule_no,
+								count(*) attenCount
+						from attendance
+						where atten_type = '출석'
+						and user_no = #{userNo}
+			            group by schedule_no) a
+					on s.schedule_no = a.schedule_no
+			left join (select	c.class_no,
+								AVG(r.review_point) avg_review_point
+						from class c
+			            inner join schedule s
+								on c.class_no = s.class_no
+						left join review r
+								on s.schedule_no = r.schedule_no
+						group by c.class_no) avg_review
+					on c.class_no = avg_review.class_no
+			where p.user_no = #{userNo}
+		]]>
+		<if test="classType == 1">
+		<![CDATA[
+			and c.class_type = 1
+		]]>
+		</if>
+		<if test="classType != 1">
+		<![CDATA[
+			and c.class_type <> 1	
+		]]>
+		</if>
+		<![CDATA[
+			order by p.pay_date desc
+			limit #{startRowNo}, #{listCount}
+		]]>
+	</select>
+	
 	<!-- 원데이 결제내역 가져오기 -->
 	<select id="getOneDayPayListByNo" parameterType="int" resultType="com.javaex.vo.MyPayVo">
 		<![CDATA[

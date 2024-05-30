@@ -62,23 +62,40 @@ public class SsService {
 	
 	// 회원 결제내역 가져오기 
 	public List<MyPayVo> exePayList(Map<String, Integer> map) {		
-		if(map.get("classType") == 1) {
-//			클래스타입이 1이면 원데이클래스 정보
-			List<MyPayVo> list = ssDao.getOneDayPayListByNo(map.get("userNo"));
-			if(list == null) {
-				return null;
-			} else {
-				return list;
-			}
+		
+		int page = map.get("page");
+		page = (page>0) ? page : (page=1);
+		
+		int listCount = 3;
+		int startRowNo = (page-1)*listCount;
+		
+		map.put("startRowNo", startRowNo);
+		map.put("listCount", listCount);
+		
+		List<MyPayVo> list = ssDao.getPayListByNo(map);
+		if(list == null) {
+			return null;
 		} else {
-//			클래스타입이 1이 아니면 정규,상시클래스 정보
-			List<MyPayVo> list = ssDao.getRegularPayListByNo(map.get("userNo"));
-			if(list == null) {
-				return null;
-			} else {
-				return list;
-			}
+			return list;
 		}
+		
+//		if(map.get("classType") == 1) {
+////			클래스타입이 1이면 원데이클래스 정보
+//			List<MyPayVo> list = ssDao.getOneDayPayListByNo(map.get("userNo"));
+//			if(list == null) {
+//				return null;
+//			} else {
+//				return list;
+//			}
+//		} else {
+////			클래스타입이 1이 아니면 정규,상시클래스 정보
+//			List<MyPayVo> list = ssDao.getRegularPayListByNo(map.get("userNo"));
+//			if(list == null) {
+//				return null;
+//			} else {
+//				return list;
+//			}
+//		}
 	}
 	
 	
