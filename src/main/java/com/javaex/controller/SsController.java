@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaex.service.SsService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
+import com.javaex.vo.CheckWishClassVo;
 import com.javaex.vo.ClassReviewVo;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
@@ -82,19 +84,15 @@ public class SsController {
 	}
 	
 	// 리뷰 작성
-	@PostMapping("/odo/ss/writereview")
+	@PostMapping("/odo/ss/reviews")
 	public JsonResult writeReveiw(HttpServletRequest request,@ModelAttribute ReviewVo vo) {
 		int userNo = JwtUtil.getNoFromHeader(request);
-		if(userNo != -1) {
-			int count = ssService.exeInsertReview(userNo,vo);
-			return JsonResult.success(count);
-		} else {
-			return JsonResult.fail("다시 로그인 해주세요.");
-		}
+		int count = ssService.exeInsertReview(userNo,vo);
+		return JsonResult.success(count);
 	}
 	
 	// 작성한 리뷰 정보 가져오기
-	@GetMapping("/odo/ss/getreview")
+	@GetMapping("/odo/ss/reviews")
 	public JsonResult getReview(	@RequestParam(value="reviewNo") int reviewNo,
 									HttpServletRequest request) {
 		int userNo = JwtUtil.getNoFromHeader(request);
@@ -106,7 +104,7 @@ public class SsController {
 	}
 	
 	// 리뷰 수정하기
-	@PutMapping("/odo/ss/modifyreview")
+	@PutMapping("/odo/ss/reviews")
 	public JsonResult modifyReview(HttpServletRequest request,@ModelAttribute ReviewVo vo) {
 		int userNo = JwtUtil.getNoFromHeader(request);
 		int count = ssService.exeUpdateReview(userNo,vo);
@@ -143,6 +141,31 @@ public class SsController {
 		return JsonResult.success(map);
 	}
 	
+	// 위시 클래스 추가
+	@PostMapping("odo/ss/wishclassis")
+	public JsonResult addWishClass(HttpServletRequest request, @ModelAttribute CheckWishClassVo vo) {
+		int userNo = JwtUtil.getNoFromHeader(request);
+		vo.setUserNo(userNo);
+		int count = ssService.exeInsertWishClass(vo);
+		if(count == 1) {
+			return JsonResult.success(vo.getwClassNo());
+		} else {
+			return JsonResult.fail("등록실패");
+		}
+	}
+	
+	// 위시 클래스 삭제
+	@DeleteMapping("odo/ss/wishclassis")
+	public JsonResult deleteWishClass(HttpServletRequest request, @ModelAttribute CheckWishClassVo vo) {
+		int userNo = JwtUtil.getNoFromHeader(request);
+		vo.setUserNo(userNo);
+		int count = ssService.exeDeleteWishClass(vo);
+		if(count == 1) {
+			return JsonResult.success(count);
+		} else {
+			return JsonResult.fail("삭제실패");
+		}
+	}
 	
 	
 	

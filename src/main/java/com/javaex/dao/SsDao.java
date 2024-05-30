@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.CheckWishClassVo;
 import com.javaex.vo.ClassReviewVo;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
@@ -88,6 +89,16 @@ public class SsDao {
 	// 리뷰페이지 - 클래스 정보 가져오기
 	public Map<String,Object> getClassInfo(int classNo) {
 		return sqlSession.selectOne("ss.getClassInfo", classNo);
+	}
+	
+	// 위시 클래스 추가
+	public int insertWishClass(CheckWishClassVo vo) {
+		return sqlSession.insert("ss.insertWishClass", vo);
+	}
+	
+	// 위시 클래스 삭제
+	public int deleteWishClass(CheckWishClassVo vo) {
+		return sqlSession.delete("ss.deleteWishClass", vo);
 	}
 	
 }

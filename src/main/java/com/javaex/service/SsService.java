@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.SsDao;
+import com.javaex.vo.CheckWishClassVo;
 import com.javaex.vo.ClassReviewVo;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
@@ -89,45 +90,42 @@ public class SsService {
 	// 리뷰 작성
 	public int exeInsertReview(int userNo,ReviewVo vo) {
 		vo.setUserNo(userNo);
-		
-		// 파일처리
 		MultipartFile file = vo.getFile();
 		
-		String osName = System.getProperty("os.name").toLowerCase();
-		String saveDir;
-		
-		if (osName.contains("linux")) { 
-			saveDir = "/app/upload";
-		} else {
-			saveDir = "C:\\uploadImages\\";
-		}
-		
-		String orgName = file.getOriginalFilename();
-		String exName = orgName.substring(orgName.lastIndexOf("."));
-		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
-		String filePath = saveDir + File.separator + saveName;
-		vo.setReviewImage(saveName);
-		
-		try {
-			byte[] fileData;
-			fileData = file.getBytes();
+		if(file != null) {
+			String osName = System.getProperty("os.name").toLowerCase();
+			String saveDir;
+			if (osName.contains("linux")) { 
+				saveDir = "/app/upload";
+			} else {
+				saveDir = "C:\\uploadImages\\";
+			}
+			
+			String orgName = file.getOriginalFilename();
+			String exName = orgName.substring(orgName.lastIndexOf("."));
+			String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+			String filePath = saveDir + File.separator + saveName;
+			vo.setReviewImage(saveName);
+			
+			try {
+				byte[] fileData;
+				fileData = file.getBytes();
 
-			OutputStream os = new FileOutputStream(filePath);
-			BufferedOutputStream bos = new BufferedOutputStream(os);
+				OutputStream os = new FileOutputStream(filePath);
+				BufferedOutputStream bos = new BufferedOutputStream(os);
 
-			bos.write(fileData);
-			bos.close();
+				bos.write(fileData);
+				bos.close();
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-		
-		int count = ssDao.insertReview(vo);
-		
-		if(count == 1) {
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
+			
+			int count = ssDao.insertReview(vo);
 			return count;
 		} else {
-			return -1;
+			int count = ssDao.insertReview(vo);
+			return count;
 		}
 		
 	}
@@ -224,8 +222,15 @@ public class SsService {
 		return ssDao.getClassInfo(classNo);
 	}
 	
+	// 위시 클래스 추가
+	public int exeInsertWishClass(CheckWishClassVo vo) {
+		return ssDao.insertWishClass(vo);
+	}
 	
-	
+	// 위시 클래스 삭제
+	public int exeDeleteWishClass(CheckWishClassVo vo) {
+		return ssDao.deleteWishClass(vo);
+	}
 	
 	
 	

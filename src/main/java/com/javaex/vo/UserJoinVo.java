@@ -6,6 +6,7 @@ public class UserJoinVo {
 	private int userNo;
 	private String userId;
 	private String userPw;
+	private String userName;
 	private String userNickname;
 	private String userHp;
 	private String userBirth;
@@ -18,11 +19,12 @@ public class UserJoinVo {
 
 	}
 
-	public UserJoinVo(int userNo, String userId, String userPw, String userNickname, String userHp, String userBirth,
-			String userGender, String userImage, boolean userKakao, boolean userNaver) {
+	public UserJoinVo(int userNo, String userId, String userPw, String userName, String userNickname, String userHp,
+			String userBirth, String userGender, String userImage, boolean userKakao, boolean userNaver) {
 		this.userNo = userNo;
 		this.userId = userId;
 		this.userPw = userPw;
+		this.userName = userName;
 		this.userNickname = userNickname;
 		this.userHp = userHp;
 		this.userBirth = userBirth;
@@ -54,6 +56,14 @@ public class UserJoinVo {
 
 	public void setUserPw(String userPw) {
 		this.userPw = userPw;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getUserNickname() {
@@ -114,9 +124,10 @@ public class UserJoinVo {
 
 	@Override
 	public String toString() {
-		return "UserJoinVo [userNo=" + userNo + ", userId=" + userId + ", userPw=" + userPw + ", userNickname="
-				+ userNickname + ", userHp=" + userHp + ", userBirth=" + userBirth + ", userGender=" + userGender
-				+ ", userImage=" + userImage + ", userKakao=" + userKakao + ", userNaver=" + userNaver + "]";
-	}	
-	
+		return "UserJoinVo [userNo=" + userNo + ", userId=" + userId + ", userPw=" + userPw + ", userName=" + userName
+				+ ", userNickname=" + userNickname + ", userHp=" + userHp + ", userBirth=" + userBirth + ", userGender="
+				+ userGender + ", userImage=" + userImage + ", userKakao=" + userKakao + ", userNaver=" + userNaver
+				+ "]";
+	}
+
 }
