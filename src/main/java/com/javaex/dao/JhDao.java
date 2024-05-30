@@ -171,8 +171,8 @@ public class JhDao {
 	}
 	
 	//업체정보 수정
-	public void update(SolCompanyVo solVo) {
+	public int update(SolCompanyVo solVo) {
 		
-		sqlSession.update("jh.update", solVo);
+		return sqlSession.update("jh.update", solVo);
 	}
 }

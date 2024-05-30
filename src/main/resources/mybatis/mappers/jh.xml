@@ -204,7 +204,7 @@
 	
 	<select id="companymodify" parameterType="int" resultType="com.javaex.vo.SolCompanyVo">
 		select	company_name companyName,
-				company_image companyImgae,
+				company_image companyImage,
 		        company_bn companyBn,
 		        company_intro companyIntro,
 		        company_id companyId,

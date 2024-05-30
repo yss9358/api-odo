@@ -135,12 +135,17 @@ public class JhController {
 	
 	//업체수정
 	@PutMapping("odo/companymodify")
-	public void modify(HttpServletRequest request, @ModelAttribute SolCompanyVo solVo) {
+	public JsonResult modify(HttpServletRequest request, @ModelAttribute SolCompanyVo solVo) {
 		int no = JwtUtil.getNoFromHeader(request);
 		
-		solVo.setCompanyNo(no);
-		js.update(solVo);
-		
+		if(no > 0) {
+			//solVo.setCompanyNo(no);
+			//System.out.println(solVo);
+			js.update(solVo);
+			return JsonResult.success(solVo);
+		}else {
+			return JsonResult.fail("fail");
+		}
 		
 		
 		

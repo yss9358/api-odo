@@ -243,46 +243,52 @@ public class JhService {
 		return jd.companymodify(a);
 	}
 
-	//업체수정
-	public String update(SolCompanyVo solVo) {
-		
-		//파일 저장
-		MultipartFile file = solVo.getCompanyFile();
-		String osName = System.getProperty("os.name").toLowerCase();
-		String saveDir;
-		if (osName.contains("linux")) {
-			saveDir = "/app/upload/"; // Linux 경로. username을 실제 사용자 이름으로 변경하세요.
-
-		} else {
-			saveDir = "C:\\uploadImages\\";
-		}
-
-		String orgName = file.getOriginalFilename();
-		String exName = orgName.substring(orgName.lastIndexOf("."));
-		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
-		String filePath = saveDir + File.separator + saveName;
-
-		try {
-			byte[] fileData;
-			fileData = file.getBytes();
-
-			OutputStream os = new FileOutputStream(filePath);
-			BufferedOutputStream bos = new BufferedOutputStream(os);
-
-			bos.write(fileData);
-			bos.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		solVo.setCompanyImage(saveName);
+	// 업체수정
+	public int update(SolCompanyVo solVo) {
 		System.out.println(solVo);
+		// 파일 저장
+		MultipartFile file = solVo.getCompanyFile();
+		if(file != null) {	//받아온 파일이 없으면 파일 저장 없음
+			String osName = System.getProperty("os.name").toLowerCase();
+			String saveDir;
+			if (osName.contains("linux")) {
+				saveDir = "/app/upload/"; // Linux 경로. username을 실제 사용자 이름으로 변경하세요.
+
+			} else {
+				saveDir = "C:\\uploadImages\\";
+			}
+
+			String orgName = file.getOriginalFilename();
+			String exName = orgName.substring(orgName.lastIndexOf("."));
+			String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+			String filePath = saveDir + File.separator + saveName;
+
+			try {
+				byte[] fileData;
+				fileData = file.getBytes();
+
+				OutputStream os = new FileOutputStream(filePath);
+				BufferedOutputStream bos = new BufferedOutputStream(os);
+
+				bos.write(fileData);
+				bos.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			solVo.setCompanyImage(saveName);
+		}
 		
-		//db저장
+		System.out.println(solVo);
+
+		// db저장
 		jd.update(solVo);
-		
-		
-		
-		return null;
+
+		if (jd.update(solVo) > 0) {
+
+			return jd.update(solVo);
+		} else {
+			return 0;
+		}
 	}
 }
