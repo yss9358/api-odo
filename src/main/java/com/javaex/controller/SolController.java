@@ -1,5 +1,6 @@
 package com.javaex.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -93,30 +94,33 @@ public class SolController {
 	}
 
 	// 선택한클래스 불러오기
-	@PostMapping("getclass")
-	public JsonResult getSelectClass(@RequestBody Map<Object, String> tempVo) {
+	@GetMapping("getclass")
+	public JsonResult getSelectClass(@RequestParam(value="companyNo") int companyNo, @RequestParam(value="classNo") int classNo)  {
 		System.out.println("SolController.getClass()");
+		Map<String, Object> tempVo = new HashMap<String, Object>();
+		tempVo.put("companyNo", companyNo);
+		tempVo.put("classNo", classNo);
 		SolClassVo classVo = solservice.exeGetClass(tempVo);
-//		System.out.println(classVo);
+		System.out.println(classVo);
 		if (classVo != null) {
 			return JsonResult.success(classVo);
 		} else {
 			return JsonResult.fail("정보 불러오기 실패");
 		}
 	}
-	
-	//정규클래스 불러오기
+
+	// 클래스 불러오기
 	@PostMapping("getrclass/{no}")
 	public JsonResult getRClass(@PathVariable int no) {
 		System.out.println("SolController.getRClass");
 		List<SolClassVo> classList = solservice.exegetRClass(no);
-		System.out.println(classList);
-		if(classList != null) {
+//		System.out.println(classList);
+		if (classList != null) {
 			return JsonResult.success(classList);
 		} else {
 			return JsonResult.fail(null);
 		}
-		
+
 	}
 
 	// 카테고리 불러오기
@@ -145,7 +149,7 @@ public class SolController {
 
 	}
 
-	//상세이미지 저장
+	// 상세이미지 저장
 	@PostMapping("file")
 	public JsonResult classinfoFile(@RequestParam(value = "file") MultipartFile file) {
 		System.out.println("SolController.classinfoFile");
@@ -158,14 +162,48 @@ public class SolController {
 	/***********************************************
 	 * 클래스 추가/수정
 	 */
-	@PostMapping("iclass")
+	// 클래스 추가
+	@PostMapping("insert")
 	public JsonResult classAdd(@ModelAttribute SolClassVo vo) {
 		System.out.println("SolController.classAdd");
 		System.out.println(vo.getClassImageFile().getOriginalFilename());
-		String saveName = solservice.exeCompanyImg(vo.getClassImageFile());
-		vo.setClassImage(saveName);
-		System.out.println(vo);
+		solservice.exeInsertClass(vo);
+
 		return JsonResult.success("");
+	}
+
+	// 클래스 수정
+	@PostMapping("update")
+	public JsonResult getUpdateClass(@ModelAttribute SolClassVo vo) {
+		System.out.println("SolController.getUpdateClass");
+//		int token = JwtUtil.getNoFromHeader(request);
+		int count = -1;
+		count = solservice.exeupdate(vo);
+		if (count > 0) {
+			return JsonResult.success("수정되었습니다.");
+		} else {
+			return JsonResult.fail("");
+		}
+	}
+	
+	/************************************************
+	 * 리스트
+	 */
+	//클래스리스트
+	@GetMapping("list")
+	public JsonResult classTypeList(@RequestParam(value ="classType") int classType, @RequestParam(value ="companyNo") int companyNo) {
+		System.out.println("SolController.classList");
+		Map<String, Object> tempVo = new HashMap<String, Object>();
+		tempVo.put("classType", classType);
+		tempVo.put("companyNo", companyNo);
+		List<SolClassVo> classList = solservice.exeClassTypeList(tempVo);
+		System.out.println(classList);
+		if(classList != null) {
+			return JsonResult.success(classList);
+		} else {
+			return JsonResult.fail(null);
+		}
+		
 	}
 
 }

@@ -29,7 +29,8 @@ public class SolClassVo {
 	private String classInfo;
 	private String classUrl;
 	private int recClassNo;
-	private List<String> startDate;
+	private List<String> startDateList;
+	private String startDate;
 	private String endDate;
 
 	public SolClassVo() {
@@ -219,12 +220,19 @@ public class SolClassVo {
 	public void setClassImageFile(MultipartFile classImageFile) {
 		this.classImageFile = classImageFile;
 	}
+	public List<String> getStartDateList() {
+		return startDateList;
+	}
 
-	public List<String> getStartDate() {
+	public void setStartDateList(List<String> startDateList) {
+		this.startDateList = startDateList;
+	}
+
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(List<String> startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
@@ -238,15 +246,17 @@ public class SolClassVo {
 
 	@Override
 	public String toString() {
-		return "SolClassVo [classImageFile=" + classImageFile + ", classNo=" + classNo + ", companyNo=" + companyNo
-				+ ", classImage=" + classImage + ", cate1No=" + cate1No + ", cate2No=" + cate2No + ", cate1Name="
-				+ cate1Name + ", cate2Name=" + cate2Name + ", className=" + className + ", classType=" + classType
-				+ ", classIntro=" + classIntro + ", classZipcode=" + classZipcode + ", classNameAddress="
-				+ classNameAddress + ", classNumAddress=" + classNumAddress + ", classDetailAddress="
-				+ classDetailAddress + ", classLatitude=" + classLatitude + ", classLongitutde=" + classLongitutde
+		return "SolClassVo [classImageFile=" + classImageFile + ", companyNo=" + companyNo + ", classNo=" + classNo
+				+ ", classType=" + classType + ", classImage=" + classImage + ", className=" + className
+				+ ", classIntro=" + classIntro + ", cate1Name=" + cate1Name + ", cate2Name=" + cate2Name
+				+ ", classZipcode=" + classZipcode + ", classNameAddress=" + classNameAddress + ", classNumAddress="
+				+ classNumAddress + ", classDetailAddress=" + classDetailAddress + ", classLatitude=" + classLatitude
+				+ ", classLongitutde=" + classLongitutde + ", cate2No=" + cate2No + ", cate1No=" + cate1No
 				+ ", classPrice=" + classPrice + ", classMin=" + classMin + ", classMax=" + classMax + ", classInfo="
-				+ classInfo + ", classUrl=" + classUrl + ", recClassNo=" + recClassNo + ", startDate=" + startDate
-				+ ", endDate=" + endDate + "]";
+				+ classInfo + ", classUrl=" + classUrl + ", recClassNo=" + recClassNo + ", startDateList="
+				+ startDateList + ", startDate=" + startDate + ", endDate=" + endDate + "]";
 	}
+
+	
 
 }

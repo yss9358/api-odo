@@ -4,47 +4,60 @@
 
 <mapper namespace="sr">
 	<!-- 쿼리문작성 -->
-	<resultMap type="com.javaex.vo.SolClassVo" id="resultMapClassVo">
-      <result column="class_no" property="classNo"></result>
-      <result column="company_no" property="companyNo"></result>
-      <result column="cate1_no" property="cate1No"></result>
-      <result column="cate1_name" property="cate1Name"></result>
-      <result column="cate2_no" property="cate2No"></result>
-      <result column="cate2_name" property="cate2Name"></result>
-      <result column="class_name" property="className"></result>
-      <result column="class_type" property="classType"></result>
-      <result column="class_intro" property="classIntro"></result>
-      <result column="class_zipcode" property="classZipcode"></result>
-      <result column="class_name_address" property="classNameAddress"></result>
-      <result column="class_num_address" property="classNumAddress"></result>
-      <result column="class_detail_address" property="classDetailAddress"></result>
-      <result column="class_latitude" property="classLatitude"></result>
-      <result column="class_longitutde" property="classLongitutde"></result>
-      <result column="class_image" property="classImage"></result>
-      <result column="class_price" property="classPrice"></result>
-      <result column="class_min" property="classMin"></result>
-      <result column="class_max" property="classMax"></result>
-      <result column="class_info" property="classInfo"></result>
-      <result column="class_url" property="classUrl"></result>
-      <result column="rec_class_no" property="recClassNo"></result>
-   </resultMap>
-   <resultMap type="com.javaex.vo.SolCateVo" id="resultMapCateVo">
-      <result column="cate1_no" property="cate1No"></result>
-      <result column="cate2_no" property="cate2No"></result>
-      <result column="cate1_name" property="cate1Name"></result>
-      <result column="cate2_name" property="cate2Name"></result>
-   </resultMap>
+	<resultMap type="com.javaex.vo.SolClassVo"
+		id="resultMapClassVo">
+		<result column="class_no" property="classNo"></result>
+		<result column="company_no" property="companyNo"></result>
+		<result column="cate1_no" property="cate1No"></result>
+		<result column="cate1_name" property="cate1Name"></result>
+		<result column="cate2_no" property="cate2No"></result>
+		<result column="cate2_name" property="cate2Name"></result>
+		<result column="class_name" property="className"></result>
+		<result column="class_type" property="classType"></result>
+		<result column="class_intro" property="classIntro"></result>
+		<result column="class_zipcode" property="classZipcode"></result>
+		<result column="class_name_address" property="classNameAddress"></result>
+		<result column="class_num_address" property="classNumAddress"></result>
+		<result column="class_detail_address"
+			property="classDetailAddress"></result>
+		<result column="class_latitude" property="classLatitude"></result>
+		<result column="class_longitutde" property="classLongitutde"></result>
+		<result column="class_image" property="classImage"></result>
+		<result column="class_price" property="classPrice"></result>
+		<result column="class_min" property="classMin"></result>
+		<result column="class_max" property="classMax"></result>
+		<result column="class_info" property="classInfo"></result>
+		<result column="class_url" property="classUrl"></result>
+		<result column="rec_class_no" property="recClassNo"></result>
+		<result column="start_date" property="startDate"></result>
+		<result column="end_date" property="endDate"></result>
+	</resultMap>
+	<resultMap type="com.javaex.vo.SolCateVo"
+		id="resultMapCateVo">
+		<result column="cate1_no" property="cate1No"></result>
+		<result column="cate2_no" property="cate2No"></result>
+		<result column="cate1_name" property="cate1Name"></result>
+		<result column="cate2_name" property="cate2Name"></result>
+	</resultMap>
+	<!-- <resultMap type="com.javaex.vo.SolSchduleVo"
+		id="resultMapSdVo">
+		<result column="schedule_no" property="scheduleNo"></result>
+		<result column="class_no" property="classNo"></result>
+		<result column="start_date" property="startDate"></result>
+		<result column="end_date" property="endDate"></result>
+	</resultMap> -->
 	<!-- <![CDATA[]]> -->
-	
+
 	<!-- 사업자 -->
 	<!-- 아이디 중복체크 -->
-	<select id="companyId" parameterType="string" resultType="string">
+	<select id="companyId" parameterType="string"
+		resultType="string">
 	<![CDATA[
 		select company_id from company
 		where company_id = #{companyid}
-	]]> 
+	]]>
 	</select>
-	
+
 	<!-- 회원가입 -->
 	<insert id="companyInsert" parameterType="CompanyVo">
 	<![CDATA[
@@ -56,9 +69,10 @@
 		#{companyHp}, #{companyIntro})
 	]]>
 	</insert>
-	
+
 	<!-- 사업자 로그인 -->
-	<select id="companyLogin" parameterType="CompanyVo" resultType="CompanyVo">
+	<select id="companyLogin" parameterType="CompanyVo"
+		resultType="CompanyVo">
 	<![CDATA[
 		select company_no companyNo, company_id companyId, company_pw companyPass
 		from company
@@ -66,21 +80,53 @@
 		and company_pw = #{companyPass}
 	]]>
 	</select>
-	
-	
-	
-	<!-- 클래스 -->
-	<insert id="classInsert">
+
+
+
+	<!-- 클래스 등록 -->
+	<insert id="classInsert" parameterType="classVo">
 	<![CDATA[
 	insert into class
-	values(null, 2,3 ,"소리클래스" ,1 ,"어서옵쇼 솔클~!!~!~!" , 
-		"5542", "서울" ,"방이동", "1004호",37.5151081873838,127.107222748544,
-		"twi1.jpg",10000,3,10, 
-		"소리클래스 상세설명",
-		"url", null)
+	values(null, #{companyNo},#{cate2No} ,#{className} ,#{classType} ,#{classIntro} , 
+		#{classZipcode}, #{classNameAddress} ,#{classNumAddress}, 
+		#{classDetailAddress},#{classLatitude},#{classLongitutde},
+		#{classImage},#{classPrice} ,#{classMin},#{classMax}, 
+		#{classInfo}, #{classUrl}, #{recClassNo})
+	]]>
+		<selectKey keyProperty="classNo" resultType="int"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 일정등록 -->
+	<insert id="scheduleInsert" parameterType="com.javaex.vo.SolScheduleVo">
+	<![CDATA[
+	insert into schedule
+	values(null, #{companyNo}, #{startDate}, #{endDate})
 	]]>
 	</insert>
-	<select id="companyClassList" parameterType="map" resultType="classVo">
+	<!-- 클래스 수정 -->
+	<update id="classUpdate" parameterType="classVo">
+	<![CDATA[
+	update class 
+	set class_name = #{className},
+		class_intro = #{classIntro},
+    	class_name_address = #{classNameAddress},
+    	class_num_address = #{classNumAddress},
+    	cate2_no = #{cate2No},
+    	class_price = #{classPrice},
+    	class_min = #{classMin},
+    	class_max = #{classMax},
+    	class_info = #{classInfo},
+    	rec_class_no = #{recClassNo}
+	where class_no = #{classNo}
+	]]>
+	</update>
+	<!-- 일정수정 -->
+
+	<!-- 회사별 클래스리스트 -->
+	<select id="companyClassList" parameterType="map"
+		resultType="classVo">
 	<![CDATA[
 		select class_no classNo, class_name className
 		from class 
@@ -88,24 +134,25 @@
 		and class_type = #{type}
 	]]>
 	</select>
-	
-	
-	<!-- 클래스 불러오기 -->
-	<select id="getClass" parameterType="map" resultType="classVo" resultMap="resultMapClassVo">
+
+
+	<!-- 이전클래스 불러오기 -->
+	<select id="getClass" parameterType="classVo" resultMap="resultMapClassVo">
 	<![CDATA[
 	select c.class_no, c.company_no, c.class_name, c.class_intro, 
 		c.class_zipcode, c.class_name_address, c.class_num_address, 
+		c.class_detail_address, c.class_latitude, c.class_longitutde,
 		c.cate2_no, t.cate1_no, c.class_type,
 		c.class_price, c.class_min, c.class_max,
 		c.class_info, c.rec_class_no
 	from class c, cate1 t, cate2 t2
-	where c.company_no = #{companyNum}
+	where c.company_no = #{companyNo}
 	and c.class_no = #{classNo}
 	and c.cate2_no = t2.cate2_no
 	and t.cate1_no = t2.cate1_no
 	]]>
 	</select>
-	<select id="rCalss" parameterType="int" resultType="classVo" resultMap="resultMapClassVo">
+	<select id="rCalss" parameterType="int" resultMap="resultMapClassVo">
 	<![CDATA[
 	select class_no, class_name
 	from class 
@@ -114,7 +161,7 @@
 	]]>
 	</select>
 	<!-- 1차 카테고리 불러오기 -->
-	<select id="selectAllCate1" resultType="com.javaex.vo.SolCateVo" resultMap="resultMapCateVo">
+	<select id="selectAllCate1" resultMap="resultMapCateVo">
 	<![CDATA[
 	select c2.cate1_no, c1.cate1_name
 	from cate1 c1, cate2 c2
@@ -123,7 +170,7 @@
 	]]>
 	</select>
 	<!-- 2차카테고리 불러오기 -->
-	<select id="selectCate2" parameterType="int" resultType="com.javaex.vo.SolCateVo" resultMap="resultMapCateVo">
+	<select id="selectCate2" parameterType="int" resultMap="resultMapCateVo">
 	<![CDATA[
 	select c2.cate2_no, c2.cate2_name
 	from cate1 c1, cate2 c2
@@ -132,4 +179,21 @@
 	]]>
 	</select>
 	
+	<!-- 클래스리스트 -->
+	<select id="classList" parameterType="map" resultMap="resultMapClassVo">
+	<![CDATA[
+	select c.class_no, c.company_no, c.class_name, 
+		c.class_intro, c.class_type,c.class_image,
+        date_format(s.start_date, '%Y/%m/%d') start_date, date_format(s.end_date, '%Y/%m/%d') end_date,
+        c.class_min, c.class_max
+	from class c, schedule s
+	where c.company_no = #{companyNo}
+	and class_type = #{classType}
+    and c.class_no = s.class_no
+	]]>
+	</select>
+	
+	
+	
+
 </mapper>
