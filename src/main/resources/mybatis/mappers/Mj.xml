@@ -27,4 +27,17 @@
 		]]>
 	</update>
 	
+	<!-- 리스트 -->
+	 <select id="select" resultType="com.javaex.vo.MjVo">
+	 	<![CDATA[
+	        SELECT idx,
+				notice_name,
+	        	title,
+	        	content,
+	        	regDate,
+	        	pagesNo
+	 		FROM notice;
+	 	]]>
+    </select>
+
 </mapper>

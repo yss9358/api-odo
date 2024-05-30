@@ -1,5 +1,6 @@
 package com.javaex.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -31,6 +32,15 @@ public class MjDao {
 		int count = sqlSession.update("Mj.update",mjVo);
 		
 		return count;
+	}
+	
+	//리스트
+	public List<MjVo> mjSelect() {
+		System.out.println("MjDao.mjSelect");
+			
+		List<MjVo> MjList = sqlSession.selectList("Mj.select");
+			
+		return MjList;
 	}
 
 }

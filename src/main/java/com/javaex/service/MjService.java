@@ -1,5 +1,6 @@
 package com.javaex.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,15 @@ public class MjService {
 		int count = mjDao.personModify(mjVo);
 		
 		return count;
+	}
+	
+	//리스트
+	public List<MjVo> exeList() {
+		System.out.println("MjService.exeList");
+			
+		List<MjVo> MjList = mjDao.mjSelect();
+			
+		return MjList;
 	}
 	
 }
