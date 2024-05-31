@@ -68,7 +68,7 @@ public class SsService {
 		map.put("userNo", userNo);
 		
 		page = (page>0) ? page : (page=1);
-		int listCount = 5;
+		int listCount = 7;
 		int startRowNo = (page-1)*listCount;
 		
 		map.put("startRowNo", startRowNo);
@@ -216,13 +216,17 @@ public class SsService {
 		map.put("type", type);
 		
 		page = (page>0) ? page : (page=1);
-		int listCount = 5;
+		int listCount = 7;
 		int startRowNo = (page-1)*listCount;
 		map.put("startRowNo", startRowNo);
 		map.put("listCount", listCount);
 		
-		
-		return ssDao.getClassReviewList(map);
+		List<ClassReviewVo> list = ssDao.getClassReviewList(map);
+		if(list == null) {
+			return null;
+		} else {
+			return list;
+		}
 	}
 	
 	// 리뷰페이지 - 클래스 정보 가져오기

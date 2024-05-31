@@ -142,7 +142,11 @@ public class SsController {
 			@RequestParam(value="page", required=false, defaultValue="1") int page) {
 		
 		List<ClassReviewVo> list = ssService.exeGetClassReviewList(classNo,type,page);
-		return JsonResult.success(list);	
+		if(list != null) {
+			return JsonResult.success(list); 
+		} else {
+			return JsonResult.fail("더 이상 불러올 리스트가 없습니다.");
+		}
 	}
 	
 	// 리뷰페이지 - 클래스 정보 가져오기
