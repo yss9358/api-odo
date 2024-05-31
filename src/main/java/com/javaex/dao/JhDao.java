@@ -142,17 +142,17 @@ public class JhDao {
 	}
 	
 	//업체정보1
-	public CompanyInfoVo companyinfo(int a) {
+	public CompanyInfoVo companyinfo(Map<String, Integer> intMap) {
 
-		CompanyInfoVo ci = sqlSession.selectOne("companyinfo1", a);
+		CompanyInfoVo ci = sqlSession.selectOne("companyinfo1", intMap);
 		
 		return ci;
 	}
 	
 	//업체정보2 클래스 리스트
-	public List<CompanyInfoVo2> classList(int a) {
+	public List<CompanyInfoVo2> classList(Map<String, Integer> intMap) {
 		
-		List<CompanyInfoVo2> ci2 = sqlSession.selectList("jh.companyinfo2", a);
+		List<CompanyInfoVo2> ci2 = sqlSession.selectList("jh.companyinfo2", intMap);
 		//System.out.println(ci2);
 		return ci2;
 	}
@@ -162,6 +162,30 @@ public class JhDao {
 		
 		CompanyInfoVo2 ci2 = sqlSession.selectOne("jh.companyinfo3", a);
 		return ci2;
+	}
+	
+	//클래스 위시등록
+	public int wishInsert(Map<String, Integer> intMap) {
+		
+		return sqlSession.insert("jh.wishInsert", intMap);
+	}
+	
+	//업체 위시등록
+	public void wishInsert2(WishCompanyVo wc) {
+		
+		sqlSession.insert("jh.wishInsert2", wc);
+	}
+	
+	//클래스 위시삭제
+	public int wishDelete(Map<String, Integer> intMap) {
+		
+		return sqlSession.delete("jh.wishDelete", intMap);
+	}
+	
+	//업체 위시삭제
+	public int wishDelete2(int a) {
+		
+		return sqlSession.delete("jh.wishDelete2", a);
 	}
 	
 	//업체정보 수정페이지

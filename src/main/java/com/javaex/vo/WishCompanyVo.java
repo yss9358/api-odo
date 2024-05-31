@@ -10,6 +10,16 @@ public class WishCompanyVo {
 	public WishCompanyVo() {
 		super();
 	}
+	
+	
+
+	public WishCompanyVo(int companyNo, int no) {
+		super();
+		this.companyNo = companyNo;
+		this.no = no;
+	}
+
+
 
 	public WishCompanyVo(String companyImage, String companyName, int companyNo, int no) {
 		super();

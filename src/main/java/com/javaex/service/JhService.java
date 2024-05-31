@@ -196,11 +196,11 @@ public class JhService {
 	}
 
 	// 업체정보페이지
-	public Map<String, Object> companyinfo(int a) {
+	public Map<String, Object> companyinfo(Map<String, Integer> intMap) {
 
-		CompanyInfoVo ci = jd.companyinfo(a);
+		CompanyInfoVo ci = jd.companyinfo(intMap);
 
-		List<CompanyInfoVo2> ci2 = jd.classList(a);
+		List<CompanyInfoVo2> ci2 = jd.classList(intMap);
 
 		for (int i = 0; i < ci2.size(); i++) {
 			int b = ci2.get(i).getClassNo();
@@ -211,6 +211,7 @@ public class JhService {
 			String className = ci2.get(i).getClassName();
 			String classIntro = ci2.get(i).getClassIntro();
 			String classImage = ci2.get(i).getClassImage();
+			int wishNo = ci2.get(i).getWishNo();
 			double reviewPoint = 0;
 			int reviewCount = 0;
 			double q1 = 0;
@@ -224,17 +225,43 @@ public class JhService {
 				q3 = ci3.getQ3();
 			}
 			CompanyInfoVo2 ci4 = new CompanyInfoVo2(classNo, className, classIntro, classImage, reviewPoint,
-					reviewCount, q1, q2, q3);
+					reviewCount, q1, q2, q3, wishNo);
 			ci2.set(i, ci4);
 		}
-		System.out.println(ci);
-		System.out.println(ci2);
 
 		Map<String, Object> infoMap = new HashMap<>();
 		infoMap.put("ci", ci);
 		infoMap.put("ci2", ci2);
 
 		return infoMap;
+	}
+	
+	//클래스 위시등록
+	public int wishInsert(Map<String, Integer> intMap) {
+		
+		return jd.wishInsert(intMap);
+	}
+	
+	//업체 위시등록
+	public int wishInsert2(WishCompanyVo wc) {
+
+		jd.wishInsert2(wc);
+		
+		return wc.getNo();
+	}
+	
+	//클래스 위시삭제
+	public int wishDelete(Map<String, Integer> intMap) {
+		
+		int a = jd.wishDelete(intMap);
+		System.out.println(a);
+		return a;
+	}
+	
+	//업체 위시삭제
+	public int wishDelete2(int a) {
+		
+		return jd.wishDelete2(a);
 	}
 
 	// 업체수정페이지

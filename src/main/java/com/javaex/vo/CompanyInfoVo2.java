@@ -11,13 +11,14 @@ public class CompanyInfoVo2 {
 	private double q1;
 	private double q2;
 	private double q3;
+	private int wishNo;
 	
 	public CompanyInfoVo2() {
 		super();
 	}
 
 	public CompanyInfoVo2(int classNo, String className, String classIntro, String classImage, double reviewPoint,
-			int reviewCount, double q1, double q2, double q3) {
+			int reviewCount, double q1, double q2, double q3, int wishNo) {
 		super();
 		this.classNo = classNo;
 		this.className = className;
@@ -28,6 +29,7 @@ public class CompanyInfoVo2 {
 		this.q1 = q1;
 		this.q2 = q2;
 		this.q3 = q3;
+		this.wishNo = wishNo;
 	}
 
 	public int getClassNo() {
@@ -102,10 +104,20 @@ public class CompanyInfoVo2 {
 		this.q3 = q3;
 	}
 
+	public int getWishNo() {
+		return wishNo;
+	}
+
+	public void setWishNo(int wishNo) {
+		this.wishNo = wishNo;
+	}
+
 	@Override
 	public String toString() {
 		return "CompanyInfoVo2 [classNo=" + classNo + ", className=" + className + ", classIntro=" + classIntro
 				+ ", classImage=" + classImage + ", reviewPoint=" + reviewPoint + ", reviewCount=" + reviewCount
-				+ ", q1=" + q1 + ", q2=" + q2 + ", q3=" + q3 + "]";
+				+ ", q1=" + q1 + ", q2=" + q2 + ", q3=" + q3 + ", wishNo=" + wishNo + "]";
 	}
+
+	
 }

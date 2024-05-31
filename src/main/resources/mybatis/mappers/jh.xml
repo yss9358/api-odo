@@ -171,24 +171,42 @@
 		and class.class_no = #{no}
 	</select>
 	
-	<select id="companyinfo1" parameterType="int" resultType="com.javaex.vo.CompanyInfoVo">
-		select	company_name companyName,
-				company_hp companyHp,
-		        company_name_address companyAddress,
-		        company_intro companyIntro,
-		        company_image companyImage
-		from company
-		where company_no = #{no}
+	<select id="companyinfo1" parameterType="Map" resultType="com.javaex.vo.CompanyInfoVo">
+		select	k.companyName,
+				k.companyHp,
+		        k.companyAddress,
+		        k.companyIntro,
+		        k.companyImage,
+		        w_company_no wishNo
+		from (select	company_name companyName,
+						company_hp companyHp,
+				        company_name_address companyAddress,
+				        company_intro companyIntro,
+				        company_image companyImage,
+		                company_no
+				from company
+		        where company.company_no = #{companyNo}) k left join wish_company
+		        on k.company_no = wish_company.company_no
+		        and user_no = #{no}
 	</select>
 	
-	<select id="companyinfo2" parameterType="int" resultType="com.javaex.vo.CompanyInfoVo2">
-		select	class_no classNo,
-				class_name className,
-		        class_intro classIntro,
-		        class_image classImage
-		from company, class
-		where company.company_no = class.company_no
-		and company.company_no = #{no}
+	<select id="companyinfo2" parameterType="Map" resultType="com.javaex.vo.CompanyInfoVo2">
+		SELECT k.classNo classNo,
+		       k.className className,
+		       k.classIntro classIntro,
+		       k.classImage classImage,
+		       w_class_no wishNo
+		FROM (
+		    SELECT c.class_no AS classNo,
+		           c.class_name AS className,
+		           c.class_intro AS classIntro,
+		           c.class_image AS classImage
+		    FROM company co
+		    JOIN class c ON co.company_no = c.company_no
+		    WHERE co.company_no = #{companyNo}
+		) AS k 
+		LEFT JOIN wish_class wc ON wc.class_no = k.classNo
+		AND wc.user_no = #{no}
 	</select>
 	
 	<select id="companyinfo3" parameterType="int" resultType="com.javaex.vo.CompanyInfoVo2">
@@ -202,6 +220,31 @@
 		and schedule.schedule_no = review.schedule_no
 		and class.class_no = #{no}
 	</select>
+	
+	<insert id="wishInsert" parameterType="Map">
+		insert into wish_class
+		value(null, #{classNo}, #{userNo}, now());
+	</insert>
+	
+	<insert id="wishInsert2" parameterType="com.javaex.vo.WishCompanyVo">
+		insert into wish_company
+		value(null, #{companyNo}, #{no}, now())
+		<selectKey keyProperty="no" resultType="int"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<delete id="wishDelete" parameterType="Map">
+		delete from wish_class
+		where class_no = #{classNo}
+		and user_no = #{userNo}
+	</delete>
+	
+	<delete id="wishDelete2" parameterType="int">
+		delete from wish_company
+		where w_company_no = #{no}
+	</delete>
 	
 	<select id="companymodify" parameterType="int" resultType="com.javaex.vo.SolCompanyVo">
 		select	company_name companyName,

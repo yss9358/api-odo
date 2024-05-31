@@ -7,20 +7,21 @@ public class CompanyInfoVo {
 	private String companyAddress;
 	private String companyIntro;
 	private String companyImage;
-	
+	private int wishNo;
 	
 	public CompanyInfoVo() {
 		super();
 	}
 
 	public CompanyInfoVo(String companyName, String companyHp, String companyAddress, String companyIntro,
-			String companyImage) {
+			String companyImage, int wishNo) {
 		super();
 		this.companyName = companyName;
 		this.companyHp = companyHp;
 		this.companyAddress = companyAddress;
 		this.companyIntro = companyIntro;
 		this.companyImage = companyImage;
+		this.wishNo = wishNo;
 	}
 
 	public String getCompanyName() {
@@ -63,9 +64,18 @@ public class CompanyInfoVo {
 		this.companyImage = companyImage;
 	}
 
+	public int getWishNo() {
+		return wishNo;
+	}
+
+	public void setWishNo(int wishNo) {
+		this.wishNo = wishNo;
+	}
+
 	@Override
 	public String toString() {
 		return "CompanyInfoVo [companyName=" + companyName + ", companyHp=" + companyHp + ", companyAddress="
-				+ companyAddress + ", companyIntro=" + companyIntro + ", companyImage=" + companyImage + "]";
+				+ companyAddress + ", companyIntro=" + companyIntro + ", companyImage=" + companyImage + ", wishNo="
+				+ wishNo + "]";
 	}
 }
