@@ -131,7 +131,10 @@ public class SsService {
 	}
 	
 	// 작성한 리뷰 정보 가져오기
-	public Map<String,Object> exeGetReview(Map<String, Integer> map) {
+	public Map<String,Object> exeGetReview(int userNo, int reviewNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("userNo", userNo);
+		map.put("reviewNo", reviewNo);
 		return ssDao.getReview(map);
 	}
 	

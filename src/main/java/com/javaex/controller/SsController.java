@@ -1,6 +1,5 @@
 package com.javaex.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,8 +67,8 @@ public class SsController {
 			HttpServletRequest request,
 			@RequestParam(value="page", required = false, defaultValue="1") int page
 			) {
+		
 		int userNo = JwtUtil.getNoFromHeader(request);
-
 		if(userNo != -1) {
 			List<MyPayVo> list = ssService.exePayList(classType,userNo,page);
 			if(list != null) {
@@ -77,9 +76,8 @@ public class SsController {
 			} else {
 				return JsonResult.fail("더 이상 불러올 리스트가 없습니다.");
 			}
-			
 		} else {
-			return JsonResult.fail("다시 로그인해주세요.");
+			return JsonResult.fail("다시 로그인 해주세요.");
 		}
 	}
 	
@@ -94,44 +92,62 @@ public class SsController {
 	@PostMapping("/odo/ss/reviews")
 	public JsonResult writeReveiw(HttpServletRequest request,@ModelAttribute ReviewVo vo) {
 		int userNo = JwtUtil.getNoFromHeader(request);
-		int count = ssService.exeInsertReview(userNo,vo);
-		return JsonResult.success(count);
+		if(userNo != -1) {
+			int count = ssService.exeInsertReview(userNo,vo);
+			return JsonResult.success(count);
+		} else {
+			return JsonResult.fail("다시 로그인 해주세요.");
+		}
 	}
 	
 	// 작성한 리뷰 정보 가져오기
 	@GetMapping("/odo/ss/reviews")
-	public JsonResult getReview(	@RequestParam(value="reviewNo") int reviewNo,
-									HttpServletRequest request) {
+	public JsonResult getReview(	
+			@RequestParam(value="reviewNo") int reviewNo,
+			HttpServletRequest request) {
 		int userNo = JwtUtil.getNoFromHeader(request);
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("userNo", userNo);
-		map.put("reviewNo", reviewNo);
-		Map<String, Object> resultMap = ssService.exeGetReview(map);
-		return JsonResult.success(resultMap);
+		if(userNo != -1) {
+			Map<String, Object> resultMap = ssService.exeGetReview(userNo, reviewNo);
+			return JsonResult.success(resultMap);
+		} else {
+			return JsonResult.fail("다시 로그인 해주세요.");
+		}
 	}
 	
 	// 리뷰 수정하기
 	@PutMapping("/odo/ss/reviews")
 	public JsonResult modifyReview(HttpServletRequest request,@ModelAttribute ReviewVo vo) {
 		int userNo = JwtUtil.getNoFromHeader(request);
-		int count = ssService.exeUpdateReview(userNo,vo);
-		return JsonResult.success(count);
+		if(userNo != -1) {
+			int count = ssService.exeUpdateReview(userNo,vo);
+			return JsonResult.success(count);
+		} else {
+			return JsonResult.fail("다시 로그인 해주세요.");
+		}
 	}
 	
 	// 출석정보 가져오기
 	@GetMapping("/odo/ss/attenlist")
 	public JsonResult attenList(@RequestParam(value="scheduleNo") int scheduleNo, HttpServletRequest request) {
 		int userNo = JwtUtil.getNoFromHeader(request);
-		Map<String,Object> map = ssService.exeGetAttenList(userNo,scheduleNo);
-		return JsonResult.success(map);
+		if(userNo != -1) {
+			Map<String,Object> map = ssService.exeGetAttenList(userNo,scheduleNo);
+			return JsonResult.success(map);
+		} else {
+			return JsonResult.fail("다시 로그인 해주세요.");
+		}
 	}
 	
 	// 쿠폰정보 가져오기
 	@GetMapping("/odo/ss/usercoupon")
 	public JsonResult couponList(HttpServletRequest request) {
 		int userNo = JwtUtil.getNoFromHeader(request);
-		List<CouponVo> list = ssService.exeCheckCoupon(userNo);
-		return JsonResult.success(list);
+		if(userNo != -1) {
+			List<CouponVo> list = ssService.exeCheckCoupon(userNo);
+			return JsonResult.success(list);
+		} else {
+			return JsonResult.fail("다시 로그인 해주세요.");
+		}
 	}
 	
 	// 리뷰페이지 - 클래스 리뷰 가져오기
@@ -160,12 +176,16 @@ public class SsController {
 	@PostMapping("odo/ss/wishclassis")
 	public JsonResult addWishClass(HttpServletRequest request, @ModelAttribute CheckWishClassVo vo) {
 		int userNo = JwtUtil.getNoFromHeader(request);
-		vo.setUserNo(userNo);
-		int count = ssService.exeInsertWishClass(vo);
-		if(count == 1) {
-			return JsonResult.success(vo.getwClassNo());
+		if(userNo != -1) {
+			vo.setUserNo(userNo);
+			int count = ssService.exeInsertWishClass(vo);
+			if(count == 1) {
+				return JsonResult.success(vo.getwClassNo());
+			} else {
+				return JsonResult.fail("등록실패");
+			}
 		} else {
-			return JsonResult.fail("등록실패");
+			return JsonResult.fail("다시 로그인 해주세요.");
 		}
 	}
 	
@@ -173,12 +193,16 @@ public class SsController {
 	@DeleteMapping("odo/ss/wishclassis")
 	public JsonResult deleteWishClass(HttpServletRequest request, @ModelAttribute CheckWishClassVo vo) {
 		int userNo = JwtUtil.getNoFromHeader(request);
-		vo.setUserNo(userNo);
-		int count = ssService.exeDeleteWishClass(vo);
-		if(count == 1) {
-			return JsonResult.success(count);
+		if(userNo != -1) {
+			vo.setUserNo(userNo);
+			int count = ssService.exeDeleteWishClass(vo);
+			if(count == 1) {
+				return JsonResult.success(count);
+			} else {
+				return JsonResult.fail("삭제실패");
+			}
 		} else {
-			return JsonResult.fail("삭제실패");
+			return JsonResult.fail("다시 로그인 해주세요.");
 		}
 	}
 	
