@@ -61,12 +61,14 @@ public class SsService {
 	}
 	
 	// 회원 결제내역 가져오기 
-	public List<MyPayVo> exePayList(Map<String, Integer> map) {		
+	public List<MyPayVo> exePayList(int classType, int userNo, int page) {		
 		
-		int page = map.get("page");
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("classType", classType);
+		map.put("userNo", userNo);
+		
 		page = (page>0) ? page : (page=1);
-		
-		int listCount = 3;
+		int listCount = 7;
 		int startRowNo = (page-1)*listCount;
 		
 		map.put("startRowNo", startRowNo);
@@ -78,26 +80,7 @@ public class SsService {
 		} else {
 			return list;
 		}
-		
-//		if(map.get("classType") == 1) {
-////			클래스타입이 1이면 원데이클래스 정보
-//			List<MyPayVo> list = ssDao.getOneDayPayListByNo(map.get("userNo"));
-//			if(list == null) {
-//				return null;
-//			} else {
-//				return list;
-//			}
-//		} else {
-////			클래스타입이 1이 아니면 정규,상시클래스 정보
-//			List<MyPayVo> list = ssDao.getRegularPayListByNo(map.get("userNo"));
-//			if(list == null) {
-//				return null;
-//			} else {
-//				return list;
-//			}
-//		}
 	}
-	
 	
 	// 리뷰쓸때 클래스정보 가져오기
 	public OneClassVo exeGetClassOne(int no) {
@@ -148,7 +131,10 @@ public class SsService {
 	}
 	
 	// 작성한 리뷰 정보 가져오기
-	public Map<String,Object> exeGetReview(Map<String, Integer> map) {
+	public Map<String,Object> exeGetReview(int userNo, int reviewNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("userNo", userNo);
+		map.put("reviewNo", reviewNo);
 		return ssDao.getReview(map);
 	}
 	
@@ -227,11 +213,23 @@ public class SsService {
 	}
 	
 	// 리뷰페이지 - 클래스 리뷰 가져오기
-	public List<ClassReviewVo> exeGetClassReviewList(int classNo, int type) {
+	public List<ClassReviewVo> exeGetClassReviewList(int classNo, int type, int page) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("classNo", classNo);
 		map.put("type", type);
-		return ssDao.getClassReviewList(map);
+		
+		page = (page>0) ? page : (page=1);
+		int listCount = 7;
+		int startRowNo = (page-1)*listCount;
+		map.put("startRowNo", startRowNo);
+		map.put("listCount", listCount);
+		
+		List<ClassReviewVo> list = ssDao.getClassReviewList(map);
+		if(list == null) {
+			return null;
+		} else {
+			return list;
+		}
 	}
 	
 	// 리뷰페이지 - 클래스 정보 가져오기
