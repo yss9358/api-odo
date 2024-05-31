@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -180,7 +179,7 @@ public class SsController {
 			vo.setUserNo(userNo);
 			int count = ssService.exeInsertWishClass(vo);
 			if(count == 1) {
-				return JsonResult.success(vo.getwClassNo());
+				return JsonResult.success(count);
 			} else {
 				return JsonResult.fail("등록실패");
 			}
@@ -206,21 +205,15 @@ public class SsController {
 		}
 	}
 	
+	// 카카오 로그인
+	@GetMapping("/odo/kakao")
+	public void kakaoLogin() {
+		System.out.println("kakao");
+	}
 	
-	
-//	// 카카오 로그인
-//	@GetMapping("/odo/user/oauth")
-//	public String kakaoLogin() {
-//		System.out.println("kakao");
-//		String url = "http://kauth.kakao.com/oauth/authorize?client_id=4946b7c22ba5fb9b866b344e8f2f4224&redirect_uri=http://localhost:8080/kak&response_type=code";
-//		System.out.println(url);
-//		return url;
-//	}
-	
-	// 카카오 로그인 토큰 가져오기 
-	@GetMapping("/odo/ss/token/{code}")
-	public void kakaoToken(@PathVariable(value="code") String code) {
-		ssService.requestToken(code);
+	@PostMapping("/odo/ss/token")
+	public void kakaoToken(@RequestBody String code) {
+		System.out.println(code);
 	}
 	
 	

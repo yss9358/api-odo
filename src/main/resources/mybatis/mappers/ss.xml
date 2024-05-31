@@ -319,11 +319,6 @@
 			insert into wish_class
 			values(null, #{classNo}, #{userNo}, now())
 		]]>
-		<selectKey  keyProperty="wClassNo" resultType="int" order="AFTER">
-			<![CDATA[
-				select last_insert_id()
-			]]>
-		</selectKey>
 	</insert>
 	
 	<!-- 위시 클래스 삭제 -->

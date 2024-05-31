@@ -62,7 +62,6 @@ public class SsService {
 	
 	// 회원 결제내역 가져오기 
 	public List<MyPayVo> exePayList(int classType, int userNo, int page) {		
-		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("classType", classType);
 		map.put("userNo", userNo);
@@ -127,7 +126,6 @@ public class SsService {
 			int count = ssDao.insertReview(vo);
 			return count;
 		}
-		
 	}
 	
 	// 작성한 리뷰 정보 가져오기
@@ -177,8 +175,6 @@ public class SsService {
 			int count = ssDao.updateReview(vo);
 			return count;
 		}
-		
-		
 	}
 	
 	// 출석정보 가져오기
