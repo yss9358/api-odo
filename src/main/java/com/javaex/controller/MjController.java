@@ -53,15 +53,33 @@ public class MjController {
 	}
 	
 	//리스트
-		@GetMapping("/odo/mypage/notice")
-		public List<MjVo> list(Model model) {
-			System.out.println("MjController.list");
+	@GetMapping("/odo/mypage/notice")
+	public List<MjVo> list(Model model) {
+		System.out.println("MjController.list");
 			
-			List<MjVo> MjList = mjService.exeList();
+		List<MjVo> MjList = mjService.exeList();
 			
-			model.addAttribute("list", MjList);
+		model.addAttribute("list", MjList);
 			
-			return MjList;
-		}
+		return MjList;
+	}
+	
+	//읽기
+	@GetMapping("/odo/mypage/notice/{no}")
+	public MjVo Read(@PathVariable("no") int no) {
+		System.out.println("NoticeController.Read()");
+		System.out.println(no);
+		
+		MjVo MjVo = mjService.exeRead(no);
+		System.out.println(MjVo);
+		return MjVo;
+	}
+	
+	
+	
+
+		
+	//통계리스트
+	//public void 
 
 }

@@ -28,16 +28,30 @@
 	</update>
 	
 	<!-- 리스트 -->
-	 <select id="select" resultType="com.javaex.vo.MjVo">
+	 <select id="selectlist" resultType="com.javaex.vo.MjVo">
 	 	<![CDATA[
 	        SELECT idx,
 				notice_name,
 	        	title,
-	        	content,
 	        	regDate,
 	        	pagesNo
 	 		FROM notice;
 	 	]]>
     </select>
+    
+    <!-- 읽기 -->
+    <select id="selectOneNO" parameterType="int" resultType="com.javaex.vo.MjVo">
+	 	<![CDATA[
+	        SELECT idx,
+				notice_name,
+				title,
+				content,
+				regDate,
+				pagesNo
+			FROM notice
+			WHERE idx = 1;
+	 	]]>
+    </select>
+	 
 
 </mapper>

@@ -38,9 +38,18 @@ public class MjDao {
 	public List<MjVo> mjSelect() {
 		System.out.println("MjDao.mjSelect");
 			
-		List<MjVo> MjList = sqlSession.selectList("Mj.select");
+		List<MjVo> MjList = sqlSession.selectList("Mj.selectlist");
 			
 		return MjList;
+	}
+	
+	//읽기
+	public MjVo selectOne(int no) {
+		System.out.println("NoticeDao.selectOneNotice()");
+		
+		MjVo MjVo=sqlSession.selectOne("Mj.selectOneNO", no);
+		
+		return MjVo;
 	}
 
 }

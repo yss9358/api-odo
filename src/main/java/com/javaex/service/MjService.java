@@ -42,4 +42,13 @@ public class MjService {
 		return MjList;
 	}
 	
+	//읽기
+	public MjVo exeRead(int no) {
+		System.out.println("MjService.exeRead");
+		
+		MjVo MjVo = mjDao.selectOne(no);
+		System.out.println(MjVo);
+		return MjVo;
+	}
+	
 }
