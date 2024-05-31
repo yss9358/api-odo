@@ -6,6 +6,7 @@
 	<!-- 쿼리문작성 -->
 	<resultMap type="com.javaex.vo.SolClassVo"
 		id="resultMapClassVo">
+		<result column="schedule_no" property="scheduleNo"></result>
 		<result column="class_no" property="classNo"></result>
 		<result column="company_no" property="companyNo"></result>
 		<result column="cate1_no" property="cate1No"></result>
@@ -39,13 +40,28 @@
 		<result column="cate1_name" property="cate1Name"></result>
 		<result column="cate2_name" property="cate2Name"></result>
 	</resultMap>
-	<!-- <resultMap type="com.javaex.vo.SolSchduleVo"
-		id="resultMapSdVo">
-		<result column="schedule_no" property="scheduleNo"></result>
-		<result column="class_no" property="classNo"></result>
+	<resultMap type="com.javaex.vo.SolMemberVo"
+		id="rmMemberVo">
+		<result column="user_no" property="userNo"></result>
+		<result column="user_name" property="userName"></result>
+		<result column="user_birth" property="userAge"></result>
+		<result column="user_gender" property="userGender"></result>
+		<result column="user_hp" property="userHp"></result>
+		<result column="attend" property="attend"></result>
+		<result column="atten_type" property="attendState"></result>
+		<result column="review_no" property="reviewState"></result>
+		<result column="coupon_no" property="couponState"></result>
 		<result column="start_date" property="startDate"></result>
 		<result column="end_date" property="endDate"></result>
-	</resultMap> -->
+	</resultMap>
+	<resultMap type="com.javaex.vo.SolScheduleVo"
+		id="rmScheduleVo">
+		<result column="schedule_no" property="scheduleNo"></result>
+		<result column="company_no" property="companyNo"></result>
+		<result column="class_name" property="title"></result>
+		<result column="start_date" property="start"></result>
+		<result column="end_date" property="end"></result>
+	</resultMap>
 	<!-- <![CDATA[]]> -->
 
 	<!-- 사업자 -->
@@ -98,6 +114,7 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
+	
 	<!-- 일정등록 -->
 	<insert id="scheduleInsert" parameterType="com.javaex.vo.SolScheduleVo">
 	<![CDATA[
@@ -105,6 +122,7 @@
 	values(null, #{companyNo}, #{startDate}, #{endDate})
 	]]>
 	</insert>
+	
 	<!-- 클래스 수정 -->
 	<update id="classUpdate" parameterType="classVo">
 	<![CDATA[
@@ -128,7 +146,7 @@
 	<select id="companyClassList" parameterType="map"
 		resultType="classVo">
 	<![CDATA[
-		select class_no classNo, class_name className
+		select class_no classNo, class_name className, class_image classImage
 		from class 
 		where company_no = #{no}
 		and class_type = #{type}
@@ -152,14 +170,17 @@
 	and t.cate1_no = t2.cate1_no
 	]]>
 	</select>
+	
+	
 	<select id="rCalss" parameterType="int" resultMap="resultMapClassVo">
 	<![CDATA[
-	select class_no, class_name
+	select class_no, class_name, class_image classImage
 	from class 
 	where company_no = #{no}
 	and class_type between 2 and 3
 	]]>
 	</select>
+	
 	<!-- 1차 카테고리 불러오기 -->
 	<select id="selectAllCate1" resultMap="resultMapCateVo">
 	<![CDATA[
@@ -169,6 +190,7 @@
 	group by c1.cate1_no
 	]]>
 	</select>
+	
 	<!-- 2차카테고리 불러오기 -->
 	<select id="selectCate2" parameterType="int" resultMap="resultMapCateVo">
 	<![CDATA[
@@ -182,18 +204,78 @@
 	<!-- 클래스리스트 -->
 	<select id="classList" parameterType="map" resultMap="resultMapClassVo">
 	<![CDATA[
-	select c.class_no, c.company_no, c.class_name, 
+	select s.schedule_no, c.class_no, c.company_no, c.class_name, 
 		c.class_intro, c.class_type,c.class_image,
         date_format(s.start_date, '%Y/%m/%d') start_date, date_format(s.end_date, '%Y/%m/%d') end_date,
-        c.class_min, c.class_max
+        (select count(p.schedule_no) 
+		from pay p 
+		where s.schedule_no = p.schedule_no
+		and c.class_type = #{classType}
+		group by s.schedule_no) class_min, c.class_max
 	from class c, schedule s
 	where c.company_no = #{companyNo}
 	and class_type = #{classType}
     and c.class_no = s.class_no
+    order by s.schedule_no
 	]]>
 	</select>
 	
+	<!-- 정규회원 리스트 -->
+	<select id="RMemberList" parameterType="int" resultMap="rmMemberVo">
+	<![CDATA[
+	select p.schedule_no, u.user_no, u.user_name, u.user_hp,
+	   u.user_gender, 2024 - SUBSTRING(u.user_birth, 1, 4) + 1 as user_birth,
+       a.atten, r.review_no, a.atten_type,
+       date_format(s.start_date, "%Y-%m-%d") start_date, date_format(s.end_date, "%Y-%m-%d") end_date
+	from pay p inner join user u 
+	on p.user_no = u.user_no left outer join 
+	(select count(atten_no) atten, atten_type, user_no from attendance
+	where schedule_no =#{scheduleNo}
+	group by user_no) a
+	on u.user_no = a.user_no left outer join 
+	(select review_no, user_no from review
+	where schedule_no = #{scheduleNo}) r
+	on a.user_no = r.user_no left outer join
+	(select schedule_no, start_date, end_date from schedule
+	where schedule_no = #{scheduleNo}) s
+	on p.schedule_no = s.schedule_no
+	where s.schedule_no = #{scheduleNo}
+	]]>
+	</select>
 	
+	<!-- 원데이회원 -->
+	<select id="oneMeberList" parameterType="int" resultMap="rmMemberVo">
+	<![CDATA[
+	select p.schedule_no, u.user_no, u.user_name, u.user_hp,
+	   u.user_gender, 2024 - SUBSTRING(u.user_birth, 1, 4) + 1 as user_birth,
+       a.atten_no, r.review_no
+	from pay p inner join user u 
+	on p.user_no = u.user_no left outer join 
+	(select atten_no, user_no from attendance
+	where schedule_no =#{scheduleNo}) a
+	on u.user_no = a.user_no left outer join 
+	(select review_no, user_no from review
+	where schedule_no = #{scheduleNo}) r
+	on a.user_no = r.user_no
+	where schedule_no = #{scheduleNo}
+	]]>
+	</select>
 	
+	<!-- 스케줄 불러오기 -->
+	<select id="selectSchedule" parameterType="int" resultMap="rmScheduleVo">
+	<![CDATA[
+	select c.class_name, s.start_date, s.end_date
+	from schedule s, class c
+	where s.class_no = c.class_no
+	and c.company_no =#{no}
+	]]>
+	</select>
+
+	<!-- 쿠폰발급 -->
+	<insert id="insertCoupon" parameterType="map">
+	<![CDATA[
+		insert into coupon values(null, #{userNo}, #{companyNo}, #{couponPrice}, now(), 0)
+	]]>
+	</insert>
 
 </mapper>

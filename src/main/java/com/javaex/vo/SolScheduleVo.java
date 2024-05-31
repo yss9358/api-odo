@@ -5,23 +5,24 @@ public class SolScheduleVo {
 	
 	private int scheduleNo;
 	private int companyNo;
-	private String startDate;
-	private String endDate;
+	private String title;
+	private String start;
+	private String end;
 	
 	
 	public SolScheduleVo() {
 		super();
 	}
-	public SolScheduleVo(int companyNo, String startDate) {
+	public SolScheduleVo(int companyNo, String start) {
 		super();
 		this.companyNo = companyNo;
-		this.startDate = startDate;
+		this.start = start;
 	}
-	public SolScheduleVo(int companyNo, String startDate, String endDate) {
+	public SolScheduleVo(int companyNo, String start, String end) {
 		super();
 		this.companyNo = companyNo;
-		this.startDate = startDate;
-		this.endDate = endDate;
+		this.start = start;
+		this.end = end;
 	}
 	
 	
@@ -37,28 +38,31 @@ public class SolScheduleVo {
 	public void setCompanyNo(int companyNo) {
 		this.companyNo = companyNo;
 	}
-	public String getStartDate() {
-		return startDate;
+	public String getTitle() {
+		return title;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getEndDate() {
-		return endDate;
+	public String getStart() {
+		return start;
 	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "SolSchedulVo [scheduleNo=" + scheduleNo + ", companyNo=" + companyNo
-				+ ", startDate=" + startDate + ", endDate=" + endDate + "]";
+		return "SolScheduleVo [scheduleNo=" + scheduleNo + ", companyNo=" + companyNo + ", title=" + title + ", start="
+				+ start + ", end=" + end + "]";
 	}
 
-
-	
-	
 
 }

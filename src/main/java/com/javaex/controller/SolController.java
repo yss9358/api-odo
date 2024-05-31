@@ -21,6 +21,8 @@ import com.javaex.util.JwtUtil;
 import com.javaex.vo.SolCateVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
+import com.javaex.vo.SolMemberVo;
+import com.javaex.vo.SolScheduleVo;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -45,7 +47,7 @@ public class SolController {
 		SolCompanyVo authCompany = solservice.exeLogin(vo);
 		if (authCompany != null) {
 			JwtUtil.createTokenAndSetHeader(response, "" + authCompany.getCompanyNo());
-			return JsonResult.success("");
+			return JsonResult.success(authCompany);
 		} else {
 			return JsonResult.fail("아이디와 비밀번호를 확인하세요.");
 		}
@@ -205,5 +207,51 @@ public class SolController {
 		}
 		
 	}
+	//유저리스트
+	@GetMapping("member/{type}/{no}")
+	public JsonResult memberList(@PathVariable("type") int type, @PathVariable("no") int schedule) {
+		System.out.println("SolController.memberList");
+		List<SolMemberVo> memberList = solservice.exeUserList(type, schedule);
+		System.out.println(memberList);
+		if(memberList != null) {
+			return JsonResult.success(memberList);
+		}
+		return null;
+	}
+	//스케줄리스트
+	@GetMapping("getschedule/{no}")
+	public JsonResult getSchedule(@PathVariable int no) {
+		System.out.println("SolController.getSchedule");
+		List<SolScheduleVo> scheduleList = solservice.exeScheduleList(no);
+		System.out.println(scheduleList);
+		if(scheduleList != null) {
+			return JsonResult.success(scheduleList);
+		} else {
+			return JsonResult.fail(null);
+		}
+	}
+	
+	/********************************************
+	 * 쿠폰지급
+	 */
+	@PostMapping("coupon")
+	public JsonResult setCoupon(@RequestParam(value ="userNo") int userNo,
+								@RequestParam(value ="companyNo") int companyNo,
+								@RequestParam(value ="couponPrice") int couponPrice) {
+		System.out.println("SolController.setCoupon");
+		Map<String, Object> tempVo = new HashMap<>();
+		tempVo.put("userNo", userNo);
+		tempVo.put("companyNo", companyNo);
+		tempVo.put("couponPrice", couponPrice);
+		int count = solservice.exeCoupon(tempVo);
+		if(count > 0) {
+			return JsonResult.success("지급되었습니다");
+		} else {
+			return JsonResult.fail(null);
+		}
+	}
+	
+	/******************************************
+	 */
 
 }

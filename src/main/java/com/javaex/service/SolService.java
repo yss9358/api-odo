@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -18,6 +17,7 @@ import com.javaex.dao.SolDao;
 import com.javaex.vo.SolCateVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
+import com.javaex.vo.SolMemberVo;
 import com.javaex.vo.SolScheduleVo;
 
 @Service
@@ -165,7 +165,28 @@ public class SolService {
 		System.out.println("SolService.exeClassTypeList");
 		return solDao.selectClassList(tempVo);
 	}
+	//유저리스트
+	public List<SolMemberVo> exeUserList(int type, int schedule){
+		System.out.println("SolService.exeUserList");
+		if(type == 1) {
+			return solDao.selectOndUser(schedule);
+		} else {
+			return solDao.selectRUser(schedule);
+		}
+		
+	}
+	//스케줄리스트
+	public List<SolScheduleVo> exeScheduleList(int no){
+		System.out.println("SolService.exeScheduleList");
+		return solDao.selectAllSchedule(no);
+	}
 	
-	
+	/********************************************
+	 * 쿠폰지급
+	 */
+	public int exeCoupon(Map<String, Object> tempVo) {
+		System.out.println("SolService.exeCoupon");
+		return solDao.insertCoupon(tempVo);
+	}
 	
 }

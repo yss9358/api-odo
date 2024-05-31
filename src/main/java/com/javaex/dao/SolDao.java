@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.javaex.vo.SolCateVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
+import com.javaex.vo.SolMemberVo;
 import com.javaex.vo.SolScheduleVo;
 
 @Repository
@@ -86,33 +87,55 @@ public class SolDao {
 		System.out.println("SolDao.insertClass");
 		return sqlSession.insert("sr.classInsert", vo);
 	}
-	//일정등록
+
+	// 일정등록
 	public int insertClassSchedul(SolScheduleVo vo) {
 		System.out.println("SolDao.insertClassSchedul");
 //		System.out.println(vo);
 		return sqlSession.insert("sr.scheduleInsert", vo);
 	}
-	//클래스 수정
+
+	// 클래스 수정
 	public int updateClass(SolClassVo vo) {
 		System.out.println("SolDao.updateClass");
 		System.out.println(vo);
 		return sqlSession.update("sr.classUpdate", vo);
 	}
-	
+
 	/***********************************
 	 * 리스트불러오기
 	 */
-	//클래스리스트
-	public List<SolClassVo> selectClassList(Map<String, Object> tempVo){
+	// 클래스리스트
+	public List<SolClassVo> selectClassList(Map<String, Object> tempVo) {
 		System.out.println("SolDao,selectClassList");
 		return sqlSession.selectList("sr.classList", tempVo);
 	}
+
+	// 정규,상시회원리스트
+	public List<SolMemberVo> selectRUser(int schedule) {
+		System.out.println("SolDao.selectRUser");
+		return sqlSession.selectList("sr.RMemberList", schedule);
+	}
+
+	// 원데이회원리스트
+	public List<SolMemberVo> selectOndUser(int schedule) {
+		System.out.println("SolDao.selectOndUser");
+		return sqlSession.selectList("sr.oneMeberList", schedule);
+	}
+	//클래스리스트
+	public List<SolScheduleVo> selectAllSchedule(int no){
+		System.out.println("SolDao.selectAllSchedule");
+		return sqlSession.selectList("sr.selectSchedule", no);
+	}
+
 	
-	
-	
-	
-	
-	
+	/****************************************
+	 * 쿠폰지급
+	 */
+	public int insertCoupon(Map<String, Object> tempVo) {
+		System.out.println("SolDao.insertCoupon");
+		return sqlSession.insert("sr.insertCoupon",tempVo);
+	}
 	
 	
 }

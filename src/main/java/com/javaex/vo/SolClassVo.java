@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class SolClassVo {
 	private MultipartFile classImageFile;
 
+	private int scheduleNo;
 	private int companyNo;
 	private int classNo;
 	private int classType;
@@ -36,6 +37,17 @@ public class SolClassVo {
 	public SolClassVo() {
 		super();
 	}
+
+	
+	public int getScheduleNo() {
+		return scheduleNo;
+	}
+
+
+	public void setScheduleNo(int scheduleNo) {
+		this.scheduleNo = scheduleNo;
+	}
+
 
 	public int getClassNo() {
 		return classNo;
@@ -244,18 +256,23 @@ public class SolClassVo {
 		this.endDate = endDate;
 	}
 
+
 	@Override
 	public String toString() {
-		return "SolClassVo [classImageFile=" + classImageFile + ", companyNo=" + companyNo + ", classNo=" + classNo
-				+ ", classType=" + classType + ", classImage=" + classImage + ", className=" + className
-				+ ", classIntro=" + classIntro + ", cate1Name=" + cate1Name + ", cate2Name=" + cate2Name
-				+ ", classZipcode=" + classZipcode + ", classNameAddress=" + classNameAddress + ", classNumAddress="
-				+ classNumAddress + ", classDetailAddress=" + classDetailAddress + ", classLatitude=" + classLatitude
-				+ ", classLongitutde=" + classLongitutde + ", cate2No=" + cate2No + ", cate1No=" + cate1No
-				+ ", classPrice=" + classPrice + ", classMin=" + classMin + ", classMax=" + classMax + ", classInfo="
-				+ classInfo + ", classUrl=" + classUrl + ", recClassNo=" + recClassNo + ", startDateList="
-				+ startDateList + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+		return "SolClassVo [classImageFile=" + classImageFile + ", scheduleNo=" + scheduleNo + ", companyNo="
+				+ companyNo + ", classNo=" + classNo + ", classType=" + classType + ", classImage=" + classImage
+				+ ", className=" + className + ", classIntro=" + classIntro + ", cate1Name=" + cate1Name
+				+ ", cate2Name=" + cate2Name + ", classZipcode=" + classZipcode + ", classNameAddress="
+				+ classNameAddress + ", classNumAddress=" + classNumAddress + ", classDetailAddress="
+				+ classDetailAddress + ", classLatitude=" + classLatitude + ", classLongitutde=" + classLongitutde
+				+ ", cate2No=" + cate2No + ", cate1No=" + cate1No + ", classPrice=" + classPrice + ", classMin="
+				+ classMin + ", classMax=" + classMax + ", classInfo=" + classInfo + ", classUrl=" + classUrl
+				+ ", recClassNo=" + recClassNo + ", startDateList=" + startDateList + ", startDate=" + startDate
+				+ ", endDate=" + endDate + "]";
 	}
+
+
+	
 
 	
 
