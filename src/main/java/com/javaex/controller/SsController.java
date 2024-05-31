@@ -69,12 +69,9 @@ public class SsController {
 			@RequestParam(value="page", required = false, defaultValue="1") int page
 			) {
 		int userNo = JwtUtil.getNoFromHeader(request);
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("classType", classType);
-		map.put("userNo", userNo);
-		map.put("page", page);
+
 		if(userNo != -1) {
-			List<MyPayVo> list = ssService.exePayList(map);
+			List<MyPayVo> list = ssService.exePayList(classType,userNo,page);
 			if(list != null) {
 				return JsonResult.success(list);
 			} else {

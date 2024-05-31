@@ -61,12 +61,14 @@ public class SsService {
 	}
 	
 	// 회원 결제내역 가져오기 
-	public List<MyPayVo> exePayList(Map<String, Integer> map) {		
+	public List<MyPayVo> exePayList(int classType, int userNo, int page) {		
 		
-		int page = map.get("page");
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("classType", classType);
+		map.put("userNo", userNo);
+		
 		page = (page>0) ? page : (page=1);
-		
-		int listCount = 3;
+		int listCount = 5;
 		int startRowNo = (page-1)*listCount;
 		
 		map.put("startRowNo", startRowNo);
