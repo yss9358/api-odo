@@ -41,16 +41,6 @@ public class SsDao {
 		return sqlSession.selectList("ss.getPayListByNo", map);
 	}
 	
-	// 회원 원데이 결제내역 가져오기
-	public List<MyPayVo> getOneDayPayListByNo(int userNo) {
-		return sqlSession.selectList("ss.getOneDayPayListByNo",userNo);
-	}
-	
-	// 회원 정규 결제내역 가져오기
-	public List<MyPayVo> getRegularPayListByNo(int userNo) {
-		return sqlSession.selectList("ss.getRegularPayListByNo",userNo);
-	} 
-	
 	// 리뷰 쓸때 클래스 정보 가져오기
 	public OneClassVo getClassOne(int no) {
 		return sqlSession.selectOne("ss.getClassOne", no);

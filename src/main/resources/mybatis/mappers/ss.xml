@@ -138,114 +138,6 @@
 		]]>
 	</select>
 	
-	<!-- 원데이 결제내역 가져오기 -->
-	<select id="getOneDayPayListByNo" parameterType="int" resultType="com.javaex.vo.MyPayVo">
-		<![CDATA[
-			select	p.user_no userNo,
-					c.class_type classType,
-			        c.class_no classNo,
-					c.class_image classImage,
-			        s.end_date endDate,
-			        IFNULL(w.w_class_no,0) wishClassNo,
-					IFNULL(avg_review.avg_review_point,0) starScore,
-					p.pay_no payNo,
-			        p.pay_date payDate,
-			        c.class_name className,
-			        c.class_intro classIntro,
-			        p.pay_price payPrice,
-			        IFNULL(a.attenCount, 0) attenCount,
-			        p.schedule_no scheduleNo,
-			        IFNULL(r.review_no, 0) reviewNo,
-			        c.class_url classUrl,
-			        IFNULL(selfC.class_no,0) recClassNo,
-			        selfC.class_image recClassImage,
-			        selfC.class_name recClassName
-			from pay p
-			inner join schedule s 
-					on p.schedule_no = s.schedule_no
-			inner join class c
-					on s.class_no = c.class_no
-			left join wish_class w
-					on p.user_no = w.user_no and c.class_no = w.class_no
-			left join review r
-					on r.user_no = p.user_no and r.schedule_no = s.schedule_no
-			left join class selfC
-					on c.rec_class_no = selfC.class_no
-			left join (select	schedule_no,
-								count(*) attenCount
-						from attendance
-						where atten_type = '출석'
-						and user_no = #{userNo}
-			            group by schedule_no) a
-					on s.schedule_no = a.schedule_no
-			left join (select	c.class_no,
-								AVG(r.review_point) avg_review_point
-						from class c
-			            inner join schedule s
-								on c.class_no = s.class_no
-						left join review r
-								on s.schedule_no = r.schedule_no
-						group by c.class_no) avg_review
-					on c.class_no = avg_review.class_no
-			where p.user_no = #{userNo}
-			and c.class_type = 1
-		]]>
-	</select>
-	
-	<!-- 정규 클래스 결제내역 가져오기 -->
-	<select id="getRegularPayListByNo" parameterType="int" resultType="com.javaex.vo.MyPayVo">
-		<![CDATA[
-			select	p.user_no userNo,
-					c.class_type classType,
-			        c.class_no classNo,
-					c.class_image classImage,
-			        s.end_date endDate,
-			        IFNULL(w.w_class_no,0) wishClassNo,
-					IFNULL(avg_review.avg_review_point,0) starScore,
-					p.pay_no payNo,
-			        p.pay_date payDate,
-			        c.class_name className,
-			        c.class_intro classIntro,
-			        p.pay_price payPrice,
-			        IFNULL(a.attenCount, 0) attenCount,
-			        p.schedule_no scheduleNo,
-			        IFNULL(r.review_no, 0) reviewNo,
-			        c.class_url classUrl,
-			        IFNULL(selfC.class_no,0) recClassNo,
-			        selfC.class_image recClassImage,
-			        selfC.class_name recClassName
-			from pay p
-			inner join schedule s 
-					on p.schedule_no = s.schedule_no
-			inner join class c
-					on s.class_no = c.class_no
-			left join wish_class w
-					on p.user_no = w.user_no and c.class_no = w.class_no
-			left join review r
-					on r.user_no = p.user_no and r.schedule_no = s.schedule_no
-			left join class selfC
-					on c.rec_class_no = selfC.class_no
-			left join (select	schedule_no,
-								count(*) attenCount
-						from attendance
-						where atten_type = '출석'
-						and user_no = #{userNo}
-			            group by schedule_no) a
-					on s.schedule_no = a.schedule_no
-			left join (select	c.class_no,
-								AVG(r.review_point) avg_review_point
-						from class c
-			            inner join schedule s
-								on c.class_no = s.class_no
-						left join review r
-								on s.schedule_no = r.schedule_no
-						group by c.class_no) avg_review
-					on c.class_no = avg_review.class_no
-			where p.user_no = #{userNo}
-			and c.class_type <> 1
-		]]>
-	</select>
-	
 	<!-- 리뷰쓸때 클래스 한개 데이터 가져오기 -->
 	<select id="getClassOne" parameterType="int" resultType="com.javaex.vo.OneClassVo">
 		<![CDATA[
@@ -355,7 +247,8 @@
 					c.user_no userNo,
 			        cp.company_name companyName,
 			        c.coupon_price couponPrice,
-			        c.coupon_date couponDate
+			        c.coupon_date couponDate,
+			        c.coupon_state couponState
 			from coupon c, user u, company cp
 			where c.user_no = u.user_no
 			and c.company_no = cp.company_no
@@ -401,7 +294,9 @@
 				order by r.review_date desc
 			]]>
 		</if>
-		
+		<![CDATA[
+			limit #{startRowNo}, #{listCount}
+		]]>
 	</select>
 	
 	<!-- 리뷰페이지 - 클래스 정보 가져오기 -->
