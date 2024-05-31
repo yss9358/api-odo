@@ -8,6 +8,7 @@ public class CompanyInfoVo {
 	private String companyIntro;
 	private String companyImage;
 	
+	
 	public CompanyInfoVo() {
 		super();
 	}

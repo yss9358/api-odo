@@ -115,8 +115,10 @@ public class JhController {
 	
 	//업체정보
 	@GetMapping("odo/companyinfo/{no}")
-	public Map<String, Object> companyifno(@PathVariable("no") int a) {
-		
+	public Map<String, Object> companyifno(HttpServletRequest request, @PathVariable("no") int a) {
+		int no = JwtUtil.getNoFromHeader(request);
+		System.out.println(no);
+		System.out.println(a);
 		return js.companyinfo(a);
 	}
 	

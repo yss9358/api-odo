@@ -11,6 +11,7 @@
 		class_price classPrice,
 		class_image classImage,
 		class_name_address classAddress,
+		class.class_no classNo,
 		w_class_no no
 		from wish_class, class
 		where wish_class.class_no = class.class_no
