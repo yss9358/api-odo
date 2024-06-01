@@ -21,6 +21,7 @@ import com.javaex.util.JwtUtil;
 import com.javaex.vo.SolCateVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
+import com.javaex.vo.SolListVo;
 import com.javaex.vo.SolMemberVo;
 import com.javaex.vo.SolScheduleVo;
 
@@ -97,7 +98,8 @@ public class SolController {
 
 	// 선택한클래스 불러오기
 	@GetMapping("getclass")
-	public JsonResult getSelectClass(@RequestParam(value="companyNo") int companyNo, @RequestParam(value="classNo") int classNo)  {
+	public JsonResult getSelectClass(@RequestParam(value = "companyNo") int companyNo,
+			@RequestParam(value = "classNo") int classNo) {
 		System.out.println("SolController.getClass()");
 		Map<String, Object> tempVo = new HashMap<String, Object>();
 		tempVo.put("companyNo", companyNo);
@@ -187,71 +189,89 @@ public class SolController {
 			return JsonResult.fail("");
 		}
 	}
-	
+
 	/************************************************
 	 * 리스트
 	 */
-	//클래스리스트
+	// 클래스리스트
 	@GetMapping("list")
-	public JsonResult classTypeList(@RequestParam(value ="classType") int classType, @RequestParam(value ="companyNo") int companyNo) {
+	public JsonResult classTypeList(@RequestParam(value = "classType") int classType,
+			@RequestParam(value = "companyNo") int companyNo) {
 		System.out.println("SolController.classList");
 		Map<String, Object> tempVo = new HashMap<String, Object>();
 		tempVo.put("classType", classType);
 		tempVo.put("companyNo", companyNo);
 		List<SolClassVo> classList = solservice.exeClassTypeList(tempVo);
 		System.out.println(classList);
-		if(classList != null) {
+		if (classList != null) {
 			return JsonResult.success(classList);
 		} else {
 			return JsonResult.fail(null);
 		}
-		
+
 	}
-	//유저리스트
+
+	// 유저리스트
 	@GetMapping("member/{type}/{no}")
 	public JsonResult memberList(@PathVariable("type") int type, @PathVariable("no") int schedule) {
 		System.out.println("SolController.memberList");
 		List<SolMemberVo> memberList = solservice.exeUserList(type, schedule);
 		System.out.println(memberList);
-		if(memberList != null) {
+		if (memberList != null) {
 			return JsonResult.success(memberList);
 		}
 		return null;
 	}
-	//스케줄리스트
+
+	// 스케줄리스트
 	@GetMapping("getschedule/{no}")
 	public JsonResult getSchedule(@PathVariable int no) {
 		System.out.println("SolController.getSchedule");
 		List<SolScheduleVo> scheduleList = solservice.exeScheduleList(no);
 		System.out.println(scheduleList);
-		if(scheduleList != null) {
+		if (scheduleList != null) {
 			return JsonResult.success(scheduleList);
 		} else {
 			return JsonResult.fail(null);
 		}
 	}
-	
+
 	/********************************************
 	 * 쿠폰지급
 	 */
 	@PostMapping("coupon")
-	public JsonResult setCoupon(@RequestParam(value ="userNo") int userNo,
-								@RequestParam(value ="companyNo") int companyNo,
-								@RequestParam(value ="couponPrice") int couponPrice) {
+	public JsonResult setCoupon(@RequestParam(value = "userNo") int userNo,
+			@RequestParam(value = "companyNo") int companyNo, @RequestParam(value = "couponPrice") int couponPrice) {
 		System.out.println("SolController.setCoupon");
 		Map<String, Object> tempVo = new HashMap<>();
 		tempVo.put("userNo", userNo);
 		tempVo.put("companyNo", companyNo);
 		tempVo.put("couponPrice", couponPrice);
 		int count = solservice.exeCoupon(tempVo);
-		if(count > 0) {
+		if (count > 0) {
 			return JsonResult.success("지급되었습니다");
 		} else {
 			return JsonResult.fail(null);
 		}
 	}
-	
+
 	/******************************************
+	 * 검색
 	 */
+	@GetMapping("classlist")
+	public JsonResult getClassList(@ModelAttribute SolListVo vo) {
+		System.out.println("SolController.getClassList");
+		System.out.println(vo.getIsFind());
+		if(vo.getPage() <= 0) {
+			vo.setPage(1);
+		}
+		List<SolListVo> classList = solservice.exeFindClassList(vo);
+		System.out.println(classList);
+		if(classList != null) {
+			return JsonResult.success(classList);
+		} else {
+			return JsonResult.fail(null);
+		}
+	}
 
 }

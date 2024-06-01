@@ -33,6 +33,29 @@
 		<result column="start_date" property="startDate"></result>
 		<result column="end_date" property="endDate"></result>
 	</resultMap>
+	<resultMap type="com.javaex.vo.SolListVo" id="rmListVo">
+		<result column="company_no" property="companyNo"></result>
+		<result column="class_no" property="classNo"></result>
+		<result column="class_price" property="classPrice"></result>
+		<result column="class_type" property="classType"></result>
+		<result column="class_image" property="classImage"></result>
+		<result column="class_name" property="className"></result>
+		<result column="class_intro" property="classIntro"></result>
+		<result column="class_zipcode" property="classZipcode"></result>
+		<result column="class_name_address" property="classNameAddress"></result>
+		<result column="class_num_address" property="classNumAddress"></result>
+		<result column="class_detail_address"
+			property="classDetailAddress"></result>
+		<result column="class_latitude" property="classLatitude"></result>
+		<result column="class_longitutde" property="classLongitutde"></result>
+		<result column="class_latitude" property="classPrice"></result>
+		<result column="class_min" property="classMin"></result>
+		<result column="class_max" property="classMax"></result>
+		<result column="review" property="review"></result>
+		<result column="wish" property="wish"></result>
+		<result column="startRow" property="startRow"></result>
+		<result column="listCount" property="listCount"></result>
+	</resultMap>
 	<resultMap type="com.javaex.vo.SolCateVo"
 		id="resultMapCateVo">
 		<result column="cate1_no" property="cate1No"></result>
@@ -40,8 +63,7 @@
 		<result column="cate1_name" property="cate1Name"></result>
 		<result column="cate2_name" property="cate2Name"></result>
 	</resultMap>
-	<resultMap type="com.javaex.vo.SolMemberVo"
-		id="rmMemberVo">
+	<resultMap type="com.javaex.vo.SolMemberVo" id="rmMemberVo">
 		<result column="user_no" property="userNo"></result>
 		<result column="user_name" property="userName"></result>
 		<result column="user_birth" property="userAge"></result>
@@ -64,7 +86,7 @@
 	</resultMap>
 	<!-- <![CDATA[]]> -->
 
-	<!-- 사업자 -->
+	<!-- 사업자 ********************************** -->
 	<!-- 아이디 중복체크 -->
 	<select id="companyId" parameterType="string"
 		resultType="string">
@@ -98,7 +120,7 @@
 	</select>
 
 
-
+	<!-- 클래스 ********************************** -->
 	<!-- 클래스 등록 -->
 	<insert id="classInsert" parameterType="classVo">
 	<![CDATA[
@@ -114,15 +136,16 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
-	
+
 	<!-- 일정등록 -->
-	<insert id="scheduleInsert" parameterType="com.javaex.vo.SolScheduleVo">
+	<insert id="scheduleInsert"
+		parameterType="com.javaex.vo.SolScheduleVo">
 	<![CDATA[
 	insert into schedule
 	values(null, #{companyNo}, #{startDate}, #{endDate})
 	]]>
 	</insert>
-	
+
 	<!-- 클래스 수정 -->
 	<update id="classUpdate" parameterType="classVo">
 	<![CDATA[
@@ -155,7 +178,8 @@
 
 
 	<!-- 이전클래스 불러오기 -->
-	<select id="getClass" parameterType="classVo" resultMap="resultMapClassVo">
+	<select id="getClass" parameterType="classVo"
+		resultMap="resultMapClassVo">
 	<![CDATA[
 	select c.class_no, c.company_no, c.class_name, c.class_intro, 
 		c.class_zipcode, c.class_name_address, c.class_num_address, 
@@ -170,9 +194,10 @@
 	and t.cate1_no = t2.cate1_no
 	]]>
 	</select>
-	
-	
-	<select id="rCalss" parameterType="int" resultMap="resultMapClassVo">
+
+	<!-- 정규클래스 불러오기 -->
+	<select id="rCalss" parameterType="int"
+		resultMap="resultMapClassVo">
 	<![CDATA[
 	select class_no, class_name, class_image classImage
 	from class 
@@ -180,7 +205,7 @@
 	and class_type between 2 and 3
 	]]>
 	</select>
-	
+
 	<!-- 1차 카테고리 불러오기 -->
 	<select id="selectAllCate1" resultMap="resultMapCateVo">
 	<![CDATA[
@@ -190,9 +215,10 @@
 	group by c1.cate1_no
 	]]>
 	</select>
-	
+
 	<!-- 2차카테고리 불러오기 -->
-	<select id="selectCate2" parameterType="int" resultMap="resultMapCateVo">
+	<select id="selectCate2" parameterType="int"
+		resultMap="resultMapCateVo">
 	<![CDATA[
 	select c2.cate2_no, c2.cate2_name
 	from cate1 c1, cate2 c2
@@ -200,9 +226,11 @@
 	and c1.cate1_no = #{cate1No}
 	]]>
 	</select>
-	
+
+	<!-- 리스트 ********************************** -->
 	<!-- 클래스리스트 -->
-	<select id="classList" parameterType="map" resultMap="resultMapClassVo">
+	<select id="classList" parameterType="map"
+		resultMap="resultMapClassVo">
 	<![CDATA[
 	select s.schedule_no, c.class_no, c.company_no, c.class_name, 
 		c.class_intro, c.class_type,c.class_image,
@@ -219,9 +247,10 @@
     order by s.schedule_no
 	]]>
 	</select>
-	
+
 	<!-- 정규회원 리스트 -->
-	<select id="RMemberList" parameterType="int" resultMap="rmMemberVo">
+	<select id="RMemberList" parameterType="int"
+		resultMap="rmMemberVo">
 	<![CDATA[
 	select p.schedule_no, u.user_no, u.user_name, u.user_hp,
 	   u.user_gender, 2024 - SUBSTRING(u.user_birth, 1, 4) + 1 as user_birth,
@@ -242,9 +271,10 @@
 	where s.schedule_no = #{scheduleNo}
 	]]>
 	</select>
-	
+
 	<!-- 원데이회원 -->
-	<select id="oneMeberList" parameterType="int" resultMap="rmMemberVo">
+	<select id="oneMeberList" parameterType="int"
+		resultMap="rmMemberVo">
 	<![CDATA[
 	select p.schedule_no, u.user_no, u.user_name, u.user_hp,
 	   u.user_gender, 2024 - SUBSTRING(u.user_birth, 1, 4) + 1 as user_birth,
@@ -260,9 +290,10 @@
 	where schedule_no = #{scheduleNo}
 	]]>
 	</select>
-	
+
 	<!-- 스케줄 불러오기 -->
-	<select id="selectSchedule" parameterType="int" resultMap="rmScheduleVo">
+	<select id="selectSchedule" parameterType="int"
+		resultMap="rmScheduleVo">
 	<![CDATA[
 	select c.class_name, s.start_date, s.end_date
 	from schedule s, class c
@@ -277,5 +308,52 @@
 		insert into coupon values(null, #{userNo}, #{companyNo}, #{couponPrice}, now(), 0)
 	]]>
 	</insert>
+
+	<!-- 검색 ********************************** -->
+	<!-- 지역리스트 -->
+	<select id="addressList" parameterType="com.javaex.vo.SolListVo" resultMap="rmListVo">
+	<![CDATA[
+	select c.class_no, c.class_name, c.class_image, class_price, 
+	   c.class_intro, c.class_name_address,
+	   c.class_latitude, c.class_longitutde,
+	   r.review, w.w_class_no wish
+	from class c left outer join
+	(select s.class_no, sum(r.review_point) review, s.end_date
+	from schedule s left outer join review r
+	on s.schedule_no = r.schedule_no
+	group by s.class_no) r
+	on c.class_no = r.class_no
+	left outer join
+	(select class_no,w_class_no
+	from wish_class
+	where user_no = #{userNo}) w
+	on c.class_no = w.class_no
+	where r.end_date > now()
+	]]>
+	<if test="isFind == 1">
+	<![CDATA[
+	and class_name_address like #{keyword}
+	and class_num_address like #{keyword}
+	]]>
+	</if>
+	<if test="isFind != 1">
+	<![CDATA[
+	and class_name like #{keyword}
+	]]>
+	</if>
+	<if test="classType != 4">
+	<![CDATA[
+	and c.class_type = #{classType}
+	]]>
+	</if>
+	<![CDATA[
+	limit #{startRow}, #{listCount}
+	]]>
+	</select>
+	
+	
+	
+	
+	
 
 </mapper>

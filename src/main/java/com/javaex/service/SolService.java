@@ -17,6 +17,7 @@ import com.javaex.dao.SolDao;
 import com.javaex.vo.SolCateVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
+import com.javaex.vo.SolListVo;
 import com.javaex.vo.SolMemberVo;
 import com.javaex.vo.SolScheduleVo;
 
@@ -115,7 +116,8 @@ public class SolService {
 		}
 		return count;
 	}
-	//클래스 수정
+
+	// 클래스 수정
 	public int exeupdate(SolClassVo vo) {
 		System.out.println("SolService.exeupdate");
 		String saveName = exeCompanyImg(vo.getClassImageFile());
@@ -156,31 +158,32 @@ public class SolService {
 		}
 		return saveName;
 	}
-	
-	
+
 	/*******************************************
 	 * 리스트 불러오기
 	 */
-	public List<SolClassVo> exeClassTypeList(Map<String, Object> tempVo){
+	public List<SolClassVo> exeClassTypeList(Map<String, Object> tempVo) {
 		System.out.println("SolService.exeClassTypeList");
 		return solDao.selectClassList(tempVo);
 	}
-	//유저리스트
-	public List<SolMemberVo> exeUserList(int type, int schedule){
+
+	// 유저리스트
+	public List<SolMemberVo> exeUserList(int type, int schedule) {
 		System.out.println("SolService.exeUserList");
-		if(type == 1) {
+		if (type == 1) {
 			return solDao.selectOndUser(schedule);
 		} else {
 			return solDao.selectRUser(schedule);
 		}
-		
+
 	}
-	//스케줄리스트
-	public List<SolScheduleVo> exeScheduleList(int no){
+
+	// 스케줄리스트
+	public List<SolScheduleVo> exeScheduleList(int no) {
 		System.out.println("SolService.exeScheduleList");
 		return solDao.selectAllSchedule(no);
 	}
-	
+
 	/********************************************
 	 * 쿠폰지급
 	 */
@@ -188,5 +191,26 @@ public class SolService {
 		System.out.println("SolService.exeCoupon");
 		return solDao.insertCoupon(tempVo);
 	}
-	
+
+	/*******************************************
+	 * 검색
+	 */
+	public List<SolListVo> exeFindClassList(SolListVo vo) {
+		System.out.println("SolService.exeAddressLista");
+
+		// 키워드 설정
+		vo.setKeyword("%" + vo.getKeyword() + "%");
+
+		// 페이지당 보일 리스트 갯수
+		int page = vo.getPage() > 0 ? vo.getPage() : (page = 1);
+		vo.setPage(page);
+		vo.setListCount(15);
+		vo.setStartRow((vo.getPage() - 1) * vo.getListCount());
+
+		// Dao;
+		return solDao.selectAddressList(vo);
+
+	}
+	// 위시 추가 삭제
+
 }

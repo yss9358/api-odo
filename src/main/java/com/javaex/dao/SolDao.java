@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.javaex.vo.SolCateVo;
 import com.javaex.vo.SolClassVo;
 import com.javaex.vo.SolCompanyVo;
+import com.javaex.vo.SolListVo;
 import com.javaex.vo.SolMemberVo;
 import com.javaex.vo.SolScheduleVo;
 
@@ -137,5 +138,13 @@ public class SolDao {
 		return sqlSession.insert("sr.insertCoupon",tempVo);
 	}
 	
+	
+	/****************************************
+	 * 검색
+	 */
+	public List<SolListVo> selectAddressList(SolListVo vo){
+		System.out.println("SolDao.selectAddressList");
+		return sqlSession.selectList("sr.addressList", vo);
+	}
 	
 }
