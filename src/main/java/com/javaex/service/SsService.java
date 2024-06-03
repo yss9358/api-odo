@@ -244,11 +244,14 @@ public class SsService {
 	}
 
 	// 카카오 로그인 회원 체크
-	public void exeCheckKakaoEmail(String email) {
-		System.out.println(email);
-		UserJoinVo vo = ssDao.checkId(email);
-		System.out.println(vo);
+	public UserJoinVo exeCheckKakaoEmail(UserJoinVo vo) {
+		UserJoinVo checkVo = ssDao.checkId(vo.getUserId());
+		if(checkVo == null) {
+			ssDao.kakaoLogin(vo);
+			return ssDao.loginByKakao(vo);
+		} else {
+			return ssDao.loginByKakao(vo);
+		}
 	}
-	
 	
 }

@@ -52,7 +52,7 @@
 	<insert id="insertUser" parameterType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
 			insert into user
-			values(null, #{userId}, #{userPw}, #{userName},#{userNickname}, #{userHp}, #{userBirth}, #{userGender}, null, false, false)
+			values(null, #{userId}, #{userPw}, #{userName},#{userNickname}, #{userHp}, #{userBirth}, #{userGender}, null, #{userKakao}, #{userNaver})
 		]]>
 	</insert>
 	
@@ -68,6 +68,34 @@
 			from user
 			where user_id = #{userId}
 			and user_pw = #{userPw}
+		]]>
+	</select>
+	
+	<!-- 카카오 회원가입 -->
+	<insert id="insertKakaoUser" parameterType="com.javaex.vo.UserJoinVo">
+		<![CDATA[
+			insert into user
+			values(null,#{userId}, null, #{userName}, #{userNickname}, #{userHp}, #{userBirth},#{userGender}, #{userImage},#{userKakao}, #{userNaver})
+		]]>
+		<selectKey keyProperty="userNo" resultType="int" order="AFTER">
+			<![CDATA[
+				select last_insert_id()
+			]]>
+		</selectKey>
+	</insert>
+	
+	<!-- 카카오 로그인 -->
+	<select id="loginByKakao" parameterType="com.javaex.vo.UserJoinVo" resultType="com.javaex.vo.UserJoinVo">
+		<![CDATA[
+			select	user_no userNo,
+					user_nickname userNickname,
+					user_id userId,
+					user_image userImage,
+					user_kakao userKakao,
+					user_naver userNaver
+			from user
+			where user_id = #{userId}
+			and user_no = #{userNo}
 		]]>
 	</select>
 	
