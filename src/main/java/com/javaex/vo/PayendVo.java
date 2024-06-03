@@ -12,13 +12,14 @@ public class PayendVo {
 	private int payPirce;
 	private int couponPrice;
 	private int companyNo;
+	private int classPrice;
 	
 	public PayendVo() {
 		super();
 	}
 
 	public PayendVo(String classImage, String nickname, String companyName, String className, String startDate,
-			String endDate, String payType, int payPirce, int couponPrice, int companyNo) {
+			String endDate, String payType, int payPirce, int couponPrice, int companyNo, int classPrice) {
 		super();
 		this.classImage = classImage;
 		this.nickname = nickname;
@@ -30,6 +31,7 @@ public class PayendVo {
 		this.payPirce = payPirce;
 		this.couponPrice = couponPrice;
 		this.companyNo = companyNo;
+		this.classPrice = classPrice;
 	}
 
 	public String getClassImage() {
@@ -112,11 +114,19 @@ public class PayendVo {
 		this.companyNo = companyNo;
 	}
 
+	public int getClassPrice() {
+		return classPrice;
+	}
+
+	public void setClassPrice(int classPrice) {
+		this.classPrice = classPrice;
+	}
+
 	@Override
 	public String toString() {
 		return "PayendVo [classImage=" + classImage + ", nickname=" + nickname + ", companyName=" + companyName
 				+ ", className=" + className + ", startDate=" + startDate + ", endDate=" + endDate + ", payType="
 				+ payType + ", payPirce=" + payPirce + ", couponPrice=" + couponPrice + ", companyNo=" + companyNo
-				+ "]";
+				+ ", classPrice=" + classPrice + "]";
 	}
 }
