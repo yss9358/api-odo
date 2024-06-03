@@ -242,28 +242,12 @@ public class SsService {
 	public int exeDeleteWishClass(CheckWishClassVo vo) {
 		return ssDao.deleteWishClass(vo);
 	}
-	
-	
-	
-	
-	
-	
-	// 카카오 로그인 토큰 가져오기 
-	public void requestToken(String code) {
-		
-//		https://henniee.tistory.com/221
-//		System.out.println("ser");
-		System.out.println(code);
-//		
-//		String accessToken = "";
-//		String refreshToken = "";
-//		
-//		String strUrl = "https://kauth.kakao.com/oauth/token";
-//		KakaoToken kakaoToken = new KakaoToken();
-		
-		
 
-		
+	// 카카오 로그인 회원 체크
+	public void exeCheckKakaoEmail(String email) {
+		System.out.println(email);
+		UserJoinVo vo = ssDao.checkId(email);
+		System.out.println(vo);
 	}
 	
 	

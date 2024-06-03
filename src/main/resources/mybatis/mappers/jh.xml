@@ -127,7 +127,8 @@
 		        end_date endDate,
 		        pay_type payType,
 		        pay_price payPirce,
-		        company.company_no companyNo
+		        company.company_no companyNo,
+                class.class_price classPrice
 		from pay, user, schedule, class, company
 		where pay.user_no = user.user_no
 		and pay.schedule_no = schedule.schedule_no
