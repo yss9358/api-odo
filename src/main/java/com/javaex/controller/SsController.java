@@ -33,6 +33,8 @@ public class SsController {
 	@Autowired
 	private SsService ssService;
 	
+//	KakaoAPI kakaoApi = new KaKaoAPI();
+	
 	// 아이디 중복확인
 	@GetMapping("/odo/ss/checkid")
 	public JsonResult checkId(@RequestParam(value="id") String id) {
@@ -214,6 +216,7 @@ public class SsController {
 	@PostMapping("/odo/ss/token")
 	public void kakaoToken(@RequestBody String code) {
 		System.out.println(code);
+		
 	}
 	
 	
