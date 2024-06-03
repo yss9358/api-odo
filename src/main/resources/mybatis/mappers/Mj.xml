@@ -67,5 +67,79 @@
     	]]>
     </delete>
 	 
-
+	<select id="chart" resultType="com.javaex.vo.ChartVo">
+	select   sum(pay_price) onedayPrice
+from pay, schedule, class, company
+where pay.schedule_no = schedule.schedule_no
+and schedule.class_no = class.class_no
+and class.company_no = company.company_no
+and class_type=1/*이건 원데이 클래스*/
+/*정규랑 상시는 밑에걸로*/
+/*and (class_type = 2 or class_type = 3)*/
+and company.company_no = 1/*여기에 회사번호 들어가고*/
+and pay_date like (SELECT DATE_FORMAT(NOW(), '%Y-%m%'));
+	</select>
+	
+		<select id="chart2" resultType="com.javaex.vo.ChartVo">
+select   sum(pay_price) preonedayPrice
+from pay, schedule, class, company
+where pay.schedule_no = schedule.schedule_no
+and schedule.class_no = class.class_no
+and class.company_no = company.company_no
+and class_type = 1
+and company.company_no = 1
+and pay_date like (SELECT date_format(date(DATE_SUB(date(now()),
+INTERVAL 1 MONTH)), '%Y-%m%'));
+	</select>
+	
+	<select id="chart3" resultType="com.javaex.vo.ChartVo">
+	select   sum(pay_price) RePrice
+from pay, schedule, class, company
+where pay.schedule_no = schedule.schedule_no
+and schedule.class_no = class.class_no
+and class.company_no = company.company_no
+and (class_type = 2 or class_type = 3)
+and company.company_no = 1/*여기에 회사번호 들어가고*/
+and pay_date like (SELECT DATE_FORMAT(NOW(), '%Y-%m%'));
+	</select>
+	
+	<select id="chart4" resultType="com.javaex.vo.ChartVo">
+select   sum(pay_price) preRePrice
+from pay, schedule, class, company
+where pay.schedule_no = schedule.schedule_no
+and schedule.class_no = class.class_no
+and class.company_no = company.company_no
+and (class_type = 2 or class_type = 3)
+and company.company_no = 1
+and pay_date like (SELECT date_format(date(DATE_SUB(date(now()),
+INTERVAL 1 MONTH)), '%Y-%m%'));
+	</select>
+	
+	<select id="list" resultType="com.javaex.vo.ListVo">
+	select   class.class_no classNo,
+      class.class_name className,
+      count(class.class_no) count
+from pay, schedule, class, company
+where pay.schedule_no = schedule.schedule_no
+and schedule.class_no = class.class_no
+and class.company_no = company.company_no
+and (class_type = 2 or class_type = 3)
+and company.company_no = 1
+group by 1 order by 3 desc
+limit 6;
+	</select>
+	
+	<select id="list1" resultType="com.javaex.vo.ListVo">
+	select   class.class_no classNo,
+      class.class_name className,
+      count(class.class_no) count
+from pay, schedule, class, company
+where pay.schedule_no = schedule.schedule_no
+and schedule.class_no = class.class_no
+and class.company_no = company.company_no
+and class_type = 1
+and company.company_no = 1
+group by 1 order by 3 desc
+limit 6;
+	</select>
 </mapper>

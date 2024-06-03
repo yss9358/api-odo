@@ -17,6 +17,8 @@ import com.javaex.service.MjService;
 import com.javaex.vo.MjVo;
 
 import jakarta.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class MjController {
@@ -108,5 +110,11 @@ public class MjController {
 	
 	//통계리스트
 	//public void 
+	@GetMapping("/odo/chart")
+	public void chart() {
+		
+		mjService.exechart();
+	}
+	
 
 }
