@@ -112,7 +112,8 @@
 	<select id="companyLogin" parameterType="CompanyVo"
 		resultType="CompanyVo">
 	<![CDATA[
-		select company_no companyNo, company_id companyId, company_pw companyPass
+		select company_no companyNo, company_id companyId, 
+			   company_name companyName, company_image companyImage
 		from company
 		where company_id = #{companyId}
 		and company_pw = #{companyPass}
