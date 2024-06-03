@@ -330,13 +330,13 @@
 	on c.class_no = w.class_no
 	where r.end_date > now()
 	]]>
-	<if test="isFind == 1">
+	<if test="isFind == 2">
 	<![CDATA[
 	and class_name_address like #{keyword}
 	and class_num_address like #{keyword}
 	]]>
 	</if>
-	<if test="isFind != 1">
+	<if test="isFind == 1">
 	<![CDATA[
 	and class_name like #{keyword}
 	]]>

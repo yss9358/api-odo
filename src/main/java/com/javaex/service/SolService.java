@@ -199,8 +199,8 @@ public class SolService {
 		System.out.println("SolService.exeAddressLista");
 
 		// 키워드 설정
+		
 		vo.setKeyword("%" + vo.getKeyword() + "%");
-
 		// 페이지당 보일 리스트 갯수
 		int page = vo.getPage() > 0 ? vo.getPage() : (page = 1);
 		vo.setPage(page);

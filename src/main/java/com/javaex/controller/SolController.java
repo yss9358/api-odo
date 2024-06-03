@@ -261,7 +261,7 @@ public class SolController {
 	@GetMapping("classlist")
 	public JsonResult getClassList(@ModelAttribute SolListVo vo) {
 		System.out.println("SolController.getClassList");
-//		System.out.println(vo.getIsFind());
+		System.out.println("키워드 : "+ vo.getKeyword());
 		List<SolListVo> classList = solservice.exeFindClassList(vo);
 		System.out.println(classList);
 		if(classList != null) {
