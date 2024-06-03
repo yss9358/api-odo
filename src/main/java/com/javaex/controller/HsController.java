@@ -18,7 +18,7 @@ public class HsController {
 	@Autowired
 	private HsService hsService;
 
-	// 클래스 상세 페이지 정보
+	// 클래스 상세페이지 도로명주소
 	@GetMapping("odo/classdetails/nameadd")
 	public JsonResult getNameAdd(@RequestParam(value = "classNo") int no) {
 
