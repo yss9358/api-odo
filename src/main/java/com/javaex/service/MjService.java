@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.MjDao;
+import com.javaex.vo.ChartVo;
 import com.javaex.vo.MjVo;
 
 @Service
@@ -66,6 +67,27 @@ public class MjService {
 			
 			return mjDao.delete(no);
 		}
+		
+	//통계
+	public void exechart() {
+		
+		ChartVo c1 = mjDao.chart1();//이번달 원데이
+		
+		ChartVo c2 = mjDao.chart2();//지난달 원데이
+		
+		ChartVo c3 = mjDao.chart3();//이번달 정규상시
+		
+		ChartVo c4 = mjDao.chart4();//지난달 원데이
+		
+		ChartVo chart = new ChartVo(c1.getOnedayPrice(), c2.getPreonedayPrice(), c3.getRePrice(), c4.getPreRePrice());
+		
+		System.out.println(chart);
+		
+		mjDao.list(); //정규상시
+		
+		mjDao.list1(); //원데이
+		
+	}
 
 	
 	
