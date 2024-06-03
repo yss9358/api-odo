@@ -261,10 +261,7 @@ public class SolController {
 	@GetMapping("classlist")
 	public JsonResult getClassList(@ModelAttribute SolListVo vo) {
 		System.out.println("SolController.getClassList");
-		System.out.println(vo.getIsFind());
-		if(vo.getPage() <= 0) {
-			vo.setPage(1);
-		}
+//		System.out.println(vo.getIsFind());
 		List<SolListVo> classList = solservice.exeFindClassList(vo);
 		System.out.println(classList);
 		if(classList != null) {

@@ -208,7 +208,12 @@ public class SolService {
 		vo.setStartRow((vo.getPage() - 1) * vo.getListCount());
 
 		// Dao;
-		return solDao.selectAddressList(vo);
+		List<SolListVo> list = solDao.selectAddressList(vo);
+		if(list == null) {
+			return null; 
+		} else {
+			return list;
+		}
 
 	}
 	// 위시 추가 삭제
