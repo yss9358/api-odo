@@ -51,4 +51,22 @@ public class MjService {
 		return MjVo;
 	}
 	
+	//등록
+	public int exeWrite() {
+		System.out.println("MjService.exeWrite");
+		
+		int count = mjDao.insert();
+		
+		return count;
+	}
+	
+	//삭제
+		public int exeDelete(int no) {
+			System.out.println("MjService.exeDelete()");
+			
+			return mjDao.delete(no);
+		}
+
+	
+	
 }

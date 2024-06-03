@@ -15,6 +15,7 @@ public class MjDao {
 	//필드
 	@Autowired
 	private SqlSession sqlSession;
+	private SqlSession sqlSessoin;
 	
 	//수정폼
 	public Map<String, Object> personMform(int no){
@@ -45,11 +46,30 @@ public class MjDao {
 	
 	//읽기
 	public MjVo selectOne(int no) {
-		System.out.println("NoticeDao.selectOneNotice()");
+		System.out.println("MjDao.selectOneNotice()");
 		
 		MjVo MjVo=sqlSession.selectOne("Mj.selectOneNO", no);
 		
 		return MjVo;
+	}
+	
+	//등록
+	public int insert() {
+		System.out.println("MjDao.insert");
+		
+		int count = sqlSession.insert("Mj.insert");
+		
+		return count;
+	}
+	
+	//삭제
+	public int delete(int no) {
+		System.out.println("MjDao.delete");
+		
+		int count = sqlSessoin.delete("notice.delete", no);
+		
+		return count;
+		
 	}
 
 }

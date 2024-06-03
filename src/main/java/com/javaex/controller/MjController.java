@@ -5,14 +5,18 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaex.service.MjService;
 import com.javaex.vo.MjVo;
+
+import jakarta.websocket.server.PathParam;
 
 @RestController
 public class MjController {
@@ -67,7 +71,7 @@ public class MjController {
 	//읽기
 	@GetMapping("/odo/mypage/notice/{no}")
 	public MjVo Read(@PathVariable("no") int no) {
-		System.out.println("NoticeController.Read()");
+		System.out.println("MjController.Read()");
 		System.out.println(no);
 		
 		MjVo MjVo = mjService.exeRead(no);
@@ -75,10 +79,33 @@ public class MjController {
 		return MjVo;
 	}
 	
+	//등록폼
 	
 	
-
+	//등록
+	@PutMapping("/odo/mypage/notice/write")
+	public String write() {
+		System.out.println("MjController.write()");
 		
+		int count = mjService.exeWrite();
+		
+		String result = count + "건 등록 되었습니다.";
+		
+		return result;
+	}
+	
+	//삭제
+	@DeleteMapping("/odo/mypage/notice/delete/{no}")
+	public String delete(@PathVariable("no") int no) {
+		System.out.println("MjController.delete");
+		
+		int count = mjService.exeDelete(no);
+		
+		String result = count + "건 삭제 되었습니다.";
+		
+		return result;
+	}
+	
 	//통계리스트
 	//public void 
 

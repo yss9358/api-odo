@@ -52,6 +52,20 @@
 			WHERE idx = 1;
 	 	]]>
     </select>
+    
+    <insert id="insert" parameterType="com.javaex.vo.MjVo">
+	    <![CDATA[
+	    	insert into notice
+	    	values(null, #{notice_name}, #{title}, #{content}, date)
+	    ]]>
+    </insert>
+    
+    <delete id="delete">
+    	<![CDATA[
+    		delete from notice
+    		where idx =#[idx}
+    	]]>
+    </delete>
 	 
 
 </mapper>
