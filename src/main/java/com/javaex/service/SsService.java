@@ -2,10 +2,16 @@ package com.javaex.service;
 
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaex.dao.SsDao;
+import com.javaex.util.KakaoToken;
 import com.javaex.vo.CheckWishClassVo;
 import com.javaex.vo.ClassReviewVo;
 import com.javaex.vo.CouponVo;
@@ -249,20 +257,69 @@ public class SsService {
 	
 	
 	// 카카오 로그인 토큰 가져오기 
-	public void requestToken(String code) {
+	public String requestToken(String code) {
 		
 //		https://henniee.tistory.com/221
-//		System.out.println("ser");
 		System.out.println(code);
 //		
-//		String accessToken = "";
-//		String refreshToken = "";
+		String accessToken = "";
+		String refreshToken = "";
 //		
-//		String strUrl = "https://kauth.kakao.com/oauth/token";
-//		KakaoToken kakaoToken = new KakaoToken();
+		String strUrl = "https://kauth.kakao.com/oauth/token";
+		KakaoToken kakaoToken = new KakaoToken();
 		
+		try {
+			URL url = new URL(strUrl);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			
+			conn.setRequestMethod("post");
+			conn.setDoOutput(true);
+			
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append("grant_type=authorization_code");
+			sb.append("&client_id=4946b7c22ba5fb9b866b344e8f2f4224");
+			sb.append("&redirect_uri=http://localhost:8080/login/user");
+			sb.append("&code="+code);
+			sb.append("&client_secret=377Ja2giI9wqMcjpTmUwNlhKIoNgX7bV");
+			
+			bw.write(sb.toString());
+			bw.flush();
+			
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode(200이면성공):{}"+ responseCode);
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line = "";
+			String result = "";
+			
+			while((line = br.readLine()) != null) {
+				result += line;
+			}
+			
+			System.out.println("response body : {}"+result);
+			
+			ObjectMapper mapper  = new ObjectMapper();
+			
+			kakaoToken = mapper.readValue(result, KakaoToken.class);
+			System.out.println("kakaoToken : " + kakaoToken);
+			
+			accessToken = kakaoToken.getAccessToken();
+			refreshToken = kakaoToken.getRefreshToken();
+			
+			System.out.println("액세스토큰 : "+accessToken);
+			System.out.println("리프레시토큰 : "+refreshToken);
+			
+			br.close();
+			bw.close();
+			
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		
-
+		System.out.println("카카오토큰생성완료");
+		return accessToken;
 		
 	}
 	

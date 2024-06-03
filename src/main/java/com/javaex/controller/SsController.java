@@ -215,8 +215,8 @@ public class SsController {
 	
 	@PostMapping("/odo/ss/token")
 	public void kakaoToken(@RequestBody String code) {
-		System.out.println(code);
-		
+//		System.out.println(code);
+		ssService.requestToken(code);
 	}
 	
 	
