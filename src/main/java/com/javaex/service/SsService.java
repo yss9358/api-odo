@@ -243,6 +243,12 @@ public class SsService {
 		return ssDao.deleteWishClass(vo);
 	}
 
+	// 카카오 로그인 회원 체크
+	public void exeCheckKakaoEmail(String email) {
+		System.out.println(email);
+		UserJoinVo vo = ssDao.checkId(email);
+		System.out.println(vo);
+	}
 	
 	
 }

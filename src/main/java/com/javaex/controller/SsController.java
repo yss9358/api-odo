@@ -174,7 +174,7 @@ public class SsController {
 	}
 	
 	// 위시 클래스 추가
-	@PostMapping("odo/ss/wishclassis")
+	@PostMapping("/odo/ss/wishclassis")
 	public JsonResult addWishClass(HttpServletRequest request, @ModelAttribute CheckWishClassVo vo) {
 		int userNo = JwtUtil.getNoFromHeader(request);
 		if(userNo != -1) {
@@ -191,7 +191,7 @@ public class SsController {
 	}
 	
 	// 위시 클래스 삭제
-	@DeleteMapping("odo/ss/wishclassis")
+	@DeleteMapping("/odo/ss/wishclassis")
 	public JsonResult deleteWishClass(HttpServletRequest request, @ModelAttribute CheckWishClassVo vo) {
 		int userNo = JwtUtil.getNoFromHeader(request);
 		if(userNo != -1) {
@@ -207,6 +207,11 @@ public class SsController {
 		}
 	}
 	
+	// 카카오 로그인 회원 체크
+	@PostMapping("/odo/ss/kakaocheck")
+	public void emailCheck(@RequestBody String email) {
+		ssService.exeCheckKakaoEmail(email);
+	}
 
 	
 }
