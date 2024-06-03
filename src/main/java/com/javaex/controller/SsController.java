@@ -207,19 +207,6 @@ public class SsController {
 		}
 	}
 	
-	// 카카오 로그인
-	@GetMapping("/odo/kakao")
-	public void kakaoLogin() {
-		System.out.println("kakao");
-	}
-	
-	@PostMapping("/odo/ss/token")
-	public void kakaoToken(@RequestBody String code) {
-//		System.out.println(code);
-		ssService.requestToken(code);
-	}
-	
-	
-	
+
 	
 }
