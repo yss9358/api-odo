@@ -127,8 +127,7 @@ public class HsDao {
 	// 무료베스트클래스 리스트 - 로그인
 	public List<HsVo> selectUsersFreeBestList(int no) {
 
-		List<HsVo> fbList = sqlSession.selectList("hs.selectUsersFreeBestList");
-		System.out.println(fbList);
+		List<HsVo> fbList = sqlSession.selectList("hs.selectUsersFreeBestList", no);
 
 		return fbList;
 	}//
@@ -136,7 +135,7 @@ public class HsDao {
 	// 유료베스트클래스 리스트 - 로그인
 	public List<HsVo> selectUsersPayBestList(int no) {
 
-		List<HsVo> pbList = sqlSession.selectList("hs.selectUsersPayBestList");
+		List<HsVo> pbList = sqlSession.selectList("hs.selectUsersPayBestList", no);
 		
 		return pbList;
 	}//
