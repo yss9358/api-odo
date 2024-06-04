@@ -1,5 +1,6 @@
 package com.javaex.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.MjDao;
 import com.javaex.vo.ChartVo;
+import com.javaex.vo.ListVo;
 import com.javaex.vo.MjVo;
 
 @Service
@@ -45,48 +47,71 @@ public class MjService {
 	
 	//읽기
 	public MjVo exeRead(int no) {
-		System.out.println("MjService.exeRead");
+//		System.out.println("MjService.exeRead");
 		
 		MjVo MjVo = mjDao.selectOne(no);
+//		System.out.println(MjVo.getPagesNo());
+		
+		int count = MjVo.getPagesNo();
+		count=count+1;
+//		System.out.println(count);
+		
+		MjVo.setPagesNo(count);
+//		MjVo.setIdx(no);
 		System.out.println(MjVo);
+		mjDao.getPagesNo(MjVo);
+		
 		return MjVo;
 	}
 	
 	//등록
-	public int exeWrite() {
-		System.out.println("MjService.exeWrite");
+	public int exeWrite(MjVo mjVo) {
+//		System.out.println("MjService.exeWrite");
 		
-		int count = mjDao.insert();
+		MjVo name = mjDao.getName(mjVo);
+		
+		mjVo.setName(name.getName());
+		
+		int count = mjDao.insert(mjVo);
 		
 		return count;
 	}
 	
 	//삭제
 		public int exeDelete(int no) {
-			System.out.println("MjService.exeDelete()");
+//			System.out.println("MjService.exeDelete()");
 			
 			return mjDao.delete(no);
 		}
 		
 	//통계
-	public void exechart() {
+	public Map<String, Object> exechart(int no) {
 		
-		ChartVo c1 = mjDao.chart1();//이번달 원데이
+		ChartVo c1 = mjDao.chart1(no);//이번달 원데이
 		
-		ChartVo c2 = mjDao.chart2();//지난달 원데이
+		ChartVo c2 = mjDao.chart2(no);//지난달 원데이
 		
-		ChartVo c3 = mjDao.chart3();//이번달 정규상시
+		ChartVo c3 = mjDao.chart3(no);//이번달 정규상시
 		
-		ChartVo c4 = mjDao.chart4();//지난달 원데이
+		ChartVo c4 = mjDao.chart4(no);//지난달 정규상시
 		
 		ChartVo chart = new ChartVo(c1.getOnedayPrice(), c2.getPreonedayPrice(), c3.getRePrice(), c4.getPreRePrice());
 		
-		System.out.println(chart);
+		//System.out.println(chart);
 		
-		mjDao.list(); //정규상시
+		List<ListVo> list = mjDao.list(no); //정규상시
 		
-		mjDao.list1(); //원데이
+		List<ListVo> list1 = mjDao.list1(no); //원데이
 		
+		Map<String, Object> mMap = new HashMap<>();
+		
+		mMap.put("chart", chart);
+		mMap.put("list", list);
+		mMap.put("list1", list1);
+		
+		System.out.println(mMap);
+		
+		return mMap;
 	}
 
 	

@@ -21,7 +21,7 @@ public class MjDao {
 
 	// 수정폼
 	public Map<String, Object> personMform(int no) {
-		System.out.println("MjDao.personMform");
+//		System.out.println("MjDao.personMform");
 
 		Map<String, Object> pMap = sqlSession.selectOne("Mj.selectOne", no);
 
@@ -30,7 +30,7 @@ public class MjDao {
 
 	// 수정
 	public int personModify(MjVo mjVo) {
-		System.out.println("MjDao.personModify");
+//		System.out.println("MjDao.personModify");
 
 		int count = sqlSession.update("Mj.update", mjVo);
 
@@ -39,7 +39,7 @@ public class MjDao {
 
 	// 리스트
 	public List<MjVo> mjSelect() {
-		System.out.println("MjDao.mjSelect");
+//		System.out.println("MjDao.mjSelect");
 
 		List<MjVo> MjList = sqlSession.selectList("Mj.selectlist");
 
@@ -48,42 +48,53 @@ public class MjDao {
 
 	// 읽기
 	public MjVo selectOne(int no) {
-		System.out.println("MjDao.selectOneNotice()");
+//		System.out.println("MjDao.selectOneNotice()");
 
 		MjVo MjVo = sqlSession.selectOne("Mj.selectOneNO", no);
 
 		return MjVo;
 	}
+	
+	public void getPagesNo(MjVo mjVo) {
+//		sqlSession.update("Mj.Pagesupdate", mjVo);
+		
+	}
 
 	// 등록
-	public int insert() {
-		System.out.println("MjDao.insert");
+	public int insert(MjVo mjVo) {
+//		System.out.println("MjDao.insert");
 
-		int count = sqlSession.insert("Mj.insert");
+		int count = sqlSession.insert("Mj.insert", mjVo);
 
 		return count;
+	}
+	
+	public MjVo getName(MjVo mjVo) {
+		MjVo name = sqlSession.selectOne("Mj.getName", mjVo);
+		
+		return name;
 	}
 
 	// 삭제
 	public int delete(int no) {
-		System.out.println("MjDao.delete");
+//		System.out.println(no);
 
-		int count = sqlSessoin.delete("Mj.delete", no);
+		int count = sqlSession.delete("Mj.delete", no);
 
 		return count;
 
 	}
 
 	// 통계
-	public ChartVo chart1() {
+	public ChartVo chart1(int no) {
 
 		ChartVo c = new ChartVo(0, 0, 0, 0);
 		ChartVo h;
-
-		if (sqlSession.selectOne("Mj.chart") == null) {
+//		System.out.println(no);
+		if (sqlSession.selectOne("Mj.chart", no) == null) {
 			h = c;
 		} else {
-			h = sqlSession.selectOne("Mj.chart");
+			h = sqlSession.selectOne("Mj.chart", no);
 		}
 
 		//System.out.println(h);
@@ -92,15 +103,15 @@ public class MjDao {
 
 	}
 
-	public ChartVo chart2() {
+	public ChartVo chart2(int no) {
 
 		ChartVo c = new ChartVo(0, 0, 0, 0);
 		ChartVo h;
 
-		if (sqlSession.selectOne("Mj.chart2") == null) {
+		if (sqlSession.selectOne("Mj.chart2",no) == null) {
 			h = c;
 		} else {
-			h = sqlSession.selectOne("Mj.chart2");
+			h = sqlSession.selectOne("Mj.chart2", no);
 		}
 
 		//System.out.println(h);
@@ -109,31 +120,31 @@ public class MjDao {
 
 	}
 
-	public ChartVo chart3() {
+	public ChartVo chart3(int no) {
 
 		ChartVo c = new ChartVo(0, 0, 0, 0);
 		ChartVo h;
 
-		if (sqlSession.selectOne("Mj.chart3") == null) {
+		if (sqlSession.selectOne("Mj.chart3", no) == null) {
 			h = c;
 		} else {
-			h = sqlSession.selectOne("Mj.chart3");
+			h = sqlSession.selectOne("Mj.chart3", no);
 		}
 
-		System.out.println(h);
+		//System.out.println(h);
 
 		return h;
 
 	}
-	public ChartVo chart4() {
+	public ChartVo chart4(int no) {
 
 		ChartVo c = new ChartVo(0, 0, 0, 0);
 		ChartVo h;
 
-		if (sqlSession.selectOne("Mj.chart4") == null) {
+		if (sqlSession.selectOne("Mj.chart4", no) == null) {
 			h = c;
 		} else {
-			h = sqlSession.selectOne("Mj.chart4");
+			h = sqlSession.selectOne("Mj.chart4", no);
 		}
 
 		//System.out.println(h);
@@ -142,19 +153,21 @@ public class MjDao {
 
 	}
 	
-	public void list() {
+	public List<ListVo> list(int no) {
 		
-		List<ListVo> list = sqlSession.selectList("Mj.list");
+		List<ListVo> list = sqlSession.selectList("Mj.list", no);
 		
-		System.out.println(list);
+		//System.out.println(list);
 		
-		
+		return list;
 	}
 	
-	public void list1() {
-		List<ListVo> list1 = sqlSession.selectList("Mj.list1");
+	public List<ListVo> list1(int no) {
+		List<ListVo> list1 = sqlSession.selectList("Mj.list1", no);
 		
-		System.out.println(list1);
+		//System.out.println(list1);
+		
+		return list1;
 	}
 	
 }
