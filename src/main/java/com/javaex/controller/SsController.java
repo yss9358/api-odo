@@ -219,7 +219,6 @@ public class SsController {
 		}
 	}
 
-	// 카카오 회원가입
 	
 	
 }
