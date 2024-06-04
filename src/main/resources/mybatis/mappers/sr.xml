@@ -345,6 +345,8 @@
 	<![CDATA[
 	and class_name_address like #{keyword}
 	and class_num_address like #{keyword}
+	order by abs(c.class_latitude-#{}),
+		 	 abs(c.class_longitutde-#{})
 	]]>
 	</if>
 	<if test="isFind == 1">
