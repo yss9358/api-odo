@@ -212,8 +212,32 @@ public class HsService {
 
 		return pMap;
 	}//
+	
+	// 메인페이지 - 비로그인 리스트
+	public List<List<HsVo>> exegetUsersList(int no) {
 
-	// 메인페이지 - 리스트
+//		// 무료 베스트 클래스 리스트
+		List<HsVo> fbList = hsDao.selectUsersFreeBestList(no);
+//
+//		// 유료 베스트 클래스 리스트
+		List<HsVo> pbList = hsDao.selectUsersPayBestList(no);
+//
+//		// 신규 베스트 클래스 리스트
+		List<HsVo> nList = hsDao.selectUsersNewBestList(no);
+//
+//		// 리스트의 리스트 생성
+		List<List<HsVo>> listOfLists = new ArrayList<>();
+//		// listOfLists.add(무료베스트클래스리스트)
+		listOfLists.add(fbList);
+//		// listOfLists.add(유료베스트클래스리스트)
+		listOfLists.add(pbList);
+//		// listOfLists.add(신규베스트클래스리스트)
+		listOfLists.add(nList);
+//		
+		return listOfLists;
+	}//
+
+	// 메인페이지 - 로그인 리스트
 	public List<List<HsVo>> exegetList() {
 
 		// 무료 베스트 클래스 리스트
