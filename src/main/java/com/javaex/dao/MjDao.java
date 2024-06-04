@@ -56,7 +56,7 @@ public class MjDao {
 	}
 	
 	public void getPagesNo(MjVo mjVo) {
-//		sqlSession.update("Mj.Pagesupdate", mjVo);
+		sqlSession.update("Mj.Pagesupdate", mjVo);
 		
 	}
 

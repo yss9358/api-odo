@@ -79,8 +79,8 @@
     
     <delete id="delete" parameterType="int">
     	<![CDATA[
-delete from notice
-where idx = #{no}
+			delete from notice
+			where idx = #{no}
     	]]>
     </delete>
 	 
