@@ -30,7 +30,7 @@ public class MjController {
 	// 수정폼
 	@GetMapping("/odo/mypage/modify/{no}")
 	public Map<String, Object> modifyform(@PathVariable(value = "no") int no) {
-		System.out.println("MjController.modifyform");
+//		System.out.println("MjController.modifyform");
 
 		Map<String, Object> pMap = mjService.exeMform(no);
 
@@ -40,7 +40,7 @@ public class MjController {
 	// 수정
 	@PostMapping("/odo/mypage/modify")
 	public int modify(@RequestBody MjVo mjVo) {
-		System.out.println("MjController.modify");
+//		System.out.println("MjController.modify");
 
 		int count = 0;
 
@@ -60,7 +60,7 @@ public class MjController {
 	// 리스트
 	@GetMapping("/odo/mypage/notice")
 	public Map<String, Object> list(HttpServletRequest request, Model model) {
-		System.out.println("MjController.list");
+//		System.out.println("MjController.list");
 		int no = JwtUtil.getNoFromHeader(request);
 
 		List<MjVo> MjList = mjService.exeList();
@@ -111,7 +111,7 @@ public class MjController {
 	// 삭제
 	@DeleteMapping("/odo/mypage/notice/delete/{no}")
 	public String delete(@PathVariable("no") int no) {
-		System.out.println("MjController.delete");
+//		System.out.println("MjController.delete");
 
 		int count = mjService.exeDelete(no);
 

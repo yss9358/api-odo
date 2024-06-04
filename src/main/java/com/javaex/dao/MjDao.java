@@ -17,7 +17,6 @@ public class MjDao {
 	// 필드
 	@Autowired
 	private SqlSession sqlSession;
-	private SqlSession sqlSessoin;
 
 	// 수정폼
 	public Map<String, Object> personMform(int no) {

@@ -35,7 +35,8 @@
 	        	title,
 	        	regDate,
 	        	pagesNo
-	 		FROM notice;
+	 		FROM notice
+	 		order by idx desc;
 	 	]]>
     </select>
     

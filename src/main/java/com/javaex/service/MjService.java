@@ -29,7 +29,7 @@ public class MjService {
 
 	// 수정
 	public int exeModify(MjVo mjVo) {
-		System.out.println("MjService.exeModify");
+//		System.out.println("MjService.exeModify");
 
 		int count = mjDao.personModify(mjVo);
 
@@ -38,7 +38,7 @@ public class MjService {
 
 	// 리스트
 	public List<MjVo> exeList() {
-		System.out.println("MjService.exeList");
+//		System.out.println("MjService.exeList");
 
 		List<MjVo> MjList = mjDao.mjSelect();
 
