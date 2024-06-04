@@ -245,9 +245,7 @@ public class SsService {
 
 	// 카카오 로그인 회원 체크
 	public UserJoinVo exeCheckKakaoEmail(UserJoinVo vo) {
-		System.out.println(vo);
 		UserJoinVo checkVo = ssDao.checkId(vo.getUserId());
-		System.out.println(checkVo);
 		if(checkVo == null) {
 			int count = ssDao.insertKakaoUser(vo);
 			if(count == 1) {
