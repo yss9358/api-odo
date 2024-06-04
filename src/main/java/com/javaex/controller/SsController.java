@@ -209,9 +209,14 @@ public class SsController {
 	
 	// 카카오 로그인 회원 체크
 	@PostMapping("/odo/ss/kakaocheck")
-	public JsonResult emailCheck(@RequestBody UserJoinVo vo) {
-		int count = ssService.exeCheckKakaoEmail(vo);
-		return JsonResult.success(count);
+	public JsonResult emailCheck(@RequestBody UserJoinVo vo,HttpServletResponse response) {
+		UserJoinVo authVo = ssService.exeCheckKakaoEmail(vo);
+		if(authVo != null) {
+			JwtUtil.createTokenAndSetHeader(response, ""+authVo.getUserNo());
+			return JsonResult.success(authVo);
+		} else {
+			return null;
+		}
 	}
 
 	// 카카오 회원가입
