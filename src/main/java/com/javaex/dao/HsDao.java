@@ -113,8 +113,18 @@ public class HsDao {
 
 		return cate2List;
 	}//
+	
+	//여기 하다 마감
+	// 1차 카테고리 리스트 - 로그인
+	public void selectCate1UsersList(Map<String, Integer> limitMap) {
 
-	// 1차 카테고리 리스트
+//		List<HsVo> cate1List = sqlSession.selectList("hs.selectCate1List", limitMap);
+		sqlSession.selectList("hs.selectCate1UsersList", limitMap);
+
+//		return cate1List;
+	}//
+
+	// 1차 카테고리 리스트 - 비로그인
 	public List<HsVo> selectCate1List(Map<String, Integer> limitMap) {
 
 		List<HsVo> cate1List = sqlSession.selectList("hs.selectCate1List", limitMap);

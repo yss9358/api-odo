@@ -118,7 +118,7 @@
 
 	<!-- ==============카테고리검색페이지============= -->
 
-	<!-- 2차카테고리 리스트 가져오기 -->
+	<!-- 2차카테고리 리스트 가져오기 - 비로그인 -->
 	<select id="selectCate2List" parameterType="map" resultType="com.javaex.vo.HsVo">
    <![CDATA[
    	   select   c.class_no classNo,
@@ -160,8 +160,30 @@
 			and c1.cate1_no = #{no}
 		]]>
 	</select>
+	
+		<!-- 1차카테고리 리스트 가져오기 - 로그인 -->
+	<select id="selectCate1UsersList" parameterType="map" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+	   select   c.class_no classNo,
+		        c.class_name className,
+		        substr(c.class_name_address, 1, 5) classNameAdd,
+		        c.class_image classImg,
+		        c.class_price classPrice,
+		        round(avg(r.review_point)) reviewPointAvg,
+		        count(r.review_point) reviewCount
+		from class c
+		join cate2 c2 on c.cate2_no = c2.cate2_no
+		join cate1 c1 on c2.cate1_no = c1.cate1_no
+		left join schedule sch on c.class_no = sch.class_no
+		left join review r on sch.schedule_no = r.schedule_no
+		where c1.cate1_no = #{cate1No}
+		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
+		order by avg(r.review_point) desc
+		limit #{startRowNo}, #{listCnt}
+   ]]>
+	</select>
 
-	<!-- 1차카테고리 리스트 가져오기 -->
+	<!-- 1차카테고리 리스트 가져오기 - 비로그인 -->
 	<select id="selectCate1List" parameterType="map" resultType="com.javaex.vo.HsVo">
    <![CDATA[
 	   select   c.class_no classNo,
@@ -183,7 +205,7 @@
    ]]>
 	</select>
 
-	<!-- ==============메인뷰============= -->
+	<!-- ===============================메인뷰============================== -->
 
 	<!-- 무료베스트 리스트 가져오기 - 로그인 -->
 	<select id="selectUsersFreeBestList" parameterType="int" resultType="com.javaex.vo.HsVo">

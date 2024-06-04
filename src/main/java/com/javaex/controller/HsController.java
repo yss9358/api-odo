@@ -45,10 +45,22 @@ public class HsController {
 
 		return JsonResult.success(pMap);
 	}//
+	
+	// 검색페이지 - 1차 카테고리 검색 리스트 - 로그인
+	@GetMapping("odo/categories/users")
+	public void getCateUsersList(@RequestParam(value = "userNo") int userNo,
+			@RequestParam(value = "cate1No") int no,
+			@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
 
-	// 검색페이지 - 1차 카테고리 검색 리스트
+//		Map<String, Object> pMap = hsService.execate1List(no, crtPage);
+		hsService.execate1UsersList(userNo, no, crtPage);
+
+//		return JsonResult.success(pMap);
+	}//
+
+	// 검색페이지 - 1차 카테고리 검색 리스트 - 비로그인
 	@GetMapping("odo/categories")
-	public JsonResult getcateList(@RequestParam(value = "cate1No") int no,
+	public JsonResult getCateList(@RequestParam(value = "cate1No") int no,
 			@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
 
 		Map<String, Object> pMap = hsService.execate1List(no, crtPage);
@@ -56,6 +68,7 @@ public class HsController {
 		return JsonResult.success(pMap);
 	}//
 	
+	//////////////////////////////////////////////////////////////////
 	
 	// 메인 페이지 - 로그인 시 리스트
 	@GetMapping("odo/mains/users")
