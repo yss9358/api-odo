@@ -5,6 +5,7 @@ public class UserJoinVo {
 
 	private int userNo;
 	private String userId;
+	private String userEmail;
 	private String userPw;
 	private String userName;
 	private String userNickname;
@@ -12,17 +13,17 @@ public class UserJoinVo {
 	private String userBirth;
 	private String userGender;
 	private String userImage;
-	private boolean userKakao;
-	private boolean userNaver;
+	private int userType;
 	
 	public UserJoinVo() {
 
 	}
 
-	public UserJoinVo(int userNo, String userId, String userPw, String userName, String userNickname, String userHp,
-			String userBirth, String userGender, String userImage, boolean userKakao, boolean userNaver) {
+	public UserJoinVo(int userNo, String userId, String userEmail, String userPw, String userName, String userNickname,
+			String userHp, String userBirth, String userGender, String userImage, int userType) {
 		this.userNo = userNo;
 		this.userId = userId;
+		this.userEmail = userEmail;
 		this.userPw = userPw;
 		this.userName = userName;
 		this.userNickname = userNickname;
@@ -30,8 +31,7 @@ public class UserJoinVo {
 		this.userBirth = userBirth;
 		this.userGender = userGender;
 		this.userImage = userImage;
-		this.userKakao = userKakao;
-		this.userNaver = userNaver;
+		this.userType = userType;
 	}
 
 	public int getUserNo() {
@@ -48,6 +48,14 @@ public class UserJoinVo {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	public String getUserPw() {
@@ -106,27 +114,19 @@ public class UserJoinVo {
 		this.userImage = userImage;
 	}
 
-	public boolean isUserKakao() {
-		return userKakao;
+	public int getUserType() {
+		return userType;
 	}
 
-	public void setUserKakao(boolean userKakao) {
-		this.userKakao = userKakao;
-	}
-
-	public boolean isUserNaver() {
-		return userNaver;
-	}
-
-	public void setUserNaver(boolean userNaver) {
-		this.userNaver = userNaver;
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 
 	@Override
 	public String toString() {
-		return "UserJoinVo [userNo=" + userNo + ", userId=" + userId + ", userPw=" + userPw + ", userName=" + userName
-				+ ", userNickname=" + userNickname + ", userHp=" + userHp + ", userBirth=" + userBirth + ", userGender="
-				+ userGender + ", userImage=" + userImage + ", userKakao=" + userKakao + ", userNaver=" + userNaver
+		return "UserJoinVo [userNo=" + userNo + ", userId=" + userId + ", userEmail=" + userEmail + ", userPw=" + userPw
+				+ ", userName=" + userName + ", userNickname=" + userNickname + ", userHp=" + userHp + ", userBirth="
+				+ userBirth + ", userGender=" + userGender + ", userImage=" + userImage + ", userType=" + userType
 				+ "]";
 	}
 

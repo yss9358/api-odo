@@ -82,8 +82,8 @@ public class SsService {
 	}
 	
 	// 리뷰쓸때 클래스정보 가져오기
-	public OneClassVo exeGetClassOne(int no) {
-		return ssDao.getClassOne(no);
+	public OneClassVo exeGetClassOne(int scheduleNo) {
+		return ssDao.getClassOne(scheduleNo);
 	}
 	
 	// 리뷰 작성

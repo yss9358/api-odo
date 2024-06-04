@@ -52,8 +52,8 @@ public class SsDao {
 	}
 	
 	// 리뷰 쓸때 클래스 정보 가져오기
-	public OneClassVo getClassOne(int no) {
-		return sqlSession.selectOne("ss.getClassOne", no);
+	public OneClassVo getClassOne(int scheduleNo) {
+		return sqlSession.selectOne("ss.getClassOne", scheduleNo);
 	}
 	
 	// 리뷰 작성

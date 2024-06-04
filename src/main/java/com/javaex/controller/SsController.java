@@ -84,8 +84,8 @@ public class SsController {
 	
 	// 리뷰쓸때 클래스정보 가져오기
 	@GetMapping("/odo/ss/getclassone")
-	public JsonResult getClassOne(@RequestParam(value="scheduleNo") int no) {
-		OneClassVo vo = ssService.exeGetClassOne(no);
+	public JsonResult getClassOne(@RequestParam(value="scheduleNo") int scheduleNo) {
+		OneClassVo vo = ssService.exeGetClassOne(scheduleNo);
 		return JsonResult.success(vo);
 	}
 	

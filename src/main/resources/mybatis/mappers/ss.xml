@@ -52,7 +52,7 @@
 	<insert id="insertUser" parameterType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
 			insert into user
-			values(null, #{userId}, #{userPw}, #{userName},#{userNickname}, #{userHp}, #{userBirth}, #{userGender}, null, #{userKakao}, #{userNaver})
+			values(null, #{userId}, #{userEmail},#{userPw}, #{userName},#{userNickname}, #{userHp}, #{userBirth}, #{userGender}, null, #{userType})
 		]]>
 	</insert>
 	
@@ -63,8 +63,7 @@
 					user_nickname userNickname,
 					user_id userId,
 					user_image userImage,
-					user_kakao userKakao,
-					user_naver userNaver
+					user_type userType
 			from user
 			where user_id = #{userId}
 			and user_pw = #{userPw}
@@ -75,7 +74,7 @@
 	<insert id="insertKakaoUser" parameterType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
 			insert into user
-			values(null,#{userId}, null, #{userName}, #{userNickname}, #{userHp}, #{userBirth},#{userGender}, #{userImage},#{userKakao}, #{userNaver})
+			values(null, #{userId},#{userEmail}, null, #{userName}, #{userNickname}, #{userHp}, #{userBirth},#{userGender}, #{userImage},#{userType})
 		]]>
 		<selectKey keyProperty="userNo" resultType="int" order="AFTER">
 			<![CDATA[
@@ -91,8 +90,7 @@
 					user_nickname userNickname,
 					user_id userId,
 					user_image userImage,
-					user_kakao userKakao,
-					user_naver userNaver
+					user_type userType
 			from user
 			where user_id = #{userId}
 			and user_no = #{userNo}
@@ -180,7 +178,7 @@
 			from schedule s
 			inner join class c
 					on s.class_no = c.class_no
-			where s.schedule_no = #{no}
+			where s.schedule_no = #{scheduleNo}
 		]]>
 	</select>
 	
@@ -280,7 +278,7 @@
 			from coupon c, user u, company cp
 			where c.user_no = u.user_no
 			and c.company_no = cp.company_no
-			and u.user_no = #{no}
+			and u.user_no = #{userNo}
 		]]>
 	</select>
 	
@@ -330,7 +328,7 @@
 	<!-- 리뷰페이지 - 클래스 정보 가져오기 -->
 	<select id="getClassInfo" parameterType="int" resultMap="classInfo">
 		<![CDATA[
-			select	 s.class_no classNo,
+			select	s.class_no classNo,
 					count(*) totalCount,
 					ifnull(avg(r.review_point),0) reviewAvg
 			from review r
