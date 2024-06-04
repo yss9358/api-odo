@@ -1,5 +1,6 @@
 package com.javaex.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaex.service.MjService;
+import com.javaex.util.JwtUtil;
 import com.javaex.vo.MjVo;
 
-import jakarta.websocket.server.PathParam;
-import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @RestController
@@ -60,39 +61,53 @@ public class MjController {
 	
 	//리스트
 	@GetMapping("/odo/mypage/notice")
-	public List<MjVo> list(Model model) {
+	public Map<String, Object> list(HttpServletRequest request, Model model) {
 		System.out.println("MjController.list");
+		int no = JwtUtil.getNoFromHeader(request);
 			
 		List<MjVo> MjList = mjService.exeList();
 			
 		model.addAttribute("list", MjList);
+		
+		Map<String, Object> Mlist = new HashMap<>();
+		
+		Mlist.put("no", no);
+		Mlist.put("MjList", MjList);
 			
-		return MjList;
+		return Mlist;
 	}
 	
 	//읽기
 	@GetMapping("/odo/mypage/notice/{no}")
-	public MjVo Read(@PathVariable("no") int no) {
-		System.out.println("MjController.Read()");
-		System.out.println(no);
+	public Map<String, Object> Read(HttpServletRequest request,@PathVariable("no") int no) {
+		int num = JwtUtil.getNoFromHeader(request);
 		
 		MjVo MjVo = mjService.exeRead(no);
-		System.out.println(MjVo);
-		return MjVo;
+		
+		Map<String, Object> Mread = new HashMap<>();
+		
+		Mread.put("num", num);
+		Mread.put("MjVo", MjVo);
+		
+		return Mread;
 	}
 	
 	//등록폼
 	
 	
 	//등록
-	@PutMapping("/odo/mypage/notice/write")
-	public String write() {
-		System.out.println("MjController.write()");
+	@PostMapping("/odo/mypage/notice/write")
+	public String write(HttpServletRequest request, @RequestBody MjVo mjVo) {
+//		System.out.println("MjController.write()");
+		int num = JwtUtil.getNoFromHeader(request);
+		mjVo.setUserno(num);
+		System.out.println(mjVo);
 		
-		int count = mjService.exeWrite();
-		
+//		
+		int count = mjService.exeWrite(mjVo);
+//		
 		String result = count + "건 등록 되었습니다.";
-		
+//		
 		return result;
 	}
 	
@@ -111,9 +126,12 @@ public class MjController {
 	//통계리스트
 	//public void 
 	@GetMapping("/odo/chart")
-	public void chart() {
+	public Map<String, Object> chart(HttpServletRequest request) {
+		int no = JwtUtil.getNoFromHeader(request);
+		System.out.println(no);
+		return mjService.exechart(no);
 		
-		mjService.exechart();
+		
 	}
 	
 

@@ -49,25 +49,42 @@
 				regDate,
 				pagesNo
 			FROM notice
-			WHERE idx = 1;
+			WHERE idx = #{no};
 	 	]]>
     </select>
+    <update id="Pagesupdate">
+    	<![CDATA[
+	    	update notice
+			set pagesNo= #{pagesNo}
+			where idx = #{idx}
+    	]]>
+    </update>
     
+    <!-- 등록 -->
     <insert id="insert" parameterType="com.javaex.vo.MjVo">
 	    <![CDATA[
 	    	insert into notice
-	    	values(null, #{notice_name}, #{title}, #{content}, date)
+	    	values(null, #{name}, #{title}, #{content}, now(), 0)
 	    ]]>
     </insert>
     
-    <delete id="delete">
+    <select id="getName" parameterType="com.javaex.vo.MjVo" resultType="com.javaex.vo.MjVo">
     	<![CDATA[
-    		delete from notice
-    		where idx =#[idx}
+    		select user_nickname name
+			from user
+			where user_no = #{userno}
+    	]]>
+    </select>
+    
+    
+    <delete id="delete" parameterType="int">
+    	<![CDATA[
+delete from notice
+where idx = #{no}
     	]]>
     </delete>
 	 
-	<select id="chart" resultType="com.javaex.vo.ChartVo">
+	<select id="chart" parameterType="int" resultType="com.javaex.vo.ChartVo">
 	select   sum(pay_price) onedayPrice
 from pay, schedule, class, company
 where pay.schedule_no = schedule.schedule_no
@@ -76,46 +93,46 @@ and class.company_no = company.company_no
 and class_type=1/*이건 원데이 클래스*/
 /*정규랑 상시는 밑에걸로*/
 /*and (class_type = 2 or class_type = 3)*/
-and company.company_no = 1/*여기에 회사번호 들어가고*/
+and company.company_no = #{no}/*여기에 회사번호 들어가고*/
 and pay_date like (SELECT DATE_FORMAT(NOW(), '%Y-%m%'));
 	</select>
 	
-		<select id="chart2" resultType="com.javaex.vo.ChartVo">
+		<select id="chart2" parameterType="int" resultType="com.javaex.vo.ChartVo">
 select   sum(pay_price) preonedayPrice
 from pay, schedule, class, company
 where pay.schedule_no = schedule.schedule_no
 and schedule.class_no = class.class_no
 and class.company_no = company.company_no
 and class_type = 1
-and company.company_no = 1
+and company.company_no = #{no}
 and pay_date like (SELECT date_format(date(DATE_SUB(date(now()),
 INTERVAL 1 MONTH)), '%Y-%m%'));
 	</select>
 	
-	<select id="chart3" resultType="com.javaex.vo.ChartVo">
+	<select id="chart3" parameterType="int" resultType="com.javaex.vo.ChartVo">
 	select   sum(pay_price) RePrice
 from pay, schedule, class, company
 where pay.schedule_no = schedule.schedule_no
 and schedule.class_no = class.class_no
 and class.company_no = company.company_no
 and (class_type = 2 or class_type = 3)
-and company.company_no = 1/*여기에 회사번호 들어가고*/
+and company.company_no = #{no}/*여기에 회사번호 들어가고*/
 and pay_date like (SELECT DATE_FORMAT(NOW(), '%Y-%m%'));
 	</select>
 	
-	<select id="chart4" resultType="com.javaex.vo.ChartVo">
+	<select id="chart4" parameterType="int" resultType="com.javaex.vo.ChartVo">
 select   sum(pay_price) preRePrice
 from pay, schedule, class, company
 where pay.schedule_no = schedule.schedule_no
 and schedule.class_no = class.class_no
 and class.company_no = company.company_no
 and (class_type = 2 or class_type = 3)
-and company.company_no = 1
+and company.company_no = #{no}
 and pay_date like (SELECT date_format(date(DATE_SUB(date(now()),
 INTERVAL 1 MONTH)), '%Y-%m%'));
 	</select>
 	
-	<select id="list" resultType="com.javaex.vo.ListVo">
+	<select id="list" parameterType="int" resultType="com.javaex.vo.ListVo">
 	select   class.class_no classNo,
       class.class_name className,
       count(class.class_no) count
@@ -124,12 +141,12 @@ where pay.schedule_no = schedule.schedule_no
 and schedule.class_no = class.class_no
 and class.company_no = company.company_no
 and (class_type = 2 or class_type = 3)
-and company.company_no = 1
+and company.company_no = #{no}
 group by 1 order by 3 desc
 limit 6;
 	</select>
 	
-	<select id="list1" resultType="com.javaex.vo.ListVo">
+	<select id="list1" parameterType="int" resultType="com.javaex.vo.ListVo">
 	select   class.class_no classNo,
       class.class_name className,
       count(class.class_no) count
@@ -138,7 +155,7 @@ where pay.schedule_no = schedule.schedule_no
 and schedule.class_no = class.class_no
 and class.company_no = company.company_no
 and class_type = 1
-and company.company_no = 1
+and company.company_no = #{no}
 group by 1 order by 3 desc
 limit 6;
 	</select>
