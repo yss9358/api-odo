@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import com.javaex.vo.SolListVo;
 import com.javaex.vo.SolMemberVo;
 import com.javaex.vo.SolScheduleVo;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -260,13 +262,42 @@ public class SolController {
 	 * 검색
 	 */
 	@GetMapping("classlist")
-	public JsonResult getClassList(@ModelAttribute SolListVo vo) {
+	public JsonResult getClassList(@ModelAttribute SolListVo vo,HttpServletRequest request) {
 		System.out.println("SolController.getClassList");
-		System.out.println(vo);
+//		System.out.println(vo);
 		List<SolListVo> classList = solservice.exeFindClassList(vo);
-		System.out.println(classList);
+//		System.out.println(classList);
 		if(classList.size() > 0) {
 			return JsonResult.success(classList);
+		} else {
+			return JsonResult.fail(null);
+		}
+	}
+	//위시
+	@PostMapping("wish/{classNo}")
+	public JsonResult wishPlus(@PathVariable int classNo, HttpServletRequest request) {
+		System.out.println("SolController.wishPlus");
+		int userNo = JwtUtil.getNoFromHeader(request);
+		Map<String, Object> tempVo = new HashMap<String, Object>();
+		tempVo.put("classNo", classNo);
+		tempVo.put("userNo", userNo);
+		int count = solservice.exeWishP(tempVo);
+		if(count > 0) {
+			return JsonResult.success(tempVo);
+		} else {
+			return JsonResult.fail(null);
+		}
+	}
+	@DeleteMapping("wish/{classNo}")
+	public JsonResult wishM(@PathVariable int classNo, HttpServletRequest request) {
+		System.out.println("SolController.wishM0");
+		int userNo = JwtUtil.getNoFromHeader(request);
+		Map<String, Object> tempVo = new HashMap<String, Object>();
+		tempVo.put("classNo", classNo);
+		tempVo.put("userNo", userNo);
+		int count = solservice.exeWishM(tempVo);
+		if(count > 0) {
+			return JsonResult.success(tempVo);
 		} else {
 			return JsonResult.fail(null);
 		}

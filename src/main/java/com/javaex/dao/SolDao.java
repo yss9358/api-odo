@@ -146,5 +146,15 @@ public class SolDao {
 		System.out.println("SolDao.selectAddressList");
 		return sqlSession.selectList("sr.addressList", vo);
 	}
+	//위시추가
+	public int insertWish(Map<String, Object> vo) {
+		System.out.println("SolDao.insertWish");
+		return sqlSession.insert("sr.insertWish", vo);
+	}
+	//위시삭제
+	public int deleteWish(Map<String, Object> vo) {
+		System.out.println("SolDao.deleteWish");
+		return sqlSession.delete("sr.deleteWish", vo);
+	}
 	
 }

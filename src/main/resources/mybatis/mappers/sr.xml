@@ -352,8 +352,19 @@
 	]]>
 	</select>
 	
-	
-	
+	<!-- 위시 추가/삭제 -->
+	<insert id="insertWish" parameterType="map">
+	<![CDATA[
+	insert into wish_class values(null, #{classNo}, #{userNo}, now())
+	]]>
+	</insert>
+	<delete id="deleteWish" parameterType="map">
+	<![CDATA[
+	delete from wish_class
+	where user_no = #{userNo}
+	and class_no = #{classNo}
+	]]>
+	</delete>
 	
 	
 

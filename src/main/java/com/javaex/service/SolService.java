@@ -202,7 +202,7 @@ public class SolService {
 
 		// 키워드 설정
 		vo.setKeyword("%" + vo.getKeyword() + "%");
-		System.out.println(vo.getClassType()+vo.getKeyword());
+//		System.out.println(vo.getClassType()+vo.getKeyword());
 		
 		// 페이지당 보일 리스트 갯수
 		int page = vo.getPage() > 0 ? vo.getPage() : (page = 1);
@@ -219,6 +219,18 @@ public class SolService {
 		}
 
 	}
-	// 위시 추가 삭제
-
+	
+	
+	// 위시 추가
+	public int exeWishP(Map<String, Object> vo) {
+		System.out.println("SolService.exeWish");
+		return solDao.insertWish(vo);
+	}
+	//위시삭제
+	public int exeWishM(Map<String, Object> vo) {
+		System.out.println("SolService.exeWishM");
+		return solDao.deleteWish(vo);
+	}
+	
+	
 }
