@@ -32,7 +32,7 @@ public class SsDao {
 	}
 	
 	// 카카오 회원가입
-	public int kakaoLogin(UserJoinVo vo) {
+	public int insertKakaoUser(UserJoinVo vo) {
 		return sqlSession.insert("ss.insertKakaoUser", vo);
 	}
 	

@@ -42,7 +42,8 @@
 	<!-- 아이디 중복확인 -->
 	<select id="checkId" parameterType="String" resultType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
-			select	user_id userId
+			select	user_id userId,
+					user_no userNo
 			from user
 			where user_id = #{id}
 		]]>

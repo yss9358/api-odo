@@ -185,7 +185,38 @@
 
 	<!-- ==============메인뷰============= -->
 
-	<!-- 무료베스트 리스트 가져오기 -->
+	<!-- 무료베스트 리스트 가져오기 - 로그인 -->
+	<select id="selectUsersFreeBestList" parameterType="int" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+		SELECT
+		    c.class_no AS classNo,
+		    c.class_name AS className,
+		    SUBSTR(c.class_name_address, 1, 5) AS classNameAdd,
+		    c.class_image AS classImg,
+		    c.class_price AS classPrice,
+		    ROUND(AVG(r.review_point)) AS reviewPointAvg,
+		    COUNT(r.review_point) AS reviewCount,
+		    COALESCE(w.user_no, 0) AS userNo,
+		    CASE
+		        WHEN COALESCE(w.user_no, 0) = #{no} THEN 1
+		        ELSE 0
+		    END AS isWish
+		FROM class c
+		LEFT JOIN (
+		    SELECT class_no, MIN(user_no) AS user_no
+		    FROM wish_class
+		    GROUP BY class_no
+		) w ON c.class_no = w.class_no
+		LEFT JOIN schedule sch ON c.class_no = sch.class_no
+		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
+		WHERE c.class_price = 0
+		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no
+		ORDER BY AVG(r.review_point) DESC
+		LIMIT 4
+   ]]>
+	</select>
+
+	<!-- 무료베스트 리스트 가져오기 - 비로그인 -->
 	<select id="selectFreeBestList" resultType="com.javaex.vo.HsVo">
    <![CDATA[
 		select c.class_no classNo,
@@ -205,7 +236,38 @@
    ]]>
 	</select>
 
-	<!-- 유료베스트 리스트 가져오기 -->
+	<!-- 유료베스트 리스트 가져오기 - 로그인 -->
+	<select id="selectUsersPayBestList" parameterType="int" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+		SELECT
+		    c.class_no AS classNo,
+		    c.class_name AS className,
+		    SUBSTR(c.class_name_address, 1, 5) AS classNameAdd,
+		    c.class_image AS classImg,
+		    c.class_price AS classPrice,
+		    ROUND(AVG(r.review_point)) AS reviewPointAvg,
+		    COUNT(r.review_point) AS reviewCount,
+		    COALESCE(w.user_no, 0) AS userNo,
+		    CASE
+		        WHEN COALESCE(w.user_no, 0) = #{no} THEN true
+		        ELSE false
+		    END AS isWish
+		FROM class c
+		LEFT JOIN schedule sch ON c.class_no = sch.class_no
+		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
+		LEFT JOIN (
+		    SELECT class_no, MIN(user_no) AS user_no
+		    FROM wish_class
+		    GROUP BY class_no
+		) w ON c.class_no = w.class_no
+		WHERE c.class_price != 0
+		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no
+		ORDER BY AVG(r.review_point) DESC
+		LIMIT 4;
+   ]]>
+	</select>
+
+	<!-- 유료베스트 리스트 가져오기 - 비로그인 -->
 	<select id="selectPayBestList" resultType="com.javaex.vo.HsVo">
    <![CDATA[
 		select c.class_no classNo,
@@ -225,7 +287,37 @@
    ]]>
 	</select>
 
-	<!-- 신규 리스트 가져오기 -->
+	<!-- 신규 리스트 가져오기 - 로그인 -->
+	<select id="selectUsersNewList" parameterType="int" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+		SELECT
+		    c.class_no AS classNo,
+		    c.class_name AS className,
+		    SUBSTR(c.class_name_address, 1, 5) AS classNameAdd,
+		    c.class_image AS classImg,
+		    c.class_price AS classPrice,
+		    COALESCE(w.user_no, 0) AS userNo,
+		    CASE
+		        WHEN COALESCE(w.user_no, 0) = #{no} THEN true
+		        ELSE false
+		    END AS isWish,
+		    ROUND(AVG(r.review_point)) AS reviewPointAvg,
+		    COUNT(r.review_point) AS reviewCount
+		FROM class c
+		LEFT JOIN (
+		    SELECT class_no, MIN(user_no) AS user_no
+		    FROM wish_class
+		    GROUP BY class_no
+		) w ON c.class_no = w.class_no
+		LEFT JOIN schedule sch ON c.class_no = sch.class_no
+		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
+		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no
+		ORDER BY c.class_no DESC
+		LIMIT 0, 4
+   ]]>
+	</select>
+
+	<!-- 신규 리스트 가져오기 - 비로그인 -->
 	<select id="selectNewList" resultType="com.javaex.vo.HsVo">
    <![CDATA[
 	   select c.class_no classNo,

@@ -99,7 +99,8 @@ public class SolService {
 
 		// 클래스 등록
 		solDao.insertClass(vo);
-//		System.out.println(vo);
+		System.out.println(vo);
+		System.out.println("=================================");
 		// 일정등록
 		int count = -1;
 		if (vo.getClassType() == 1) {
@@ -107,12 +108,13 @@ public class SolService {
 				if (vo.getStartDateList().get(i) != null) {
 					count = solDao
 							.insertClassSchedul(new SolScheduleVo(vo.getCompanyNo(), vo.getStartDateList().get(i)));
+					System.out.println(vo.getStartDateList().get(i));
 				}
 			}
 
 		} else if (vo.getClassType() == 2 || vo.getClassType() == 3) {
 			count = solDao.insertClassSchedul(new SolScheduleVo(vo.getCompanyNo(), vo.getStartDate(), vo.getEndDate()));
-
+			System.out.println(vo.getStartDate());
 		}
 		return count;
 	}
@@ -199,8 +201,9 @@ public class SolService {
 		System.out.println("SolService.exeAddressLista");
 
 		// 키워드 설정
-		
 		vo.setKeyword("%" + vo.getKeyword() + "%");
+		System.out.println(vo.getClassType()+vo.getKeyword());
+		
 		// 페이지당 보일 리스트 갯수
 		int page = vo.getPage() > 0 ? vo.getPage() : (page = 1);
 		vo.setPage(page);

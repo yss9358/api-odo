@@ -55,8 +55,18 @@ public class HsController {
 
 		return JsonResult.success(pMap);
 	}//
+	
+	
+	// 메인 페이지 - 로그인 시 리스트
+	@GetMapping("odo/mains/users")
+	public JsonResult getUsersList(@RequestParam(value = "userNo") int no) {
+		
+		List<List<HsVo>> listOfLists = hsService.exegetUsersList(no);
 
-	// 메인 페이지 - 리스트
+		return JsonResult.success(listOfLists);
+	}//
+
+	// 메인 페이지 - 비로그인 리스트
 	@GetMapping("odo/mains")
 	public JsonResult getList() {
 

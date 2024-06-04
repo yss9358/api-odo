@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -177,7 +178,7 @@ public class SolController {
 	}
 
 	// 클래스 수정
-	@PostMapping("update")
+	@PutMapping("update")
 	public JsonResult getUpdateClass(@ModelAttribute SolClassVo vo) {
 		System.out.println("SolController.getUpdateClass");
 //		int token = JwtUtil.getNoFromHeader(request);
@@ -261,10 +262,10 @@ public class SolController {
 	@GetMapping("classlist")
 	public JsonResult getClassList(@ModelAttribute SolListVo vo) {
 		System.out.println("SolController.getClassList");
-		System.out.println("키워드 : "+ vo.getKeyword());
+		System.out.println(vo);
 		List<SolListVo> classList = solservice.exeFindClassList(vo);
 		System.out.println(classList);
-		if(classList != null) {
+		if(classList.size() > 0) {
 			return JsonResult.success(classList);
 		} else {
 			return JsonResult.fail(null);

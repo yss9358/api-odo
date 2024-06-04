@@ -121,8 +121,37 @@ public class HsDao {
 
 		return cate1List;
 	}//
+	
+	///////////////////////////////////////////////////////////////
+	
+	// 무료베스트클래스 리스트 - 로그인
+	public List<HsVo> selectUsersFreeBestList(int no) {
 
-	// 무료베스트클래스 리스트
+		List<HsVo> fbList = sqlSession.selectList("hs.selectUsersFreeBestList");
+		System.out.println(fbList);
+
+		return fbList;
+	}//
+
+	// 유료베스트클래스 리스트 - 로그인
+	public List<HsVo> selectUsersPayBestList(int no) {
+
+		List<HsVo> pbList = sqlSession.selectList("hs.selectUsersPayBestList");
+		
+		return pbList;
+	}//
+
+	// 신규베스트클래스 리스트 - 로그인
+	public List<HsVo> selectUsersNewBestList(int no) {
+
+		List<HsVo> nList = sqlSession.selectList("hs.selectUsersNewList", no);
+		
+		return nList;
+	}//
+	
+	///////////////////////////////////////////////////////////////////////////
+
+	// 무료베스트클래스 리스트 - 비로그인
 	public List<HsVo> selectFreeBestList() {
 
 		List<HsVo> fbList = sqlSession.selectList("hs.selectFreeBestList");
@@ -130,7 +159,7 @@ public class HsDao {
 		return fbList;
 	}//
 
-	// 유료베스트클래스 리스트
+	// 유료베스트클래스 리스트 - 비로그인
 	public List<HsVo> selectPayBestList() {
 
 		List<HsVo> pbList = sqlSession.selectList("hs.selectPayBestList");
@@ -138,7 +167,7 @@ public class HsDao {
 		return pbList;
 	}//
 
-	// 신규베스트클래스 리스트
+	// 신규베스트클래스 리스트 - 비로그인
 	public List<HsVo> selectNewBestList() {
 
 		List<HsVo> nList = sqlSession.selectList("hs.selectNewList");

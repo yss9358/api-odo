@@ -92,7 +92,7 @@ public class SolDao {
 	// 일정등록
 	public int insertClassSchedul(SolScheduleVo vo) {
 		System.out.println("SolDao.insertClassSchedul");
-//		System.out.println(vo);
+		System.out.println(vo);
 		return sqlSession.insert("sr.scheduleInsert", vo);
 	}
 
