@@ -9,6 +9,8 @@ public class SolScheduleVo {
 	private String start;
 	private String end;
 	
+	private int classType;
+	
 	
 	public SolScheduleVo() {
 		super();
@@ -24,6 +26,7 @@ public class SolScheduleVo {
 		this.start = start;
 		this.end = end;
 	}
+	
 	
 	
 	public int getScheduleNo() {
@@ -56,6 +59,13 @@ public class SolScheduleVo {
 	public void setEnd(String end) {
 		this.end = end;
 	}
+	public int getClassType() {
+		return classType;
+	}
+	public void setClassType(int classType) {
+		this.classType = classType;
+	}
+	
 	
 	
 	@Override
