@@ -160,7 +160,8 @@
     	class_min = #{classMin},
     	class_max = #{classMax},
     	class_info = #{classInfo},
-    	rec_class_no = #{recClassNo}
+    	rec_class_no = #{recClassNo},
+    	class_image = #{classImage}
 	where class_no = #{classNo}
 	]]>
 	</update>
@@ -178,7 +179,7 @@
 	</select>
 
 
-	<!-- 이전클래스 불러오기 -->
+	<!-- 이전클래스 불러오기(수정할 클래스) -->
 	<select id="getClass" parameterType="classVo"
 		resultMap="resultMapClassVo">
 	<![CDATA[
@@ -193,6 +194,15 @@
 	and c.class_no = #{classNo}
 	and c.cate2_no = t2.cate2_no
 	and t.cate1_no = t2.cate1_no
+	]]>
+	</select>
+	<!-- 스케줄 불러오기 -->
+	<select id="selectschedule" parameterType="int" resultMap="rmScheduleVo">
+	<![CDATA[
+	select schedule_no, start_date, end_date 
+	from schedule
+	where class_no = #{classNo}
+	and end_date > now()
 	]]>
 	</select>
 

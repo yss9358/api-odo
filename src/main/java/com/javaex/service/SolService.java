@@ -60,10 +60,9 @@ public class SolService {
 		return solDao.selectAllClass(tempVo);
 	}
 
-	// 클래스불러오기
+	// 수정할 클래스불러오기
 	public SolClassVo exeGetClass(Map<String, Object> tempVo) {
 		System.out.println("SolService.exeGetClass()");
-//		return null;
 		return solDao.selectClass(tempVo);
 	}
 
