@@ -61,9 +61,9 @@ public class HsController {
 	@GetMapping("odo/mains/users")
 	public JsonResult getUsersList(@RequestParam(value = "userNo") int no) {
 		
-		List<List<HsVo>> listOfLists = hsService.exegetUsersList(no);
+		List<List<HsVo>> usersListOfLists = hsService.exegetUsersList(no);
 
-		return JsonResult.success(listOfLists);
+		return JsonResult.success(usersListOfLists);
 	}//
 
 	// 메인 페이지 - 비로그인 리스트

@@ -213,7 +213,7 @@ public class HsService {
 		return pMap;
 	}//
 	
-	// 메인페이지 - 비로그인 리스트
+	// 메인페이지 - 로그인 리스트
 	public List<List<HsVo>> exegetUsersList(int no) {
 
 //		// 무료 베스트 클래스 리스트
@@ -237,7 +237,7 @@ public class HsService {
 		return listOfLists;
 	}//
 
-	// 메인페이지 - 로그인 리스트
+	// 메인페이지 - 비로그인 리스트
 	public List<List<HsVo>> exegetList() {
 
 		// 무료 베스트 클래스 리스트
