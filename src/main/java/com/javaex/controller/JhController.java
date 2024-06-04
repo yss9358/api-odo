@@ -213,8 +213,12 @@ public class JhController {
 		}else {
 			return JsonResult.fail("fail");
 		}
-		
-		
+	}
+	
+	//안드로이드 회원의 학원 등록 리스트
+	@PostMapping("odo/android/list")
+	public void AndroidList() {
 		
 	}
+	
 }
