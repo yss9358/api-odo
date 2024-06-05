@@ -118,26 +118,6 @@
 
 	<!-- ==============카테고리검색페이지============= -->
 
-	<!-- 2차카테고리 리스트 가져오기 - 비로그인 -->
-	<select id="selectCate2List" parameterType="map" resultType="com.javaex.vo.HsVo">
-   <![CDATA[
-   	   select   c.class_no classNo,
-		        c.class_name className,
-		        substr(c.class_name_address, 1, 5) classNameAdd,
-		        c.class_image classImg,
-		        c.class_price classPrice,
-		        round(avg(r.review_point)) reviewPointAvg,
-		        count(r.review_point) reviewCount
-		from class c
-		join cate2 c2 on c.cate2_no = c2.cate2_no
-		left join schedule sch on c.class_no = sch.class_no
-		left join review r on sch.schedule_no = r.schedule_no
-		where c2.cate2_no = #{cate2No}
-		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
-		order by avg(r.review_point) desc
-		limit #{startRowNo}, #{listCnt}
-   ]]>
-	</select>
 
 	<!-- 전체 글갯수 -->
 	<select id="selectTotalCnt2" parameterType="int" resultType="int">
@@ -160,11 +140,43 @@
 			and c1.cate1_no = #{no}
 		]]>
 	</select>
-	
-		<!-- 1차카테고리 리스트 가져오기 - 로그인 -->
-	<select id="selectCate1UsersList" parameterType="map" resultType="com.javaex.vo.HsVo">
+
+	<!-- 2차카테고리 리스트 가져오기 - 로그인 -->
+	<select id="selectCate2UsersList" parameterType="map" resultType="com.javaex.vo.HsVo">
    <![CDATA[
-	   select   c.class_no classNo,
+   	   select   c.class_no classNo,
+		        c.class_name className,
+		        substr(c.class_name_address, 1, 5) classNameAdd,
+		        c.class_image classImg,
+		        c.class_price classPrice,
+		        round(avg(r.review_point)) reviewPointAvg,
+		        count(r.review_point) reviewCount,
+		        COALESCE(w.user_no, 0) AS userNo,
+			    CASE
+			        WHEN w.user_no IS NOT NULL THEN 1
+			        ELSE 0
+			    END AS wish,
+			    w.w_class_no AS wClassNo
+		from class c
+		join cate2 c2 on c.cate2_no = c2.cate2_no
+		left join schedule sch on c.class_no = sch.class_no
+		left join review r on sch.schedule_no = r.schedule_no
+		LEFT JOIN (
+		    SELECT class_no, user_no, w_class_no
+		    FROM wish_class
+		    WHERE user_no = #{userNo}
+		) w ON c.class_no = w.class_no
+		where c2.cate2_no = #{cate2No}
+		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no, w.w_class_no
+		order by avg(r.review_point) desc
+		limit #{startRowNo}, #{listCnt}
+   ]]>
+	</select>
+
+	<!-- 2차카테고리 리스트 가져오기 - 비로그인 -->
+	<select id="selectCate2List" parameterType="map" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+   	   select   c.class_no classNo,
 		        c.class_name className,
 		        substr(c.class_name_address, 1, 5) classNameAdd,
 		        c.class_image classImg,
@@ -173,13 +185,46 @@
 		        count(r.review_point) reviewCount
 		from class c
 		join cate2 c2 on c.cate2_no = c2.cate2_no
-		join cate1 c1 on c2.cate1_no = c1.cate1_no
 		left join schedule sch on c.class_no = sch.class_no
 		left join review r on sch.schedule_no = r.schedule_no
-		where c1.cate1_no = #{cate1No}
+		where c2.cate2_no = #{cate2No}
 		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
 		order by avg(r.review_point) desc
 		limit #{startRowNo}, #{listCnt}
+   ]]>
+	</select>
+
+	<!-- 1차카테고리 리스트 가져오기 - 로그인 -->
+	<select id="selectCate1UsersList" parameterType="map" resultType="com.javaex.vo.HsVo">
+   <![CDATA[
+		SELECT
+		    c.class_no AS classNo,
+		    c.class_name AS className,
+		    SUBSTR(c.class_name_address, 1, 5) AS classNameAdd,
+		    c.class_image AS classImg,
+		    c.class_price AS classPrice,
+		    ROUND(AVG(r.review_point)) AS reviewPointAvg,
+		    COUNT(r.review_point) AS reviewCount,
+		    COALESCE(w.user_no, 0) AS userNo,
+		    CASE
+		        WHEN w.user_no IS NOT NULL THEN 1
+		        ELSE 0
+		    END AS wish,
+		    w.w_class_no AS wClassNo
+		FROM class c
+		JOIN cate2 c2 ON c.cate2_no = c2.cate2_no
+		JOIN cate1 c1 ON c2.cate1_no = c1.cate1_no
+		LEFT JOIN schedule sch ON c.class_no = sch.class_no
+		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
+		LEFT JOIN (
+		    SELECT class_no, user_no, w_class_no
+		    FROM wish_class
+		    WHERE user_no = #{userNo}
+		) w ON c.class_no = w.class_no
+		WHERE c1.cate1_no = #{cate1No}
+		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no, w.w_class_no
+		ORDER BY AVG(r.review_point) DESC
+		LIMIT #{startRowNo}, #{listCnt}
    ]]>
 	</select>
 
@@ -221,18 +266,19 @@
 		        WHEN w.user_no IS NOT NULL THEN 1
 		        ELSE 0
 		    END AS wish,
+		    w.w_class_no wClassNo,
 		    ROUND(AVG(r.review_point)) AS reviewPointAvg,
 		    COUNT(r.review_point) AS reviewCount
 		FROM class c
 		LEFT JOIN (
-		    SELECT class_no, user_no
+		    SELECT class_no, user_no, w_class_no
 		    FROM wish_class
 		    WHERE user_no = #{no}
 		) w ON c.class_no = w.class_no
 		LEFT JOIN schedule sch ON c.class_no = sch.class_no
 		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
 		WHERE c.class_price = 0
-		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no
+		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no, w.w_class_no
 		ORDER BY AVG(r.review_point) DESC
 		LIMIT 4
    ]]>
@@ -272,18 +318,19 @@
 		        WHEN w.user_no IS NOT NULL THEN 1
 		        ELSE 0
 		    END AS wish,
+		    w.w_class_no wClassNo,
 		    ROUND(AVG(r.review_point)) AS reviewPointAvg,
 		    COUNT(r.review_point) AS reviewCount
 		FROM class c
 		LEFT JOIN (
-		    SELECT class_no, user_no
+		    SELECT class_no, user_no, w_class_no
 		    FROM wish_class
 		    WHERE user_no = #{no}
 		) w ON c.class_no = w.class_no
 		LEFT JOIN schedule sch ON c.class_no = sch.class_no
 		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
 		WHERE c.class_price != 0
-		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no
+		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no, w.w_class_no
 		ORDER BY AVG(r.review_point) DESC
 		LIMIT 4
    ]]>
@@ -323,17 +370,18 @@
 		        WHEN w.user_no IS NOT NULL THEN 1
 		        ELSE 0
 		    END AS wish,
+		    w.w_class_no wClassNo,
 		    ROUND(AVG(r.review_point)) AS reviewPointAvg,
 		    COUNT(r.review_point) AS reviewCount
 		FROM class c
 		LEFT JOIN (
-		    SELECT class_no, user_no
+		    SELECT class_no, user_no, w_class_no
 		    FROM wish_class
 		    WHERE user_no = #{no}
 		) w ON c.class_no = w.class_no
 		LEFT JOIN schedule sch ON c.class_no = sch.class_no
 		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
-		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no
+		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no, w.w_class_no
 		ORDER BY c.class_no DESC
 		LIMIT 0, 4
    ]]>
