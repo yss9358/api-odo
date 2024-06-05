@@ -141,10 +141,18 @@
 	<!-- 일정등록 -->
 	<insert id="scheduleInsert"
 		parameterType="com.javaex.vo.SolScheduleVo">
+	<if test="end == null">
+	<![CDATA[
+	insert into schedule
+	values(null, #{companyNo}, #{start}, null)
+	]]>
+	</if>
+	<if test="end != null">
 	<![CDATA[
 	insert into schedule
 	values(null, #{companyNo}, #{start}, #{end})
 	]]>
+	</if>
 	</insert>
 
 	<!-- 클래스 수정 -->

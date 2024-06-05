@@ -257,6 +257,7 @@ public class SolClassVo {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+	
 
 
 	@Override

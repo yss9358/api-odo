@@ -184,8 +184,8 @@ public class SolController {
 	// 클래스 추가
 	@PostMapping("insert")
 	public JsonResult classAdd(@ModelAttribute SolClassVo vo) {
-//		System.out.println("SolController.classAdd");
-		
+		System.out.println("SolController.classAdd");
+		System.out.println(vo);
 		int count = solservice.exeInsertClass(vo);
 		
 		if(count > 0) {
