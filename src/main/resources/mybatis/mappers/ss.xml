@@ -71,8 +71,8 @@
 		]]>
 	</select>
 	
-	<!-- 카카오 회원가입 -->
-	<insert id="insertKakaoUser" parameterType="com.javaex.vo.UserJoinVo">
+	<!-- SNS 회원가입 -->
+	<insert id="insertSnsUser" parameterType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
 			insert into user
 			values(null, #{userId},#{userEmail}, null, #{userName}, #{userNickname}, #{userHp}, #{userBirth},#{userGender}, #{userImage},#{userType})
@@ -84,8 +84,8 @@
 		</selectKey>
 	</insert>
 	
-	<!-- 카카오 로그인 -->
-	<select id="loginByKakao" parameterType="com.javaex.vo.UserJoinVo" resultType="com.javaex.vo.UserJoinVo">
+	<!-- SNS 로그인 -->
+	<select id="loginBySns" parameterType="com.javaex.vo.UserJoinVo" resultType="com.javaex.vo.UserJoinVo">
 		<![CDATA[
 			select	user_no userNo,
 					user_nickname userNickname,
@@ -97,6 +97,7 @@
 			and user_no = #{userNo}
 		]]>
 	</select>
+	
 	
 	<!-- 회원의 결제 내역 가져오기  -->
 	<select id="getPayListByNo" parameterType="map" resultType="com.javaex.vo.MyPayVo">

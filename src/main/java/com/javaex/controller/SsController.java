@@ -229,122 +229,134 @@ public class SsController {
 		}
 	}
 
-	// 네이버 토큰 받기
-	@GetMapping("/odo/ss/navertoken")
-	public JsonResult naverToken(@RequestParam(value="code") String code, @RequestParam(value="state") String state) {
-		String naverToken = getNaverToken(code, state);
-		HashMap<String, String> resultMap = requestUser(naverToken,state);
-		return JsonResult.success(resultMap);
-	}
-	
-	// 네이버 토큰얻기
-	private String getNaverToken(String code, String state) {
-		String access_token = "";
-		String refresh_token = "";
-		
-		String strUrl = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
-		NaverToken naverToken = new NaverToken();
-		
-		try {
-			URL url = new URL(strUrl);
-			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-			
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			StringBuilder sb = new StringBuilder();
-			sb.append("&client_id=G0qt69ejziDW7itLBej_");
-			sb.append("&client_secret=oy3OZnEUm0");
-			sb.append("&redirect_uri=http://localhost:8080/naverlogin");
-			sb.append("&code="+code);
-			sb.append("&state="+state);
-			bw.write(sb.toString());
-			bw.flush();
-			
-			conn.getResponseCode();
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
-			
-			while((line = br.readLine()) != null) {
-				result += line;
-			}
-			
-			ObjectMapper mapper = new ObjectMapper();
-			
-			naverToken = mapper.readValue(result, NaverToken.class);
-			
-			access_token = naverToken.getAccess_token();
-			refresh_token = naverToken.getRefresh_token();
-			System.out.println(refresh_token);
-			br.close();
-			bw.close();
-			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		return access_token;
-	}
-	
-	// 네이버 유저정보 얻기
-	private HashMap<String,String> requestUser(String accessToken, String state) {
-		
-		String strUrl = "https://openapi.naver.com/v1/nid/me";
-		
-		HashMap<String, String> userInfo = new HashMap<String,String>();
-		userInfo.put("accessToken", accessToken);
-		userInfo.put("state", state);
-		
-		try {
-			URL url = new URL(strUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-			
-			int responseCode = conn.getResponseCode();
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader(responseCode == 200 ? conn.getInputStream() : conn.getErrorStream()));
-			String line = "";
-			String result = "";
-			while((line = br.readLine()) != null) {
-				result += line;
-			}
-			br.close();
-			
-			if(responseCode == 200) {
-				ObjectMapper mapper = new ObjectMapper();
-				HashMap<String, Object> resultMap = mapper.readValue(result, HashMap.class);
-				HashMap<String, Object> response = (HashMap<String,Object>)resultMap.get("response");
-				
-				String id = (String)response.get("id");
-				String nickname = (String) response.get("nickname");
-				String email = (String)response.get("email");
-				String birthyear = (String)response.get("birthyear");
-				String birthday = (String)response.get("birthday");
-				String gender = (String)response.get("gender");
-				String name = (String)response.get("name");
-				String phone_number = (String)response.get("mobile");
-				
-				userInfo.put("email", email);
-				userInfo.put("id", id);
-				userInfo.put("nickname", nickname);
-				userInfo.put("birthyear", birthyear);
-				userInfo.put("birthday",birthday);
-				userInfo.put("name", name);
-				userInfo.put("gender", gender);
-				userInfo.put("phone_number", phone_number);
-			} else {
-				System.out.println("Failed to get user info : {}" + result);
-			}
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		return userInfo;
-	}
+//	// 네이버 토큰 받기
+//	@GetMapping("/odo/ss/navertoken")
+//	public JsonResult naverToken(@RequestParam(value="code") String code, @RequestParam(value="state") String state,HttpServletResponse response) {
+//		Map<String, Object> map = getNaverToken(code, state);
+//		HashMap<String, String> resultMap = requestUser(map,state);
+//		Map<String,Object> authMap =ssService.exeCheckNaverEmail(resultMap);
+//		if(authMap != null) {
+//			JwtUtil.createTokenAndSetHeader(response, ""+((UserJoinVo)authMap.get("authVo")).getUserNo());
+//			return JsonResult.success(authMap);
+//		} else {
+//			return JsonResult.fail("로그인을 다시하세요.");
+//		}
+//	}
+//	
+//	// 네이버 토큰얻기
+//	private Map<String, Object> getNaverToken(String code, String state) {
+//		String access_token = "";
+//		String refresh_token = "";
+//		
+//		String strUrl = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+//		NaverToken naverToken = new NaverToken();
+//		
+//		try {
+//			URL url = new URL(strUrl);
+//			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+//			
+//			conn.setRequestMethod("POST");
+//			conn.setDoOutput(true);
+//			
+//			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+//			StringBuilder sb = new StringBuilder();
+//			sb.append("&client_id=G0qt69ejziDW7itLBej_");
+//			sb.append("&client_secret=oy3OZnEUm0");
+//			sb.append("&redirect_uri=http://localhost:8080/naverlogin");
+//			sb.append("&code="+code);
+//			sb.append("&state="+state);
+//			bw.write(sb.toString());
+//			bw.flush();
+//			
+//			conn.getResponseCode();
+//			
+//			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//			String line = "";
+//			String result = "";
+//			
+//			while((line = br.readLine()) != null) {
+//				result += line;
+//			}
+//			
+//			ObjectMapper mapper = new ObjectMapper();
+//			
+//			naverToken = mapper.readValue(result, NaverToken.class);
+//			
+//			access_token = naverToken.getAccess_token();
+//			refresh_token = naverToken.getRefresh_token();
+//			br.close();
+//			bw.close();
+//			
+//		} catch(IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("refresh_token", refresh_token);
+//		map.put("access_token", access_token);
+//		return map;
+//	}
+//	
+//	// 네이버 유저정보 얻기
+//	private HashMap<String,String> requestUser(Map<String,Object> map, String state) {
+//		
+//		String strUrl = "https://openapi.naver.com/v1/nid/me";
+//		String accessToken = (String)map.get("access_token");
+//		String refreshToken = (String)map.get("refresh_token");
+//		
+//		HashMap<String, String> userInfo = new HashMap<String,String>();
+//		userInfo.put("accessToken", accessToken);
+//		userInfo.put("refreshToken", refreshToken);
+//		userInfo.put("state", state);
+//		
+//		try {
+//			URL url = new URL(strUrl);
+//			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//			
+//			conn.setRequestMethod("POST");
+//			conn.setDoOutput(true);
+//			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+//			
+//			int responseCode = conn.getResponseCode();
+//			
+//			BufferedReader br = new BufferedReader(new InputStreamReader(responseCode == 200 ? conn.getInputStream() : conn.getErrorStream()));
+//			String line = "";
+//			String result = "";
+//			while((line = br.readLine()) != null) {
+//				result += line;
+//			}
+//			br.close();
+//			
+//			if(responseCode == 200) {
+//				ObjectMapper mapper = new ObjectMapper();
+//				HashMap<String, Object> resultMap = mapper.readValue(result, HashMap.class);
+//				HashMap<String, Object> response = (HashMap<String,Object>)resultMap.get("response");
+//				
+//				String id = (String)response.get("id");
+//				String nickname = (String) response.get("nickname");
+//				String email = (String)response.get("email");
+//				String birthyear = (String)response.get("birthyear");
+//				String birthday = (String)response.get("birthday");
+//				String gender = (String)response.get("gender");
+//				String name = (String)response.get("name");
+//				String phone_number = (String)response.get("mobile");
+//				
+//				userInfo.put("email", email);
+//				userInfo.put("id", id);
+//				userInfo.put("nickname", nickname);
+//				userInfo.put("birthyear", birthyear);
+//				userInfo.put("birthday",birthday);
+//				userInfo.put("name", name);
+//				userInfo.put("gender", gender);
+//				userInfo.put("phone_number", phone_number);
+//			} else {
+//				System.out.println("Failed to get user info : {}" + result);
+//			}
+//		} catch(IOException e) {
+//			e.printStackTrace();
+//		}
+//		return userInfo;
+//	}
 	
 }
 

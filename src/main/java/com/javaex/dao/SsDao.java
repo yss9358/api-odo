@@ -31,19 +31,19 @@ public class SsDao {
 		return sqlSession.insert("ss.insertUser",vo);
 	}
 	
-	// 카카오 회원가입
-	public int insertKakaoUser(UserJoinVo vo) {
-		return sqlSession.insert("ss.insertKakaoUser", vo);
-	}
-	
-	//카카오 로그인
-	public UserJoinVo loginByKakao(UserJoinVo vo) {
-		return sqlSession.selectOne("ss.loginByKakao", vo);
-	}
-	
 	// 일반회원 로그인
 	public UserJoinVo loginByIdPw(UserJoinVo vo) {
 		return sqlSession.selectOne("ss.loginByIdPw", vo);
+	}
+	
+	// SNS 회원가입
+	public int insertSnsUser(UserJoinVo vo) {
+		return sqlSession.insert("ss.insertSnsUser",vo);
+	}
+	
+	// SNS 로그인
+	public UserJoinVo loginBySns(UserJoinVo vo) {
+		return sqlSession.selectOne("ss.loginBySns", vo);
 	}
 	
 	// 결제 내역 가져오기 
