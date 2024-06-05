@@ -296,4 +296,18 @@
 		from attendance
 		where schedule_no = #{no}
 	</select>
+	
+	<select id="androidCheck" parameterType="int" resultType="int">
+		select	count(atten_no)
+		from attendance, schedule
+		where date_format(atten_date, "%Y-%m-%d") = curdate()
+		and attendance.schedule_no = schedule.schedule_no
+		and attendance.schedule_no = #{no}
+		and  user_no = 1;
+	</select>
+	
+	<insert id="androidCheck2" parameterType="int">
+		insert into attendance
+		value(null, #{no}, 1, '출석', now());
+	</insert>
 </mapper>

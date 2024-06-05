@@ -216,4 +216,19 @@ public class JhDao {
 		
 		return b;
 	}
+	
+	//안드로이드 출석체크
+	public int AndroidCheck(int no) {
+		
+		int a = sqlSession.selectOne("jh.androidCheck", no);
+
+		return a;
+	}
+	
+	//안드로이드 출석체크2
+	public void AndroidCheck2(int no) {
+		System.out.println("Rrrr");
+		sqlSession.insert("jh.androidCheck2", no);
+		
+	}
 }

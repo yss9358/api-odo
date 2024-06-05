@@ -347,4 +347,22 @@ public class JhService {
 		return AnList;
 	}
 	
+	//안드로이드 출석체크
+	public String AndroidCheck(int no) {
+		
+		//오늘 출석했는지
+		int a = jd.AndroidCheck(no);
+		
+		if(a > 0) {
+			return "오늘 출석체크를 하셨습니다";
+		}else {
+			jd.AndroidCheck2(no);
+			
+			
+			return "출석체크 되었습니다";
+		}
+		
+		//jd.AndroidCheck2(no);
+	}
+	
 }

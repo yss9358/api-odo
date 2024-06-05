@@ -225,9 +225,11 @@ public class JhController {
 	}
 	
 	@PostMapping("odo/android/check")
-	public void AndroidCheck(@RequestBody int no) {
+	public String AndroidCheck(@RequestBody int no) {
 		
-		System.out.println(no);
+		//System.out.println(no);
+		
+		return js.AndroidCheck(no);
 	}
 	
 }
