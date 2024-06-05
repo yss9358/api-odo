@@ -4,7 +4,7 @@
 <mapper namespace="Mj">
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
-	
+
 	<!-- 수정폼 -->
 	<select id="selectOne" parameterType="int" resultType="map">
 		<![CDATA[
@@ -16,8 +16,8 @@
 			where user_no = #{user_no}
 		]]>
 	</select>
-	
-	<!--수정-->
+
+	<!--수정 -->
 	<update id="update" parameterType="com.javaex.vo.MjVo">
 		<![CDATA[
 			update user
@@ -26,9 +26,9 @@
 			where user_birth = #{birth}		
 		]]>
 	</update>
-	
+
 	<!-- 리스트 -->
-	 <select id="selectlist" resultType="com.javaex.vo.MjVo">
+	<select id="selectlist" resultType="com.javaex.vo.MjVo">
 	 	<![CDATA[
 	        SELECT idx,
 				notice_name,
@@ -38,10 +38,11 @@
 	 		FROM notice
 	 		order by idx desc;
 	 	]]>
-    </select>
-    
-    <!-- 읽기 -->
-    <select id="selectOneNO" parameterType="int" resultType="com.javaex.vo.MjVo">
+	</select>
+
+	<!-- 읽기 -->
+	<select id="selectOneNO" parameterType="int"
+		resultType="com.javaex.vo.MjVo">
 	 	<![CDATA[
 	        SELECT idx,
 				notice_name,
@@ -52,112 +53,123 @@
 			FROM notice
 			WHERE idx = #{no};
 	 	]]>
-    </select>
-    <update id="Pagesupdate">
+	</select>
+
+	<!-- 조회수 -->
+	<update id="Pagesupdate">
     	<![CDATA[
 	    	update notice
 			set pagesNo= #{pagesNo}
 			where idx = #{idx}
     	]]>
-    </update>
-    
-    <!-- 등록 -->
-    <insert id="insert" parameterType="com.javaex.vo.MjVo">
+	</update>
+
+	<!-- 등록 -->
+	<insert id="insert" parameterType="com.javaex.vo.MjVo">
 	    <![CDATA[
 	    	insert into notice
 	    	values(null, #{name}, #{title}, #{content}, now(), 0)
 	    ]]>
-    </insert>
-    
-    <select id="getName" parameterType="com.javaex.vo.MjVo" resultType="com.javaex.vo.MjVo">
+	</insert>
+
+	<select id="getName" parameterType="com.javaex.vo.MjVo"
+		resultType="com.javaex.vo.MjVo">
     	<![CDATA[
     		select user_nickname name
 			from user
 			where user_no = #{userno}
     	]]>
-    </select>
-    
-    
-    <delete id="delete" parameterType="int">
+	</select>
+
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="int">
     	<![CDATA[
 			delete from notice
 			where idx = #{no}
     	]]>
-    </delete>
-	 
-	<select id="chart" parameterType="int" resultType="com.javaex.vo.ChartVo">
-	select   sum(pay_price) onedayPrice
-from pay, schedule, class, company
-where pay.schedule_no = schedule.schedule_no
-and schedule.class_no = class.class_no
-and class.company_no = company.company_no
-and class_type=1/*이건 원데이 클래스*/
-/*정규랑 상시는 밑에걸로*/
-/*and (class_type = 2 or class_type = 3)*/
-and company.company_no = #{no}/*여기에 회사번호 들어가고*/
-and pay_date like (SELECT DATE_FORMAT(NOW(), '%Y-%m%'));
+	</delete>
+	
+	<!-- 원데이 클래스 차트 -->
+	<select id="chart" parameterType="int"
+		resultType="com.javaex.vo.ChartVo">
+		select sum(pay_price) onedayPrice
+		from pay, schedule, class, company
+		where pay.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.company_no = company.company_no
+		and class_type=1/*이건 원데이 클래스*/
+		/*정규랑 상시는 밑에걸로*/
+		/*and (class_type = 2 or class_type = 3)*/
+		and company.company_no = #{no}/*여기에 회사번호 들어가고*/
+		and pay_date like (SELECT DATE_FORMAT(NOW(), '%Y-%m%'));
 	</select>
 	
-		<select id="chart2" parameterType="int" resultType="com.javaex.vo.ChartVo">
-select   sum(pay_price) preonedayPrice
-from pay, schedule, class, company
-where pay.schedule_no = schedule.schedule_no
-and schedule.class_no = class.class_no
-and class.company_no = company.company_no
-and class_type = 1
-and company.company_no = #{no}
-and pay_date like (SELECT date_format(date(DATE_SUB(date(now()),
-INTERVAL 1 MONTH)), '%Y-%m%'));
+	<!-- 차트 -->
+	<select id="chart2" parameterType="int"
+		resultType="com.javaex.vo.ChartVo">
+		select sum(pay_price) preonedayPrice
+		from pay, schedule, class, company
+		where pay.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.company_no = company.company_no
+		and class_type = 1
+		and company.company_no = #{no}
+		and pay_date like (SELECT date_format(date(DATE_SUB(date(now()),
+		INTERVAL 1 MONTH)), '%Y-%m%'));
 	</select>
-	
-	<select id="chart3" parameterType="int" resultType="com.javaex.vo.ChartVo">
-	select   sum(pay_price) RePrice
-from pay, schedule, class, company
-where pay.schedule_no = schedule.schedule_no
-and schedule.class_no = class.class_no
-and class.company_no = company.company_no
-and (class_type = 2 or class_type = 3)
-and company.company_no = #{no}/*여기에 회사번호 들어가고*/
-and pay_date like (SELECT DATE_FORMAT(NOW(), '%Y-%m%'));
+
+	<select id="chart3" parameterType="int"
+		resultType="com.javaex.vo.ChartVo">
+		select sum(pay_price) RePrice
+		from pay, schedule, class, company
+		where pay.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.company_no = company.company_no
+		and (class_type = 2 or class_type = 3)
+		and company.company_no = #{no}/*여기에 회사번호 들어가고*/
+		and pay_date like (SELECT DATE_FORMAT(NOW(), '%Y-%m%'));
 	</select>
-	
-	<select id="chart4" parameterType="int" resultType="com.javaex.vo.ChartVo">
-select   sum(pay_price) preRePrice
-from pay, schedule, class, company
-where pay.schedule_no = schedule.schedule_no
-and schedule.class_no = class.class_no
-and class.company_no = company.company_no
-and (class_type = 2 or class_type = 3)
-and company.company_no = #{no}
-and pay_date like (SELECT date_format(date(DATE_SUB(date(now()),
-INTERVAL 1 MONTH)), '%Y-%m%'));
+
+	<select id="chart4" parameterType="int"
+		resultType="com.javaex.vo.ChartVo">
+		select sum(pay_price) preRePrice
+		from pay, schedule, class, company
+		where pay.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.company_no = company.company_no
+		and (class_type = 2 or class_type = 3)
+		and company.company_no = #{no}
+		and pay_date like (SELECT date_format(date(DATE_SUB(date(now()),
+		INTERVAL 1 MONTH)), '%Y-%m%'));
 	</select>
-	
-	<select id="list" parameterType="int" resultType="com.javaex.vo.ListVo">
-	select   class.class_no classNo,
-      class.class_name className,
-      count(class.class_no) count
-from pay, schedule, class, company
-where pay.schedule_no = schedule.schedule_no
-and schedule.class_no = class.class_no
-and class.company_no = company.company_no
-and (class_type = 2 or class_type = 3)
-and company.company_no = #{no}
-group by 1 order by 3 desc
-limit 6;
+
+	<select id="list" parameterType="int"
+		resultType="com.javaex.vo.ListVo">
+		select class.class_no classNo,
+		class.class_name className,
+		count(class.class_no) count
+		from pay, schedule, class, company
+		where pay.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.company_no = company.company_no
+		and (class_type = 2 or class_type = 3)
+		and company.company_no = #{no}
+		group by 1 order by 3 desc
+		limit 6;
 	</select>
-	
-	<select id="list1" parameterType="int" resultType="com.javaex.vo.ListVo">
-	select   class.class_no classNo,
-      class.class_name className,
-      count(class.class_no) count
-from pay, schedule, class, company
-where pay.schedule_no = schedule.schedule_no
-and schedule.class_no = class.class_no
-and class.company_no = company.company_no
-and class_type = 1
-and company.company_no = #{no}
-group by 1 order by 3 desc
-limit 6;
+
+	<select id="list1" parameterType="int"
+		resultType="com.javaex.vo.ListVo">
+		select class.class_no classNo,
+		class.class_name className,
+		count(class.class_no) count
+		from pay, schedule, class, company
+		where pay.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and class.company_no = company.company_no
+		and class_type = 1
+		and company.company_no = #{no}
+		group by 1 order by 3 desc
+		limit 6;
 	</select>
 </mapper>
