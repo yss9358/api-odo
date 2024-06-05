@@ -169,22 +169,28 @@ public class SolService {
 	}
 
 	// 유저리스트
-	public List<SolMemberVo> exeUserList(int type, int schedule) {
+	public List<SolMemberVo> exeUserList(SolScheduleVo vo) {
 		System.out.println("SolService.exeUserList");
-		if (type == 1) {
-			return solDao.selectOndUser(schedule);
+		if (vo.getClassType() == 1) {
+			SolScheduleVo sVo = solDao.selectSchedule(vo.getClassNo());
+			return solDao.selectOndUser(sVo.getScheduleNo());
 		} else {
-			return solDao.selectRUser(schedule);
+			return solDao.selectRUser(vo.getScheduleNo());
 		}
 
 	}
 
-	// 스케줄리스트
+	// 운영중인 클래스리스트
 	public List<SolScheduleVo> exeScheduleList(int no) {
 		System.out.println("SolService.exeScheduleList");
 		return solDao.selectAllSchedule(no);
 	}
-
+	//원데이 일정불러오기
+	public List<SolScheduleVo> exeOneList(int classNo){
+		return solDao.selectAllOneday(classNo);
+	}
+	
+	
 	/********************************************
 	 * 쿠폰지급
 	 */

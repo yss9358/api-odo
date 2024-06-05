@@ -13,6 +13,9 @@ public class SolMemberVo {
 	private String couponState;
 	private String startDate;
 	private String endDate;
+	private String schedule;
+	private int classType;
+	private int classNo;
 	
 	
 	public SolMemberVo() {
@@ -87,18 +90,37 @@ public class SolMemberVo {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	
-	
-	
-	
-	
+	public String getSchedule() {
+		return schedule;
+	}
+	public void setSchedule(String schedule) {
+		this.schedule = schedule;
+	}
+	public int getClassType() {
+		return classType;
+	}
+	public void setClassType(int classType) {
+		this.classType = classType;
+	}
+	public int getClassNo() {
+		return classNo;
+	}
+	public void setClassNo(int classNo) {
+		this.classNo = classNo;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "SolMemberVo [userNo=" + userNo + ", userName=" + userName + ", userAge=" + userAge + ", userGender="
 				+ userGender + ", userHp=" + userHp + ", attend=" + attend + ", attendState=" + attendState
 				+ ", reviewState=" + reviewState + ", couponState=" + couponState + ", startDate=" + startDate
-				+ ", endDate=" + endDate + "]";
+				+ ", endDate=" + endDate + ", schedule=" + schedule + ", classType=" + classType + ", classNo="
+				+ classNo + "]";
 	}
+
+
 	
 	
 	

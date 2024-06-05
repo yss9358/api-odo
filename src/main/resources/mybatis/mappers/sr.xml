@@ -242,6 +242,25 @@
 	<!-- 클래스리스트 -->
 	<select id="classList" parameterType="map"
 		resultMap="resultMapClassVo">
+	<if test="classType == 1">
+	<![CDATA[
+	select c.class_no, c.company_no, c.class_name, 
+		c.class_intro, c.class_type,c.class_image,
+         c.class_max, coalesce(const.class_min, 0) class_min
+	from class c left join
+    (select class_no, count(class_no) class_min
+	 from pay p join schedule s
+     on p.schedule_no = s.schedule_no
+     where s.class_no in (
+     select class_no from class where class_type = #{classType})
+     group by class_no) const
+	on c.class_no = const.class_no
+	where c.company_no = #{companyNo}
+	and class_type = #{classType}
+    order by c.class_no
+	]]>
+	</if>
+	<if test="classType != 1">
 	<![CDATA[
 	select s.schedule_no, c.class_no, c.company_no, c.class_name, 
 		c.class_intro, c.class_type,c.class_image,
@@ -257,6 +276,8 @@
     and c.class_no = s.class_no
     order by s.schedule_no
 	]]>
+	</if>
+	
 	</select>
 
 	<!-- 정규회원 리스트 -->
@@ -299,6 +320,26 @@
 	where schedule_no = #{scheduleNo}) r
 	on a.user_no = r.user_no
 	where schedule_no = #{scheduleNo}
+	]]>
+	</select>
+	<!-- 기본가장 최근일정 -->
+	<select id="maxSchedule" parameterType="int" resultMap="rmScheduleVo">
+	<![CDATA[
+	select s.schedule_no, s.start_date
+	from schedule s, class c
+	where s.class_no = c.class_no
+	and c.class_no = #{classNo}
+	order by s.start_date desc
+	limit 1	
+	]]>
+	</select>
+	<!-- 원데이 일정표 불러오기 -->
+	<select id="ondayScheduleList" parameterType="int" resultMap="rmScheduleVo">
+	<![CDATA[
+	select s.schedule_no, s.start_date
+	from schedule s, class c
+	where s.class_no = c.class_no
+	and s.class_no = #{classNo}
 	]]>
 	</select>
 

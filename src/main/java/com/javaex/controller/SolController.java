@@ -29,6 +29,7 @@ import com.javaex.vo.SolScheduleVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("odo/company")
@@ -215,10 +216,10 @@ public class SolController {
 	}
 
 	// 유저리스트
-	@GetMapping("member/{type}/{no}")
-	public JsonResult memberList(@PathVariable("type") int type, @PathVariable("no") int schedule) {
+	@GetMapping("member")
+	public JsonResult memberList(@ModelAttribute SolScheduleVo vo) {
 		System.out.println("SolController.memberList");
-		List<SolMemberVo> memberList = solservice.exeUserList(type, schedule);
+		List<SolMemberVo> memberList = solservice.exeUserList(vo);
 		System.out.println(memberList);
 		if (memberList != null) {
 			return JsonResult.success(memberList);
@@ -233,6 +234,17 @@ public class SolController {
 		List<SolScheduleVo> scheduleList = solservice.exeScheduleList(no);
 		System.out.println(scheduleList);
 		if (scheduleList != null) {
+			return JsonResult.success(scheduleList);
+		} else {
+			return JsonResult.fail(null);
+		}
+	}
+	//원데이 일정 리스트
+	@GetMapping("one/{classNo}")
+	public JsonResult getOneday(@PathVariable int classNo) {
+		System.out.println("SolController.getOneday");
+		List<SolScheduleVo> scheduleList = solservice.exeOneList(classNo);
+		if(scheduleList.size() > 0) {
 			return JsonResult.success(scheduleList);
 		} else {
 			return JsonResult.fail(null);

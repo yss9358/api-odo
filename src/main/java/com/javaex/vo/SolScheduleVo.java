@@ -10,6 +10,7 @@ public class SolScheduleVo {
 	private String end;
 	
 	private int classType;
+	private int classNo;
 	
 	
 	public SolScheduleVo() {
@@ -65,14 +66,25 @@ public class SolScheduleVo {
 	public void setClassType(int classType) {
 		this.classType = classType;
 	}
-	
-	
-	
-	@Override
-	public String toString() {
-		return "SolScheduleVo [scheduleNo=" + scheduleNo + ", companyNo=" + companyNo + ", title=" + title + ", start="
-				+ start + ", end=" + end + "]";
+	public int getClassNo() {
+		return classNo;
 	}
-
+	public void setClassNo(int classNo) {
+		this.classNo = classNo;
+	}
+	public SolScheduleVo(int scheduleNo, int companyNo, String title, String start, String end, int classType,
+			int classNo) {
+		super();
+		this.scheduleNo = scheduleNo;
+		this.companyNo = companyNo;
+		this.title = title;
+		this.start = start;
+		this.end = end;
+		this.classType = classType;
+		this.classNo = classNo;
+	}
+	
+	
+	
 
 }

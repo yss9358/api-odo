@@ -59,10 +59,14 @@ public class SolDao {
 		System.out.println(tempVo);
 		return sqlSession.selectOne("sr.getClass", tempVo);
 	}
-//	//일정 불러오기
-//	public List<SolScheduleVo> selectSchedule(int classNo){
-//		return sqlSession.selectList("sr.selectschedule", classNo);
-//	}
+	//최근일정 불러오기
+	public SolScheduleVo selectSchedule(int classNo){
+		return sqlSession.selectOne("sr.maxSchedule", classNo);
+	}
+	//원데이 일정 불러오기
+	public List<SolScheduleVo> selectAllOneday(int classNo){
+		return sqlSession.selectList("sr.ondayScheduleList", classNo);
+	}
 
 	// 정규클래스
 	public List<SolClassVo> selectRClass(int no) {
@@ -127,7 +131,7 @@ public class SolDao {
 		System.out.println("SolDao.selectOndUser");
 		return sqlSession.selectList("sr.oneMeberList", schedule);
 	}
-	//클래스리스트
+	//운영중인 클래스리스트
 	public List<SolScheduleVo> selectAllSchedule(int no){
 		System.out.println("SolDao.selectAllSchedule");
 		return sqlSession.selectList("sr.selectSchedule", no);
