@@ -241,11 +241,11 @@ public class SsController {
 	public JsonResult modifyUser(MultipartFile file, @ModelAttribute UserJoinVo vo, HttpServletRequest request) {
 		int userNo = JwtUtil.getNoFromHeader(request);
 		if(userNo != -1) {
-			int count = ssService.exeUpdateUserInfo(file,vo,userNo);
-			if(count == 1) {
-				return JsonResult.success(count);
+			UserJoinVo updateVo = ssService.exeUpdateUserInfo(file,vo,userNo);
+			if(updateVo != null) {
+				return JsonResult.success(updateVo);
 			} else {
-				return JsonResult.fail("수정에 실패했어요");
+				return JsonResult.fail("토큰을 확인하세요");
 			}
 		} else {
 			return JsonResult.fail("다시 로그인 해주세요.");

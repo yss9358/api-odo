@@ -116,4 +116,9 @@ public class SsDao {
 		return sqlSession.update("ss.updateUserInfo", vo);
 	}
 	
+	// 수정하고 한명 데이터 가져오기
+	public UserJoinVo updateAuthUser(int userNo) {
+		return sqlSession.selectOne("ss.updateAuthUser",userNo);
+	}
+	
 }

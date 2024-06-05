@@ -391,13 +391,26 @@
 		]]>
 		<if test="userImage != null">
 		<![CDATA[
-			,user_image = 'userImage'
+			,user_image = #{userImage}
 		]]>	
 		</if>
 		<![CDATA[
 			where user_no = #{userNo}
 		]]>
 	</update>
+	
+	<!-- 수정하고 한명 데이터 가져오기 -->
+	<select id="updateAuthUser" parameterType="int" resultType="com.javaex.vo.UserJoinVo">
+		<![CDATA[
+			select	user_no userNo,
+					user_nickname userNickname,
+					user_id userId,
+					user_image userImage,
+					user_type userType
+			from user
+			where user_no = #{userNo}
+		]]>
+	</select>
 	
 
 </mapper>

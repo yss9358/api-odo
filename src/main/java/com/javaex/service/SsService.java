@@ -265,7 +265,7 @@ public class SsService {
 	}
 	
 	// 수정폼 - 회원정보 수정하기
-	public int exeUpdateUserInfo(MultipartFile file, UserJoinVo vo, int userNo) {
+	public UserJoinVo exeUpdateUserInfo(MultipartFile file, UserJoinVo vo, int userNo) {
 		vo.setUserNo(userNo);
 		
 		if(file != null) {
@@ -297,9 +297,19 @@ public class SsService {
 				e.printStackTrace();
 			}
 			
-			return ssDao.updateUserInfo(vo);
+			int count =  ssDao.updateUserInfo(vo);
+			if(count == 1) {
+				return ssDao.updateAuthUser(userNo);
+			} else {
+				return null;
+			}
 		} else {
-			return ssDao.updateUserInfo(vo);
+			int count =ssDao.updateUserInfo(vo);
+			if(count == 1) {
+				return ssDao.updateAuthUser(userNo);
+			} else {
+				return null;
+			}
 		}
 	}
 	
