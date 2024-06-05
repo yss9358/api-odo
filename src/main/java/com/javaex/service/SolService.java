@@ -35,20 +35,17 @@ public class SolService {
 	 */
 	// 아이디 중복확인
 	public String exeId(String id) {
-		System.out.println("SolService.exeId()");
 		return solDao.selectCompanyId(id);
 	}
 
 	// 회원가입
 	public int exeInsertCompany(SolCompanyVo solVo) {
-		System.out.println("SolService.exeInsertCompany");
 		return solDao.insertCompany(solVo);
 	}
 
 	// 로그인
 	public SolCompanyVo exeLogin(SolCompanyVo solVo) {
-		SolCompanyVo authCompany = solDao.login(solVo);
-		return authCompany;
+		return solDao.login(solVo);
 	}
 
 	/**********************************************
@@ -56,31 +53,26 @@ public class SolService {
 	 */
 	// 기존클래스리스트
 	public List<SolClassVo> exeClassList(Map<Object, String> tempVo) {
-		System.out.println("SolService.exeClassList()");
 		return solDao.selectAllClass(tempVo);
 	}
 
 	// 수정할 클래스불러오기
 	public SolClassVo exeGetClass(Map<String, Object> tempVo) {
-		System.out.println("SolService.exeGetClass()");
 		return solDao.selectClass(tempVo);
 	}
 
 	// 기존클래스
 	public List<SolClassVo> exegetRClass(int no) {
-		System.out.println("SolService.exegetRClass");
 		return solDao.selectRClass(no);
 	}
 
 	// 카테고리 불러오기
 	public List<SolCateVo> exeGetCate() {
-		System.out.println("SolService.exeGetCate");
 		return solDao.selectAllCate();
 	}
 
 	// 2차카테고리
 	public List<SolCateVo> exeGetCate2(int no) {
-		System.out.println("SolService.exeGetCate2S");
 		return solDao.selectCate2(no);
 	}
 
@@ -91,15 +83,14 @@ public class SolService {
 	 */
 	// 클래스 등록
 	public int exeInsertClass(SolClassVo vo) {
-		System.out.println("SolService.exeInsertClass");
+		
 		// 이미지저장
 		String saveName = exeCompanyImg(vo.getClassImageFile());
 		vo.setClassImage(saveName);
 
 		// 클래스 등록
 		solDao.insertClass(vo);
-		System.out.println(vo);
-		System.out.println("=================================");
+		
 		// 일정등록
 		int count = -1;
 		if (vo.getClassType() == 1) {
@@ -115,28 +106,34 @@ public class SolService {
 			count = solDao.insertClassSchedul(new SolScheduleVo(vo.getCompanyNo(), vo.getStartDate(), vo.getEndDate()));
 			System.out.println(vo.getStartDate());
 		}
+		
 		return count;
 	}
 
 	// 클래스 수정
 	public int exeupdate(SolClassVo vo) {
-		System.out.println("SolService.exeupdate");
+		
 		String saveName = exeCompanyImg(vo.getClassImageFile());
 		vo.setClassImage(saveName);
 		int count = solDao.updateClass(vo);
-		System.out.println(vo);
+		
 		for(int i = 0; i < vo.getStartDateList().size(); i++) {
 			count++;
 			SolScheduleVo temp = new SolScheduleVo(vo.getScheduleNo(), vo.getStartDateList().get(i),vo.getEndDate());
 			solDao.updateSchedule(temp);
 		}
+		
 		return count;
 	}
 
 	// 파일업로드
 	public String exeCompanyImg(MultipartFile file) {
+		
+		//운영체계가져오기
 		String osName = System.getProperty("os.name").toLowerCase();
-		String saveDir;
+		String saveDir;	//저장공간
+		
+		//운영체제 확인
 		if (osName.contains("linux")) {
 			saveDir = "/app/upload/"; // Linux 경로. username을 실제 사용자 이름으로 변경하세요.
 
@@ -144,6 +141,7 @@ public class SolService {
 			saveDir = ".\\uploadImages\\";
 		}
 
+		//파일명 뒤져서 저장명 꺼내기
 		String orgName = file.getOriginalFilename();
 		String exName = orgName.substring(orgName.lastIndexOf("."));
 		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
@@ -171,13 +169,12 @@ public class SolService {
 	 * 리스트 불러오기
 	 */
 	public List<SolClassVo> exeClassTypeList(Map<String, Object> tempVo) {
-		System.out.println("SolService.exeClassTypeList");
 		return solDao.selectClassList(tempVo);
 	}
 
 	// 유저리스트
 	public List<SolMemberVo> exeUserList(SolScheduleVo vo) {
-		System.out.println("SolService.exeUserList");
+		
 		if (vo.getClassType() == 1) {
 			SolScheduleVo sVo = solDao.selectSchedule(vo.getClassNo());
 			return solDao.selectOndUser(sVo.getScheduleNo());
@@ -189,7 +186,6 @@ public class SolService {
 
 	// 운영중인 클래스리스트
 	public List<SolScheduleVo> exeScheduleList(int no) {
-		System.out.println("SolService.exeScheduleList");
 		return solDao.selectAllSchedule(no);
 	}
 	//원데이 일정불러오기
@@ -202,7 +198,6 @@ public class SolService {
 	 * 쿠폰지급
 	 */
 	public int exeCoupon(Map<String, Object> tempVo) {
-		System.out.println("SolService.exeCoupon");
 		return solDao.insertCoupon(tempVo);
 	}
 
@@ -210,7 +205,6 @@ public class SolService {
 	 * 검색
 	 */
 	public List<SolListVo> exeFindClassList(SolListVo vo) {
-		System.out.println("SolService.exeAddressLista");
 
 		// 키워드 설정
 		vo.setKeyword("%" + vo.getKeyword() + "%");
