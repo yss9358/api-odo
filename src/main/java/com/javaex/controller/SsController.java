@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.SsService;
 import com.javaex.util.JsonResult;
@@ -229,6 +230,22 @@ public class SsController {
 				return JsonResult.success(null);
 			} else {
 				return JsonResult.success(vo);
+			}
+		} else {
+			return JsonResult.fail("다시 로그인 해주세요.");
+		}
+	}
+	
+	// 수정폼 - 회원정보 수정하기
+	@PutMapping("/odo/ss/modify")
+	public JsonResult modifyUser(MultipartFile file, @ModelAttribute UserJoinVo vo, HttpServletRequest request) {
+		int userNo = JwtUtil.getNoFromHeader(request);
+		if(userNo != -1) {
+			int count = ssService.exeUpdateUserInfo(file,vo,userNo);
+			if(count == 1) {
+				return JsonResult.success(count);
+			} else {
+				return JsonResult.fail("수정에 실패했어요");
 			}
 		} else {
 			return JsonResult.fail("다시 로그인 해주세요.");

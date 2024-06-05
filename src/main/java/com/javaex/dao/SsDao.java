@@ -111,4 +111,9 @@ public class SsDao {
 		return sqlSession.selectOne("ss.getUserInfoByUserNo",userNo);
 	}
 	
+	// 수정폼 - 회원정보 수정하기
+	public int updateUserInfo(UserJoinVo vo) {
+		return sqlSession.update("ss.updateUserInfo", vo);
+	}
+	
 }

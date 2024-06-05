@@ -120,11 +120,9 @@ public class SsService {
 				e.printStackTrace();
 			}	
 			
-			int count = ssDao.insertReview(vo);
-			return count;
+			return ssDao.insertReview(vo);
 		} else {
-			int count = ssDao.insertReview(vo);
-			return count;
+			return ssDao.insertReview(vo);
 		}
 	}
 	
@@ -169,11 +167,9 @@ public class SsService {
 				e.printStackTrace();
 			}
 			
-			int count = ssDao.updateReview(vo);
-			return count;
+			return ssDao.updateReview(vo);
 		} else {
-			int count = ssDao.updateReview(vo);
-			return count;
+			return ssDao.updateReview(vo);
 		}
 	}
 	
@@ -265,6 +261,45 @@ public class SsService {
 			return null;
 		} else {
 			return vo;
+		}
+	}
+	
+	// 수정폼 - 회원정보 수정하기
+	public int exeUpdateUserInfo(MultipartFile file, UserJoinVo vo, int userNo) {
+		vo.setUserNo(userNo);
+		
+		if(file != null) {
+			String osName = System.getProperty("os.name").toLowerCase();
+			String saveDir;
+			if (osName.contains("linux")) { 
+				saveDir = "/app/upload";
+			} else {
+				saveDir = "C:\\uploadImages\\";
+			}
+			String orgName = file.getOriginalFilename();
+			String exName = orgName.substring(orgName.lastIndexOf("."));
+			String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+			String filePath = saveDir + File.separator + saveName;
+			
+			vo.setUserImage(saveName);
+			
+			try {
+				byte[] fileData;
+				fileData = file.getBytes();
+
+				OutputStream os = new FileOutputStream(filePath);
+				BufferedOutputStream bos = new BufferedOutputStream(os);
+
+				bos.write(fileData);
+				bos.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			return ssDao.updateUserInfo(vo);
+		} else {
+			return ssDao.updateUserInfo(vo);
 		}
 	}
 	

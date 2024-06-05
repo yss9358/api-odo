@@ -381,6 +381,23 @@
 		]]>
 	</select>
 	
+	<!-- 수정폼 - 회원정보 수정하기 -->
+	<update id="updateUserInfo" parameterType="com.javaex.vo.UserJoinVo">
+		<![CDATA[
+			update user
+			set user_nickname = #{userNickname},
+				user_hp = #{userHp},
+			    user_email = #{userEmail}
+		]]>
+		<if test="userImage != null">
+		<![CDATA[
+			,user_image = 'userImage'
+		]]>	
+		</if>
+		<![CDATA[
+			where user_no = #{userNo}
+		]]>
+	</update>
 	
 
 </mapper>
