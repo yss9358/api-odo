@@ -1,13 +1,5 @@
 package com.javaex.controller;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaex.service.SsService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
@@ -29,7 +20,6 @@ import com.javaex.vo.CheckWishClassVo;
 import com.javaex.vo.ClassReviewVo;
 import com.javaex.vo.CouponVo;
 import com.javaex.vo.MyPayVo;
-import com.javaex.vo.NaverToken;
 import com.javaex.vo.OneClassVo;
 import com.javaex.vo.ReviewVo;
 import com.javaex.vo.UserJoinVo;
