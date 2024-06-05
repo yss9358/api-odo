@@ -24,6 +24,22 @@ public class HsDao {
 		return payList;
 	}
 	
+	//회사 위시 삭제
+	public int deleteComWish(ClassDetailVo wishVo) {
+
+		int count = sqlSession.delete("hs.deleteComWish", wishVo);
+
+		return count;
+	}
+	
+	//회사 위시 추가
+	public int insertComWish(ClassDetailVo wishVo) {
+
+		int count = sqlSession.insert("hs.insertComWish", wishVo);
+
+		return count;
+	}
+	
 	//클래스 위시 삭제
 	public int deleteClassWish(ClassDetailVo wishVo) {
 
@@ -31,7 +47,7 @@ public class HsDao {
 
 		return count;
 	}
-
+	
 	//클래스 위시 추가
 	public int insertClassWish(ClassDetailVo wishVo) {
 

@@ -18,6 +18,23 @@ public class HsService {
 	@Autowired
 	private HsDao hsDao;
 
+	
+	//회사 위시 삭제
+	public int exeDeleteComWish(ClassDetailVo wishVo) {
+		
+		int count = hsDao.deleteComWish(wishVo);
+
+		return count;
+	}
+	
+	//회사 위시 추가
+	public int exeInsertComWish(ClassDetailVo wishVo) {
+
+		int count = hsDao.insertComWish(wishVo);
+
+		return count;
+	}
+	
 	//클래스 위시 삭제
 	public int exeDeleteClassWish(ClassDetailVo wishVo) {
 		

@@ -23,6 +23,24 @@ public class HsController {
 	private HsService hsService;
 
 	
+	// 회사 위시 삭제
+	@DeleteMapping("odo/comwishes")
+	public JsonResult deleteComWish(@RequestBody ClassDetailVo wishVo) {
+
+		int count = hsService.exeDeleteComWish(wishVo);
+
+		return JsonResult.success(count);
+	}
+	
+	// 회사 위시 추가
+	@PostMapping("odo/comwishes")
+	public JsonResult postComWish(@RequestBody ClassDetailVo wishVo) {
+
+		int count = hsService.exeInsertComWish(wishVo);
+
+		return JsonResult.success(count);
+	}
+	
 	// 클래스 위시 삭제
 	@DeleteMapping("odo/wishes")
 	public JsonResult deleteWish(@RequestBody ClassDetailVo wishVo) {
