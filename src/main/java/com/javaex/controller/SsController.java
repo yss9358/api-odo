@@ -181,7 +181,7 @@ public class SsController {
 			vo.setUserNo(userNo);
 			int count = ssService.exeInsertWishClass(vo);
 			if(count == 1) {
-				return JsonResult.success(count);
+				return JsonResult.success(vo.getwClassNo());
 			} else {
 				return JsonResult.fail("등록실패");
 			}
