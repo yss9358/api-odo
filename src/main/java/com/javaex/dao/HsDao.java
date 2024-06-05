@@ -65,7 +65,15 @@ public class HsDao {
 		return comClassCnt;
 	}
 	
-	//해당클래스 운영회사 정보
+	//해당클래스 운영회사 정보 - 로그인
+	public ClassDetailVo selectUsersComInfo(Map<String, Integer> ciMap) {
+		
+		ClassDetailVo companyInfo = sqlSession.selectOne("hs.selectUsersComInfo", ciMap);
+		
+		return companyInfo;
+	}
+	
+	//해당클래스 운영회사 정보 - 비로그인
 	public ClassDetailVo selectComInfo(int no) {
 		
 		ClassDetailVo companyInfo = sqlSession.selectOne("hs.selectComInfo", no);
@@ -81,7 +89,15 @@ public class HsDao {
 		return schList;
 	}
 	
-	//클래스 정보
+	//클래스 정보 - 로그인
+	public ClassDetailVo selectUsersClassDetail(Map<String, Integer> iMap) {
+		
+		ClassDetailVo classDetailVo = sqlSession.selectOne("hs.selectUsersClassDetail", iMap);
+		
+		return classDetailVo;
+	}
+	
+	//클래스 정보 - 비로그인
 	public ClassDetailVo selectClassDetail(int no) {
 		
 		ClassDetailVo classDetailVo = sqlSession.selectOne("hs.selectClassDetail", no);

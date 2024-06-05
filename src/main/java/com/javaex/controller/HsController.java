@@ -26,8 +26,20 @@ public class HsController {
 		
 		return JsonResult.success(nameAdd);
 	}
+	
+	///////////////////////////////////////////////////////////////////////
+	
+	// 클래스 상세 페이지 정보 - 로그인
+	@GetMapping("odo/classdetails/users")
+	public JsonResult getUsersClassDetails(@RequestParam(value = "userNo") int userNo, 
+			@RequestParam(value = "classNo") int no) {
+		
+		Map<String, Object> cMap = hsService.exeGetUsersClassDeatils(userNo, no);
 
-	// 클래스 상세 페이지 정보
+		return JsonResult.success(cMap);
+	}
+
+	// 클래스 상세 페이지 정보 - 비로그인
 	@GetMapping("odo/classdetails")
 	public JsonResult getClassDetails(@RequestParam(value = "classNo") int no) {
 
@@ -35,6 +47,8 @@ public class HsController {
 
 		return JsonResult.success(cMap);
 	}
+	
+	///////////////////////////////////////////////////////////////////////////
 	
 	// 검색페이지 - 2차 카테고리 리스트 - 로그인
 	@GetMapping("odo/subcategories/users")

@@ -27,7 +27,59 @@ public class HsService {
 		return nameAdd;
 	}
 	
-	//클래스 상세 페이지 정보 리스트
+	//클래스 상세 페이지 정보 리스트 - 비로그인
+	public Map<String, Object> exeGetUsersClassDeatils(int userNo, int no) {
+		
+		Map<String, Integer> iMap = new HashMap<String, Integer>();
+		iMap.put("userNo", userNo);
+		iMap.put("no", no);
+		
+		//클래스 정보
+		ClassDetailVo classDetailVo = hsDao.selectUsersClassDetail(iMap);
+		
+		//클래스 일정/시간 리스트
+		List<ClassDetailVo> schList = hsDao.selectScheduleList(no);
+		
+		//현재클래스의 운영회사 번호
+		int companyNo = classDetailVo.getCompanyNo();
+		
+		Map<String, Integer> ciMap = new HashMap<String, Integer>();
+		ciMap.put("companyNo", companyNo);
+		ciMap.put("userNo", userNo);
+		
+		//현재클래스의 운영회사 정보
+		ClassDetailVo companyInfo = hsDao.selectUsersComInfo(ciMap);
+		
+		//해당클래스 운영회사 클래스 수
+		int comClassCnt = hsDao.selectComClassCnt(companyNo);
+		
+		//해당클래스 운영회사 후기 수
+		int comReviewCnt = hsDao.selectComReviewCnt(companyNo);
+		
+		//해당클래스 운영회사 찜 수
+		int comWishCnt = hsDao.selectComWishCnt(companyNo);
+		
+		//해당클래스 후기 리스트
+		List<ClassDetailVo> classReviewList = hsDao.selectClassReviewList(no);
+		
+		//해당클래스 총 후기 수
+		int classReviewCnt = hsDao.selectClassReviewCnt(no);
+		
+		//모두 Map으로 묶는다
+		Map<String, Object> cMap = new HashMap<String, Object>();
+		cMap.put("classDetailVo", classDetailVo);
+		cMap.put("schList", schList);
+		cMap.put("companyInfo", companyInfo);
+		cMap.put("comClassCnt", comClassCnt);
+		cMap.put("comReviewCnt", comReviewCnt);
+		cMap.put("comWishCnt", comWishCnt);
+		cMap.put("classReviewList", classReviewList);
+		cMap.put("classReviewCnt", classReviewCnt);
+		
+		return cMap;
+	}
+	
+	//클래스 상세 페이지 정보 리스트 - 비로그인
 	public Map<String, Object> exeGetClassDeatils(int no) {
 		
 		//클래스 정보

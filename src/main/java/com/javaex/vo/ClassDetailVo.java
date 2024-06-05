@@ -4,6 +4,7 @@ public class ClassDetailVo {
 
 	//필드
 	//클래스
+	private int classNo;
 	private String classImg;
 	private String className;
 	private int classPrice;
@@ -29,12 +30,24 @@ public class ClassDetailVo {
 	private String startDate;
 	private String endDate;
 
+	//클래스 위시
+	private int wish;
+	private int wClassNo;
+	
+	//회사 위시
+	private int cWish;
+	private int wCompanyNo;
 	
 	//생성자
 	public ClassDetailVo() {
 	}
 	
-	//클래스 정보
+	public ClassDetailVo(int classNo, int userNo) {
+		this.classNo = classNo;
+		this.userNo = userNo;
+	}
+
+	//클래스 정보 - 비로그인
 	public ClassDetailVo(String classImg, String className, int classPrice, String classIntro, String classInfo, String classNameAdd,
 			String classDetailAdd, int companyNo) {
 		this.classImg = classImg;
@@ -46,11 +59,36 @@ public class ClassDetailVo {
 		this.classDetailAdd = classDetailAdd;
 		this.companyNo = companyNo;
 	}
+	
+	//클래스 정보 - 로그인
+	public ClassDetailVo(String classImg, String className, int classPrice, String classIntro, String classInfo, String classNameAdd,
+			String classDetailAdd, int companyNo, int userNo, int wish, int wClassNo) {
+		this.classImg = classImg;
+		this.className = className;
+		this.classPrice = classPrice;
+		this.classIntro = classIntro;
+		this.classInfo = classInfo;
+		this.classNameAdd = classNameAdd;
+		this.classDetailAdd = classDetailAdd;
+		this.companyNo = companyNo;
+		this.userNo = userNo;
+		this.wish = wish;
+		this.wClassNo = wClassNo;
+	}
 
-	//클래스 운영 회사 정보
+	//클래스 운영 회사 정보 - 비로그인
 	public ClassDetailVo(String companyImg, String companyName) {
 		this.companyImg = companyImg;
 		this.companyName = companyName;
+	}
+	
+	//클래스 운영 회사 정보 - 로그인
+	public ClassDetailVo(String companyImg, String companyName, int userNo, int cWish, int wCompanyNo) {
+		this.companyImg = companyImg;
+		this.companyName = companyName;
+		this.userNo = userNo;
+		this.cWish = cWish;
+		this.wCompanyNo = wCompanyNo;
 	}
 
 	//클래스 일정 리스트
@@ -72,6 +110,14 @@ public class ClassDetailVo {
 		this.userNickname = userNickname;
 	}
 	
+
+	public int getClassNo() {
+		return classNo;
+	}
+
+	public void setClassNo(int classNo) {
+		this.classNo = classNo;
+	}
 
 	public String getClassImg() {
 		return classImg;
@@ -232,16 +278,44 @@ public class ClassDetailVo {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	
+
+	public int getWish() {
+		return wish;
+	}
+
+	public void setWish(int wish) {
+		this.wish = wish;
+	}
+
+	public int getwClassNo() {
+		return wClassNo;
+	}
+
+	public void setwClassNo(int wClassNo) {
+		this.wClassNo = wClassNo;
+	}
+
+	public int getcWish() {
+		return cWish;
+	}
+
+	public void setcWish(int cWish) {
+		this.cWish = cWish;
+	}
+
+	public int getwCompanyNo() {
+		return wCompanyNo;
+	}
+
+	public void setwCompanyNo(int wCompanyNo) {
+		this.wCompanyNo = wCompanyNo;
+	}
 
 	@Override
 	public String toString() {
-		return "ClassDetailVo [companyImg=" + companyImg + ", companyName=" + companyName + "]";
+		return "ClassDetailVo [companyImg=" + companyImg + ", companyName=" + companyName + ", userNo=" + userNo
+				+ ", cWish=" + cWish + ", wCompanyNo=" + wCompanyNo + "]";
 	}
-	
-	
-	
-	
 	
 	
 }
