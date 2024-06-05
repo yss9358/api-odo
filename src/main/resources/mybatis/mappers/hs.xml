@@ -12,6 +12,15 @@
       and class_type = 1
       and user.user_no = #{no}
    </select>
+   
+   	<!-- 클래스 위시 삭제 -->
+	<delete id="deleteClassWish" parameterType="com.javaex.vo.ClassDetailVo">
+	<![CDATA[
+		delete from wish_class
+		where w_class_no = #{classNo}
+		and user_no = #{userNo};
+	]]>
+	</delete>
 
 	<!-- 클래스 위시 추가 -->
 	<insert id="insertClassWish" parameterType="com.javaex.vo.ClassDetailVo">
@@ -151,8 +160,8 @@
 		    com.company_no AS companyNo,
 		    COALESCE(w.user_no, 0) AS userNo,
 		    CASE
-		        WHEN w.user_no IS NOT NULL THEN true
-		        ELSE false
+		        WHEN w.user_no IS NOT NULL THEN 1
+		        ELSE 0
 		    END AS wish,
 		    w.w_class_no AS wClassNo
 		FROM class cl

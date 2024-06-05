@@ -18,7 +18,15 @@ public class HsService {
 	@Autowired
 	private HsDao hsDao;
 
-	
+	//클래스 위시 삭제
+	public int exeDeleteClassWish(ClassDetailVo wishVo) {
+		
+		int count = hsDao.deleteClassWish(wishVo);
+
+		return count;
+	}
+
+	//클래스 위시 추가
 	public int exeInsertClassWish(ClassDetailVo wishVo) {
 
 		int count = hsDao.insertClassWish(wishVo);

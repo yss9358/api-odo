@@ -23,7 +23,16 @@ public class HsDao {
 		List<Integer> payList = sqlSession.selectList("hs.onePayList", userNo);
 		return payList;
 	}
+	
+	//클래스 위시 삭제
+	public int deleteClassWish(ClassDetailVo wishVo) {
 
+		int count = sqlSession.delete("hs.deleteClassWish", wishVo);
+
+		return count;
+	}
+
+	//클래스 위시 추가
 	public int insertClassWish(ClassDetailVo wishVo) {
 
 		int count = sqlSession.insert("hs.insertClassWish", wishVo);

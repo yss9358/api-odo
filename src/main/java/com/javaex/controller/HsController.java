@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,30 +23,40 @@ public class HsController {
 	private HsService hsService;
 
 	
-	@PostMapping("odo/wishes")
-	public JsonResult postWish(@RequestBody ClassDetailVo wishVo) {
-		
-		int count = hsService.exeInsertClassWish(wishVo);
-		
+	// 클래스 위시 삭제
+	@DeleteMapping("odo/wishes")
+	public JsonResult deleteWish(@RequestBody ClassDetailVo wishVo) {
+
+		int count = hsService.exeDeleteClassWish(wishVo);
+
 		return JsonResult.success(count);
 	}
-	
+
+	// 클래스 위시 추가
+	@PostMapping("odo/wishes")
+	public JsonResult postWish(@RequestBody ClassDetailVo wishVo) {
+
+		int count = hsService.exeInsertClassWish(wishVo);
+
+		return JsonResult.success(count);
+	}
+
 	// 클래스 상세페이지 도로명주소
 	@GetMapping("odo/classdetails/nameadd")
 	public JsonResult getNameAdd(@RequestParam(value = "classNo") int no) {
 
 		String nameAdd = hsService.exeGetNameAdd(no);
-		
+
 		return JsonResult.success(nameAdd);
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////
-	
+
 	// 클래스 상세 페이지 정보 - 로그인
 	@GetMapping("odo/classdetails/users")
-	public JsonResult getUsersClassDetails(@RequestParam(value = "userNo") int userNo, 
+	public JsonResult getUsersClassDetails(@RequestParam(value = "userNo") int userNo,
 			@RequestParam(value = "classNo") int no) {
-		
+
 		Map<String, Object> cMap = hsService.exeGetUsersClassDeatils(userNo, no);
 
 		return JsonResult.success(cMap);
@@ -59,12 +70,12 @@ public class HsController {
 
 		return JsonResult.success(cMap);
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	// 검색페이지 - 2차 카테고리 리스트 - 로그인
 	@GetMapping("odo/subcategories/users")
-	public JsonResult getsubCateUsersList(@RequestParam(value = "userNo") int userNo, 
+	public JsonResult getsubCateUsersList(@RequestParam(value = "userNo") int userNo,
 			@RequestParam(value = "cate2No") int no,
 			@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
 
@@ -82,7 +93,7 @@ public class HsController {
 
 		return JsonResult.success(pMap);
 	}//
-	
+
 	// 검색페이지 - 1차 카테고리 검색 리스트 - 로그인
 	@GetMapping("odo/categories/users")
 	public JsonResult getCateUsersList(@RequestParam(value = "userNo") int userNo,
@@ -103,13 +114,13 @@ public class HsController {
 
 		return JsonResult.success(pMap);
 	}//
-	
+
 	//////////////////////////////////////////////////////////////////
-	
+
 	// 메인 페이지 - 로그인 시 리스트
 	@GetMapping("odo/mains/users")
 	public JsonResult getUsersList(@RequestParam(value = "userNo") int no) {
-		
+
 		List<List<HsVo>> usersListOfLists = hsService.exegetUsersList(no);
 
 		return JsonResult.success(usersListOfLists);
