@@ -277,7 +277,7 @@ public class SolController {
 	 * 검색
 	 */
 	@GetMapping("classlist")
-	public JsonResult getClassList(@ModelAttribute SolListVo vo,HttpServletRequest request) {
+	public JsonResult getClassList(@ModelAttribute SolListVo vo) {
 		System.out.println("SolController.getClassList");
 //		System.out.println(vo);
 		List<SolListVo> classList = solservice.exeFindClassList(vo);
