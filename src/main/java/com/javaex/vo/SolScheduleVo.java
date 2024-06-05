@@ -27,7 +27,13 @@ public class SolScheduleVo {
 		this.start = start;
 		this.end = end;
 	}
-	
+	public SolScheduleVo(int scheduleNo, String start, String end, int classType) {
+		super();
+		this.scheduleNo = scheduleNo;
+		this.start = start;
+		this.end = end;
+		this.classType = classType;
+	}
 	
 	
 	public int getScheduleNo() {
@@ -72,16 +78,10 @@ public class SolScheduleVo {
 	public void setClassNo(int classNo) {
 		this.classNo = classNo;
 	}
-	public SolScheduleVo(int scheduleNo, int companyNo, String title, String start, String end, int classType,
-			int classNo) {
-		super();
-		this.scheduleNo = scheduleNo;
-		this.companyNo = companyNo;
-		this.title = title;
-		this.start = start;
-		this.end = end;
-		this.classType = classType;
-		this.classNo = classNo;
+	@Override
+	public String toString() {
+		return "SolScheduleVo [scheduleNo=" + scheduleNo + ", companyNo=" + companyNo + ", title=" + title + ", start="
+				+ start + ", end=" + end + ", classType=" + classType + ", classNo=" + classNo + "]";
 	}
 	
 	

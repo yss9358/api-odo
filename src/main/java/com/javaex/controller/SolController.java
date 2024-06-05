@@ -175,9 +175,12 @@ public class SolController {
 	public JsonResult classAdd(@ModelAttribute SolClassVo vo) {
 		System.out.println("SolController.classAdd");
 		System.out.println(vo.getClassImageFile().getOriginalFilename());
-		solservice.exeInsertClass(vo);
-
-		return JsonResult.success("");
+		int count = solservice.exeInsertClass(vo);
+		if(count > 0) {
+			return JsonResult.success("");
+		} else {
+			return JsonResult.fail(null);
+		}
 	}
 
 	// 클래스 수정

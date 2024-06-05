@@ -110,6 +110,11 @@ public class SolDao {
 		System.out.println(vo);
 		return sqlSession.update("sr.classUpdate", vo);
 	}
+	//일정수정
+	public int updateSchedule(SolScheduleVo vo) {
+		System.out.println("SolDao.updateSchedule");
+		return sqlSession.update("sr.scheduleUpdate", vo);
+	}
 
 	/***********************************
 	 * 리스트불러오기

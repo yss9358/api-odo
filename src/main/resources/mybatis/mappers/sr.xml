@@ -166,7 +166,20 @@
 	]]>
 	</update>
 	<!-- 일정수정 -->
-
+	<update id="scheduleUpdate" parameterType="com.javaex.vo.SolScheduleVo">
+	<![CDATA[
+	update schedule set
+	start_date = #{start}
+	]]>
+	<if test="end != null">
+	<![CDATA[
+	,end_data = #{end}
+	]]>
+	</if>
+	<![CDATA[
+	where schedule_no = #{scheduleNo}
+	]]>
+	</update>
 	<!-- 회사별 클래스리스트 -->
 	<select id="companyClassList" parameterType="map"
 		resultType="classVo">

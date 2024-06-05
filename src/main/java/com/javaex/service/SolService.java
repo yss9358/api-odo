@@ -123,7 +123,14 @@ public class SolService {
 		System.out.println("SolService.exeupdate");
 		String saveName = exeCompanyImg(vo.getClassImageFile());
 		vo.setClassImage(saveName);
-		return solDao.updateClass(vo);
+		int count = solDao.updateClass(vo);
+		System.out.println(vo);
+		for(int i = 0; i < vo.getStartDateList().size(); i++) {
+			count++;
+			SolScheduleVo temp = new SolScheduleVo(vo.getScheduleNo(), vo.getStartDateList().get(i),vo.getEndDate());
+			solDao.updateSchedule(temp);
+		}
+		return count;
 	}
 
 	// 파일업로드

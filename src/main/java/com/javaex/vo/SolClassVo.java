@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class SolClassVo {
+
+	//이미지 파일
 	private MultipartFile classImageFile;
 
 	private int scheduleNo;
