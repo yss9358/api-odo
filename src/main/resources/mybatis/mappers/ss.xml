@@ -364,6 +364,22 @@
 		]]>
 	</delete>
 	
+	<!-- 수정폼 - 회원정보 가져오기 -->
+	<select id="getUserInfoByUserNo" parameterType="int" resultType="com.javaex.vo.UserJoinVo">
+		<![CDATA[
+			select	user_no userNo,
+					user_id userId,
+					user_nickname userNickname,
+			        user_email userEmail,
+			        user_name userName,
+			        user_hp userHp,
+			        user_gender userGender,
+			        user_birth userBirth,
+			        user_image userImage
+			from user
+			where user_no = #{userNo}
+		]]>
+	</select>
 	
 	
 

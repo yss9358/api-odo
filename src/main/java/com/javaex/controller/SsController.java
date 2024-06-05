@@ -218,6 +218,22 @@ public class SsController {
 			return null;
 		}
 	}
+	
+	// 수정폼 - 회원정보 가져오기
+	@GetMapping("/odo/ss/modify")
+	public JsonResult getUserInfo(@RequestParam(value="userNo") int userNo, HttpServletRequest request) {
+		int no = JwtUtil.getNoFromHeader(request);
+		if(userNo == no && no != -1) {
+			UserJoinVo vo = ssService.exeGetUserInfo(userNo);
+			if(vo == null) {
+				return JsonResult.success(null);
+			} else {
+				return JsonResult.success(vo);
+			}
+		} else {
+			return JsonResult.fail("다시 로그인 해주세요.");
+		}
+	}
 
 //	// 네이버 토큰 받기
 //	@GetMapping("/odo/ss/navertoken")

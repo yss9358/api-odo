@@ -258,50 +258,62 @@ public class SsService {
 		}
 	}
 	
-	// 네이버 로그인 회원 체크
-	public Map<String, Object> exeCheckNaverEmail(Map<String, String> map) {
-		Map<String, Object> authMap = new HashMap<String,Object>();
-		authMap.put("accessToken", (String)map.get("accessToken"));
-		authMap.put("refreshToken", (String)map.get("refreshToken"));
-		authMap.put("state", (String)map.get("state"));
-		
-		String year = (String)map.get("birthyear");
-		String birthDay = (String)map.get("birthday");
-		String[] birth = birthDay.split("-");
-		String userBirth = birth[0] + birth[1];
-		String gender = (String)map.get("gender");
-		
-		UserJoinVo vo = new UserJoinVo();
-		vo.setUserId("Naver " +(String)map.get("id"));
-		vo.setUserEmail((String)map.get("email"));
-		vo.setUserName((String)map.get("name"));
-		vo.setUserNickname((String)map.get("nickname"));
-		vo.setUserHp((String)map.get("phone_number"));
-		vo.setUserBirth(year + userBirth);
-		if(gender.equals("M")) {
-			vo.setUserGender("male");
+	// 수정폼 - 회원정보 가져오기
+	public UserJoinVo exeGetUserInfo(int userNo) {
+		UserJoinVo vo = ssDao.getUserInfoByUserNo(userNo);
+		if(vo == null) {
+			return null;
 		} else {
-			vo.setUserGender("female");
-		}
-		vo.setUserType(2);
-		
-		UserJoinVo checkVo = ssDao.checkId(vo.getUserId());
-		
-		if(checkVo == null) {
-			int count = ssDao.insertSnsUser(vo);
-			if(count == 1) {
-				UserJoinVo authVo =  ssDao.loginBySns(vo);
-				authMap.put("authVo", authVo);
-				return authMap;
-			} else {
-				return null;
-			}
-		} else {
-			UserJoinVo authVo =  ssDao.loginBySns(vo);
-			authMap.put("authVo", authVo);
-			return authMap;
+			return vo;
 		}
 	}
+	
+	
+	
+//	// 네이버 로그인 회원 체크
+//	public Map<String, Object> exeCheckNaverEmail(Map<String, String> map) {
+//		Map<String, Object> authMap = new HashMap<String,Object>();
+//		authMap.put("accessToken", (String)map.get("accessToken"));
+//		authMap.put("refreshToken", (String)map.get("refreshToken"));
+//		authMap.put("state", (String)map.get("state"));
+//		
+//		String year = (String)map.get("birthyear");
+//		String birthDay = (String)map.get("birthday");
+//		String[] birth = birthDay.split("-");
+//		String userBirth = birth[0] + birth[1];
+//		String gender = (String)map.get("gender");
+//		
+//		UserJoinVo vo = new UserJoinVo();
+//		vo.setUserId("Naver " +(String)map.get("id"));
+//		vo.setUserEmail((String)map.get("email"));
+//		vo.setUserName((String)map.get("name"));
+//		vo.setUserNickname((String)map.get("nickname"));
+//		vo.setUserHp((String)map.get("phone_number"));
+//		vo.setUserBirth(year + userBirth);
+//		if(gender.equals("M")) {
+//			vo.setUserGender("male");
+//		} else {
+//			vo.setUserGender("female");
+//		}
+//		vo.setUserType(2);
+//		
+//		UserJoinVo checkVo = ssDao.checkId(vo.getUserId());
+//		
+//		if(checkVo == null) {
+//			int count = ssDao.insertSnsUser(vo);
+//			if(count == 1) {
+//				UserJoinVo authVo =  ssDao.loginBySns(vo);
+//				authMap.put("authVo", authVo);
+//				return authMap;
+//			} else {
+//				return null;
+//			}
+//		} else {
+//			UserJoinVo authVo =  ssDao.loginBySns(vo);
+//			authMap.put("authVo", authVo);
+//			return authMap;
+//		}
+//	}
 	
 	
 }

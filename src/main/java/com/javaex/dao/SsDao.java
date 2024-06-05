@@ -106,4 +106,9 @@ public class SsDao {
 		return sqlSession.delete("ss.deleteWishClass", vo);
 	}
 	
+	// 수정폼 - 회원정보 가져오기
+	public UserJoinVo getUserInfoByUserNo(int userNo) {
+		return sqlSession.selectOne("ss.getUserInfoByUserNo",userNo);
+	}
+	
 }
