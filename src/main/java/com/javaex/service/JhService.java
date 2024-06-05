@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.JhDao;
 import com.javaex.util.JsonResult;
+import com.javaex.vo.AndroidVo;
 import com.javaex.vo.CompanyInfoVo;
 import com.javaex.vo.CompanyInfoVo2;
 import com.javaex.vo.PayVo;
@@ -318,4 +319,32 @@ public class JhService {
 			return 0;
 		}
 	}
+	
+	//안드로이드 수강신청한 업체 리스트
+	public List<AndroidVo> AndroidList() {
+		
+		List<AndroidVo> aList = jd.AndroidList1();
+		
+		List<AndroidVo> AnList = new ArrayList<>();
+		
+		for(int i = 0; i<aList.size(); i++) {
+			
+			String className = aList.get(i).getClassName();
+			
+			String classAddress = aList.get(i).getClassAddress();
+			
+			int classType = aList.get(i).getClassType();
+			
+			int schedulNo = aList.get(i).getScheduleNo();
+			
+			int attenCount = jd.AndroidList2(schedulNo);
+			
+			AndroidVo an = new AndroidVo(className, classAddress, classType, schedulNo, attenCount);
+			System.out.println(an);
+			AnList.add(an);
+		}
+		
+		return AnList;
+	}
+	
 }

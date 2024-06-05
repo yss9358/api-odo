@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaex.service.JhService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
+import com.javaex.vo.AndroidVo;
 import com.javaex.vo.PayVo;
 import com.javaex.vo.SolCompanyVo;
 import com.javaex.vo.WishCompanyVo;
@@ -216,9 +218,16 @@ public class JhController {
 	}
 	
 	//안드로이드 회원의 학원 등록 리스트
-	@PostMapping("odo/android/list")
-	public void AndroidList() {
+	@GetMapping("odo/android/list")
+	public List<AndroidVo> AndroidList() {
 		
+		return js.AndroidList();
+	}
+	
+	@PostMapping("odo/android/check")
+	public void AndroidCheck(@RequestBody int no) {
+		
+		System.out.println(no);
 	}
 	
 }

@@ -278,4 +278,22 @@
 		        company_image = #{companyImage}
 		where company_no = #{companyNo}
 	</update>
+	
+	<select id="androidList1" resultType="com.javaex.vo.AndroidVo">
+		select	class_name className,
+				class_name_address classAddress,
+		        class_type classType,
+		        schedule.schedule_no scheduleNo
+		from user, pay, schedule, class
+		where user.user_no = pay.user_no
+		and pay.schedule_no = schedule.schedule_no
+		and schedule.class_no = class.class_no
+		and user.user_no = 1;	
+	</select>
+	
+	<select id="androidList2" parameterType="int" resultType="int">
+		select	count(atten_no) attenCount
+		from attendance
+		where schedule_no = #{no}
+	</select>
 </mapper>

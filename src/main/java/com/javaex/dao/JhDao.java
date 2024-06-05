@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.AndroidVo;
 import com.javaex.vo.CompanyInfoVo;
 import com.javaex.vo.CompanyInfoVo2;
 import com.javaex.vo.PayVo;
@@ -198,5 +199,21 @@ public class JhDao {
 	public int update(SolCompanyVo solVo) {
 		
 		return sqlSession.update("jh.update", solVo);
+	}
+	
+	//안드로이드 수강신청한 업체리스트
+	public List<AndroidVo> AndroidList1() {
+		
+		List<AndroidVo> aList = sqlSession.selectList("jh.androidList1");
+		
+		return aList;
+	}
+	
+	//안드로이드 수강신청한 업체리스트2
+	public int AndroidList2(int a) {
+		
+		int b = sqlSession.selectOne("jh.androidList2", a);
+		
+		return b;
 	}
 }
