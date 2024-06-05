@@ -98,13 +98,11 @@ public class SolService {
 				if (vo.getStartDateList().get(i) != null) {
 					count = solDao
 							.insertClassSchedul(new SolScheduleVo(vo.getCompanyNo(), vo.getStartDateList().get(i)));
-					System.out.println(vo.getStartDateList().get(i));
 				}
 			}
 
 		} else if (vo.getClassType() == 2 || vo.getClassType() == 3) {
 			count = solDao.insertClassSchedul(new SolScheduleVo(vo.getCompanyNo(), vo.getStartDate(), vo.getEndDate()));
-			System.out.println(vo.getStartDate());
 		}
 		
 		return count;
