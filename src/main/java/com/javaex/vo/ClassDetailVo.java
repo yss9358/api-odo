@@ -313,8 +313,7 @@ public class ClassDetailVo {
 
 	@Override
 	public String toString() {
-		return "ClassDetailVo [companyImg=" + companyImg + ", companyName=" + companyName + ", userNo=" + userNo
-				+ ", cWish=" + cWish + ", wCompanyNo=" + wCompanyNo + "]";
+		return "ClassDetailVo [classNo=" + classNo + ", userNo=" + userNo + "]";
 	}
 	
 	

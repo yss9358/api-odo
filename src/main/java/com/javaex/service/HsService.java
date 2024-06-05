@@ -17,55 +17,64 @@ public class HsService {
 
 	@Autowired
 	private HsDao hsDao;
-	
-	
-	//도로명주소 가져오기
+
+	public int exeInsertClassWish(ClassDetailVo wishVo) {
+
+		int count = hsDao.insertClassWish(wishVo);
+
+		return count;
+	}
+
+	// 도로명주소 가져오기
 	public String exeGetNameAdd(int no) {
-		
+
 		String nameAdd = hsDao.selectNameAdd(no);
-		
+
 		return nameAdd;
 	}
-	
-	//클래스 상세 페이지 정보 리스트 - 비로그인
+
+	// 클래스 상세 페이지 정보 리스트 - 비로그인
 	public Map<String, Object> exeGetUsersClassDeatils(int userNo, int no) {
-		
+
 		Map<String, Integer> iMap = new HashMap<String, Integer>();
 		iMap.put("userNo", userNo);
 		iMap.put("no", no);
-		
-		//클래스 정보
+
+		// 클래스 정보
 		ClassDetailVo classDetailVo = hsDao.selectUsersClassDetail(iMap);
-		
-		//클래스 일정/시간 리스트
+
+		// 클래스 일정/시간 리스트
 		List<ClassDetailVo> schList = hsDao.selectScheduleList(no);
-		
-		//현재클래스의 운영회사 번호
+
+		// 현재클래스의 운영회사 번호
 		int companyNo = classDetailVo.getCompanyNo();
-		
+
 		Map<String, Integer> ciMap = new HashMap<String, Integer>();
 		ciMap.put("companyNo", companyNo);
 		ciMap.put("userNo", userNo);
-		
-		//현재클래스의 운영회사 정보
+
+		// 현재클래스의 운영회사 정보
 		ClassDetailVo companyInfo = hsDao.selectUsersComInfo(ciMap);
-		
-		//해당클래스 운영회사 클래스 수
+
+		// 해당클래스 운영회사 클래스 수
 		int comClassCnt = hsDao.selectComClassCnt(companyNo);
-		
-		//해당클래스 운영회사 후기 수
+
+		// 해당클래스 운영회사 후기 수
 		int comReviewCnt = hsDao.selectComReviewCnt(companyNo);
-		
-		//해당클래스 운영회사 찜 수
+
+		// 해당클래스 운영회사 찜 수
 		int comWishCnt = hsDao.selectComWishCnt(companyNo);
-		
-		//해당클래스 후기 리스트
+
+		// 해당클래스 후기 리스트
 		List<ClassDetailVo> classReviewList = hsDao.selectClassReviewList(no);
-		
-		//해당클래스 총 후기 수
+
+		// 해당클래스 총 후기 수
 		int classReviewCnt = hsDao.selectClassReviewCnt(no);
-		
-		//모두 Map으로 묶는다
+
+		// 유저의 원데이 클래스 결제내역
+		List<Integer> payList = hsDao.onePayList(userNo);
+
+		// 모두 Map으로 묶는다
 		Map<String, Object> cMap = new HashMap<String, Object>();
 		cMap.put("classDetailVo", classDetailVo);
 		cMap.put("schList", schList);
@@ -75,41 +84,58 @@ public class HsService {
 		cMap.put("comWishCnt", comWishCnt);
 		cMap.put("classReviewList", classReviewList);
 		cMap.put("classReviewCnt", classReviewCnt);
+		cMap.put("payList", payList);
 		
+		for (int i = 0; i < payList.size(); i++) {
+
+			int a = payList.get(i);
+			System.out.println(a);
+
+			for (int y = 0; y < schList.size(); y++) {
+
+				int b = schList.get(y).getScheduleNo();
+				System.out.println(b);
+				if (a == b) {
+					schList.remove(y);
+				}
+			}
+
+		}
+	
 		return cMap;
 	}
-	
-	//클래스 상세 페이지 정보 리스트 - 비로그인
+
+	// 클래스 상세 페이지 정보 리스트 - 비로그인
 	public Map<String, Object> exeGetClassDeatils(int no) {
-		
-		//클래스 정보
+
+		// 클래스 정보
 		ClassDetailVo classDetailVo = hsDao.selectClassDetail(no);
-		
-		//클래스 일정/시간 리스트
+
+		// 클래스 일정/시간 리스트
 		List<ClassDetailVo> schList = hsDao.selectScheduleList(no);
-		
-		//현재클래스의 운영회사 번호
+
+		// 현재클래스의 운영회사 번호
 		int companyNo = classDetailVo.getCompanyNo();
-		
-		//현재클래스의 운영회사 정보
+
+		// 현재클래스의 운영회사 정보
 		ClassDetailVo companyInfo = hsDao.selectComInfo(companyNo);
-		
-		//해당클래스 운영회사 클래스 수
+
+		// 해당클래스 운영회사 클래스 수
 		int comClassCnt = hsDao.selectComClassCnt(companyNo);
-		
-		//해당클래스 운영회사 후기 수
+
+		// 해당클래스 운영회사 후기 수
 		int comReviewCnt = hsDao.selectComReviewCnt(companyNo);
-		
-		//해당클래스 운영회사 찜 수
+
+		// 해당클래스 운영회사 찜 수
 		int comWishCnt = hsDao.selectComWishCnt(companyNo);
-		
-		//해당클래스 후기 리스트
+
+		// 해당클래스 후기 리스트
 		List<ClassDetailVo> classReviewList = hsDao.selectClassReviewList(no);
-		
-		//해당클래스 총 후기 수
+
+		// 해당클래스 총 후기 수
 		int classReviewCnt = hsDao.selectClassReviewCnt(no);
-		
-		//모두 Map으로 묶는다
+
+		// 모두 Map으로 묶는다
 		Map<String, Object> cMap = new HashMap<String, Object>();
 		cMap.put("classDetailVo", classDetailVo);
 		cMap.put("schList", schList);
@@ -119,10 +145,10 @@ public class HsService {
 		cMap.put("comWishCnt", comWishCnt);
 		cMap.put("classReviewList", classReviewList);
 		cMap.put("classReviewCnt", classReviewCnt);
-		
+
 		return cMap;
 	}
-	
+
 	// 검색페이지 - 2차 카테고리 리스트 - 로그인
 	public Map<String, Object> execate2UsersList(int userNo, int no, int crtPage) {
 
@@ -143,7 +169,7 @@ public class HsService {
 
 		// dao에 전달해서 현재 페이지의 리스트 8개를 받는다
 		List<HsVo> cate2List = hsDao.selectCate2UsersList(limitMap);
-		
+
 		////////////////////////////////////////////
 		// 페이징 계산
 		////////////////////////////////////////////
@@ -214,7 +240,7 @@ public class HsService {
 
 		// dao에 전달해서 현재 페이지의 리스트 8개를 받는다
 		List<HsVo> cate2List = hsDao.selectCate2List(limitMap);
-		
+
 		////////////////////////////////////////////
 		// 페이징 계산
 		////////////////////////////////////////////
@@ -265,7 +291,7 @@ public class HsService {
 
 		return pMap;
 	}//
-	
+
 	// 검색페이지 - 1차 카테고리 리스트 - 로그인
 	public Map<String, Object> execate1UsersList(int userNo, int no, int crtPage) {
 
@@ -408,9 +434,9 @@ public class HsService {
 
 		return pMap;
 	}//
-	
+
 	/////////////////////////////////////////////////////////////////////////
-	
+
 	// 메인페이지 - 로그인 리스트
 	public List<List<HsVo>> exegetUsersList(int no) {
 
@@ -455,7 +481,7 @@ public class HsService {
 		listOfLists.add(pbList);
 		// listOfLists.add(신규베스트클래스리스트)
 		listOfLists.add(nList);
-		
+
 		return listOfLists;
 	}//
 }

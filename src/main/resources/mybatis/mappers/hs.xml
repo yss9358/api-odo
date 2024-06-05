@@ -3,21 +3,23 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hs">
 
-	<resultMap id="classDetailMap" type="com.javaex.vo.ClassDetailVo">
-		<result property="classImg" column="classImg" />
-		<result property="className" column="className" />
-		<result property="classPrice" column="classPrice" />
-		<result property="classIntro" column="classIntro" />
-		<result property="classInfo" column="classInfo" />
-		<result property="classNameAdd" column="classNameAdd" />
-		<result property="classDetailAdd" column="classDetailAdd" />
-		<result property="companyNo" column="companyNo" />
-		<result property="userNo" column="userNo" />
-		<result property="wish" column="wish" />
-		<result property="wClassNo" column="wClassNo" />
-	</resultMap>
+  <select id="onePayList" parameterType="int" resultType="int">
+      select   schedule.schedule_no
+      from user, pay, schedule, class
+      where user.user_no = pay.user_no
+      and pay.schedule_no = schedule.schedule_no
+      and schedule.class_no = class.class_no
+      and class_type = 1
+      and user.user_no = #{no}
+   </select>
 
-
+	<!-- 클래스 위시 추가 -->
+	<insert id="insertClassWish" parameterType="com.javaex.vo.ClassDetailVo">
+	<![CDATA[
+	   	insert into wish_class
+		values(null, #{classNo}, #{userNo}, now())
+	]]>
+	</insert>
 
 	<!-- 클래스 상세 정보 가져오기 -->
 	<select id="selectNameAdd" parameterType="int" resultType="String">

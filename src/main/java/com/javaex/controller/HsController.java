@@ -5,11 +5,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaex.service.HsService;
 import com.javaex.util.JsonResult;
+import com.javaex.vo.ClassDetailVo;
 import com.javaex.vo.HsVo;
 
 @RestController
@@ -18,6 +21,15 @@ public class HsController {
 	@Autowired
 	private HsService hsService;
 
+	
+	@PostMapping("odo/wishes")
+	public JsonResult postWish(@RequestBody ClassDetailVo wishVo) {
+		
+		int count = hsService.exeInsertClassWish(wishVo);
+		
+		return JsonResult.success(count);
+	}
+	
 	// 클래스 상세페이지 도로명주소
 	@GetMapping("odo/classdetails/nameadd")
 	public JsonResult getNameAdd(@RequestParam(value = "classNo") int no) {
