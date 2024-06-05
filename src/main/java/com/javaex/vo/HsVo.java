@@ -33,6 +33,7 @@ public class HsVo {
 	// 필드
 	private int userNo;
 	private int wish;
+	private int wClassNo;
 
 	// 생성자
 	public HsVo() {
@@ -53,7 +54,7 @@ public class HsVo {
 	
 	//메인페이지 클래스 리스트 - 로그인
 	public HsVo(int classNo, String className, String classNameAdd, String classImg, int classPrice, int reviewPointAvg,
-			int reviewCount, int userNo, int wish) {
+			int reviewCount, int userNo, int wish, int wClassNo) {
 		this.classNo = classNo;
 		this.className = className;
 		this.classNameAdd = classNameAdd;
@@ -63,6 +64,7 @@ public class HsVo {
 		this.reviewCount = reviewCount;
 		this.userNo = userNo;
 		this.wish = wish;
+		this.wClassNo = wClassNo;
 	}
 
 	
@@ -242,12 +244,21 @@ public class HsVo {
 	public void setWish(int wish) {
 		this.wish = wish;
 	}
+	
+
+	public int getwClassNo() {
+		return wClassNo;
+	}
+
+	public void setwClassNo(int wClassNo) {
+		this.wClassNo = wClassNo;
+	}
 
 	@Override
 	public String toString() {
 		return "HsVo [classNo=" + classNo + ", className=" + className + ", classImg=" + classImg + ", classPrice="
 				+ classPrice + ", reviewPointAvg=" + reviewPointAvg + ", reviewCount=" + reviewCount + ", userNo="
-				+ userNo + ", wish=" + wish + "]";
+				+ userNo + ", wish=" + wish + ", wClassNo=" + wClassNo + "]";
 	}
 
 	

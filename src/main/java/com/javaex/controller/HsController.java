@@ -35,8 +35,19 @@ public class HsController {
 
 		return JsonResult.success(cMap);
 	}
+	
+	// 검색페이지 - 2차 카테고리 리스트 - 로그인
+	@GetMapping("odo/subcategories/users")
+	public JsonResult getsubCateUsersList(@RequestParam(value = "userNo") int userNo, 
+			@RequestParam(value = "cate2No") int no,
+			@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
 
-	// 검색페이지 - 2차 카테고리 리스트
+		Map<String, Object> pMap = hsService.execate2UsersList(userNo, no, crtPage);
+
+		return JsonResult.success(pMap);
+	}//
+
+	// 검색페이지 - 2차 카테고리 리스트 - 비로그인
 	@GetMapping("odo/subcategories")
 	public JsonResult getsubCateList(@RequestParam(value = "cate2No") int no,
 			@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
@@ -48,14 +59,13 @@ public class HsController {
 	
 	// 검색페이지 - 1차 카테고리 검색 리스트 - 로그인
 	@GetMapping("odo/categories/users")
-	public void getCateUsersList(@RequestParam(value = "userNo") int userNo,
+	public JsonResult getCateUsersList(@RequestParam(value = "userNo") int userNo,
 			@RequestParam(value = "cate1No") int no,
 			@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
 
-//		Map<String, Object> pMap = hsService.execate1List(no, crtPage);
-		hsService.execate1UsersList(userNo, no, crtPage);
+		Map<String, Object> pMap = hsService.execate1UsersList(userNo, no, crtPage);
 
-//		return JsonResult.success(pMap);
+		return JsonResult.success(pMap);
 	}//
 
 	// 검색페이지 - 1차 카테고리 검색 리스트 - 비로그인
