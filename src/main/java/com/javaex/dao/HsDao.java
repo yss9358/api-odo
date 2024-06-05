@@ -16,11 +16,11 @@ public class HsDao {
 	@Autowired
 	private SqlSession sqlSession;
 
+	
 	// 유저의 원데이클래스 결제내역
 	public List<Integer> onePayList(int userNo) {
 
 		List<Integer> payList = sqlSession.selectList("hs.onePayList", userNo);
-		// System.out.println(payList);
 		return payList;
 	}
 

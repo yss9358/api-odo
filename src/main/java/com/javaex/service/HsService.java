@@ -18,6 +18,7 @@ public class HsService {
 	@Autowired
 	private HsDao hsDao;
 
+	
 	public int exeInsertClassWish(ClassDetailVo wishVo) {
 
 		int count = hsDao.insertClassWish(wishVo);
@@ -89,12 +90,10 @@ public class HsService {
 		for (int i = 0; i < payList.size(); i++) {
 
 			int a = payList.get(i);
-			System.out.println(a);
 
 			for (int y = 0; y < schList.size(); y++) {
 
 				int b = schList.get(y).getScheduleNo();
-				System.out.println(b);
 				if (a == b) {
 					schList.remove(y);
 				}
