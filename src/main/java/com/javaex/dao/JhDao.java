@@ -202,8 +202,8 @@ public class JhDao {
 		
 		int i = sqlSession.update("jh.update", solVo);
 		
-		System.out.println(solVo);
-		System.out.println(i);
+		//System.out.println(solVo);
+		//System.out.println(i);
 		return i;
 	}
 	
