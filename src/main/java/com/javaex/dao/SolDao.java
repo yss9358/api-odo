@@ -88,6 +88,7 @@ public class SolDao {
 
 	// 수정할 클래스 불러오기
 	public SolClassVo selectClass(Map<String, Object> tempVo) {
+//		System.out.println("selectClass");
 		return sqlSession.selectOne("sr.getClass", tempVo);
 	}
 
@@ -98,8 +99,11 @@ public class SolDao {
 	}
 
 	// 수정할일정
-	public List<SolScheduleVo> updateScheduleSelect(int classNo) {
+	public List<String> updateScheduleSelect(int classNo) {
 		return sqlSession.selectList("sr.updateScheduleSelect", classNo);
+	}
+	public SolClassVo updateScheduleSelect2(int classNo) {
+		return sqlSession.selectOne("sr.updateScheduleSelect1", classNo);
 	}
 
 	// 일정수정

@@ -16,20 +16,20 @@ public class SolScheduleVo {
 	public SolScheduleVo() {
 		super();
 	}
-	public SolScheduleVo(int companyNo, String start) {
+	public SolScheduleVo(int classNo, String start) {
 		super();
-		this.companyNo = companyNo;
+		this.classNo = classNo;
 		this.start = start;
 	}
-	public SolScheduleVo(int companyNo, String start, String end) {
+	public SolScheduleVo(int classNo, String start, String end) {
 		super();
-		this.companyNo = companyNo;
+		this.classNo = classNo;
 		this.start = start;
 		this.end = end;
 	}
-	public SolScheduleVo(int scheduleNo, String start, String end, int classType) {
+	public SolScheduleVo(int classNo, String start, String end, int classType) {
 		super();
-		this.scheduleNo = scheduleNo;
+		this.classNo = classNo;
 		this.start = start;
 		this.end = end;
 		this.classType = classType;

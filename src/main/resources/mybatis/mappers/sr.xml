@@ -144,13 +144,13 @@
 	<if test="end == null">
 	<![CDATA[
 	insert into schedule
-	values(null, #{companyNo}, #{start}, null)
+	values(null, #{classNo}, #{start}, null)
 	]]>
 	</if>
 	<if test="end != null">
 	<![CDATA[
 	insert into schedule
-	values(null, #{companyNo}, #{start}, #{end})
+	values(null, #{classNo}, #{start}, #{end})
 	]]>
 	</if>
 	</insert>
@@ -174,12 +174,18 @@
 	]]>
 	</update>
 	<!-- 수정할 일정 -->
-	<!-- <select id="updateScheduleSelect">
+	<select id="updateScheduleSelect" resultType="string" parameterType="int">
 	<![CDATA[
-	select schedule_no from schedule
-    where class_no = 1
+	select start_datefrom schedule
+    where class_no = #{classNo}
 	]]>
-	</select>-->
+	</select>
+	<select id="updateScheduleSelect1" resultMap="resultMapClassVo" parameterType="int">
+	<![CDATA[
+	select start_date, end_date from schedule
+    where class_no = #{classNo}
+	]]>
+	</select>
 	<!-- 일정수정 -->
 	<update id="scheduleUpdate" parameterType="com.javaex.vo.SolScheduleVo">
 	<![CDATA[
@@ -188,7 +194,7 @@
 	]]>
 	<if test="end != null">
 	<![CDATA[
-	,end_data = #{end}
+	,end_date = #{end}
 	]]>
 	</if>
 	<![CDATA[

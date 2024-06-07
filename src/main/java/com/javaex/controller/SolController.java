@@ -107,7 +107,7 @@ public class SolController {
 	@GetMapping("getclass")
 	public JsonResult getSelectClass(@RequestParam(value = "companyNo") int companyNo,
 			@RequestParam(value = "classNo") int classNo) {
-//		System.out.println("SolController.getClass()");
+		System.out.println("SolController.getClass()");
 
 		Map<String, Object> tempVo = new HashMap<String, Object>();
 		tempVo.put("companyNo", companyNo);
@@ -189,7 +189,7 @@ public class SolController {
 		int count = solservice.exeInsertClass(vo);
 
 		if (count > 0) {
-			return JsonResult.success("");
+			return JsonResult.success("추가성공");
 		} else {
 			return JsonResult.fail(null);
 		}
