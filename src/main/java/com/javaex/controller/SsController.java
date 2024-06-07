@@ -69,6 +69,9 @@ public class SsController {
 			) {
 		
 		int userNo = JwtUtil.getNoFromHeader(request);
+		System.out.println(userNo);
+		System.out.println(page);
+		System.out.println(classType);
 		if(userNo != -1) {
 			List<MyPayVo> list = ssService.exePayList(classType,userNo,page);
 			if(list != null) {

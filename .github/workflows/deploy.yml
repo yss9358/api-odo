@@ -45,7 +45,9 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            sudo mkdir -p /home/ec2-user/upload
             sudo docker pull y2s9358/odo:latest
             sudo docker stop odo || true
             sudo docker rm odo || true
-            sudo docker run -d --name odo -p 9090:9090 y2s9358/odo:latest
+            sudo docker run -d --name odo -p 9090:9090 -v /home/ec2-user/upload:app/upload y2s9358/odo:latest
+            
