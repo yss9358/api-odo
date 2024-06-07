@@ -48,9 +48,9 @@ public class SolController {
 	@PostMapping("login")
 	public JsonResult companyLogin(@RequestBody SolCompanyVo vo, HttpServletResponse response) {
 //		System.out.println("SolController.companyLogin()");
-		
+
 		SolCompanyVo authCompany = solservice.exeLogin(vo);
-		
+
 		if (authCompany != null) {
 			JwtUtil.createTokenAndSetHeader(response, "" + authCompany.getCompanyNo());
 			return JsonResult.success(authCompany);
@@ -63,7 +63,7 @@ public class SolController {
 	@PostMapping("join")
 	public JsonResult companyJoin(@ModelAttribute SolCompanyVo solVo) {
 //		System.out.println("SolController.companyJoin()");
-		
+
 		String saveName = solservice.exeCompanyImg(solVo.getCompanyFile());
 		solVo.setCompanyImage(saveName);
 
@@ -79,7 +79,7 @@ public class SolController {
 	@GetMapping("id")
 	public JsonResult companyId(@RequestParam(value = "companyId") String id) {
 //		System.out.println("SolController.companyId()");
-		
+
 		if (solservice.exeId(id) == null) {
 			return JsonResult.success(id);
 		} else {
@@ -93,9 +93,9 @@ public class SolController {
 	@PostMapping("cclist")
 	public JsonResult classList(@RequestBody Map<Object, String> tempVo) {
 //		System.out.println("SolController.classList");
-		
+
 		List<SolClassVo> classList = solservice.exeClassList(tempVo);
-		
+
 		if (classList.size() > 0) {
 			return JsonResult.success(classList);
 		} else {
@@ -108,12 +108,12 @@ public class SolController {
 	public JsonResult getSelectClass(@RequestParam(value = "companyNo") int companyNo,
 			@RequestParam(value = "classNo") int classNo) {
 //		System.out.println("SolController.getClass()");
-		
+
 		Map<String, Object> tempVo = new HashMap<String, Object>();
 		tempVo.put("companyNo", companyNo);
 		tempVo.put("classNo", classNo);
 		SolClassVo classVo = solservice.exeGetClass(tempVo);
-		
+
 		if (classVo != null) {
 			return JsonResult.success(classVo);
 		} else {
@@ -125,9 +125,9 @@ public class SolController {
 	@PostMapping("getrclass/{no}")
 	public JsonResult getRClass(@PathVariable int no) {
 //		System.out.println("SolController.getRClass");
-		
+
 		List<SolClassVo> classList = solservice.exegetRClass(no);
-		
+
 		if (classList != null) {
 			return JsonResult.success(classList);
 		} else {
@@ -140,9 +140,9 @@ public class SolController {
 	@PostMapping("getcate")
 	public JsonResult getCate() {
 //		System.out.println("SolController.getCate()");
-		
+
 		List<SolCateVo> cateList = solservice.exeGetCate();
-		
+
 		if (cateList != null) {
 			return JsonResult.success(cateList);
 		} else {
@@ -154,9 +154,9 @@ public class SolController {
 	@GetMapping("getcate2/{no}")
 	public JsonResult getCate2(@PathVariable int no) {
 //		System.out.println("SolController.getCate2()");
-		
+
 		List<SolCateVo> cateList = solservice.exeGetCate2(no);
-		
+
 		if (cateList != null) {
 			return JsonResult.success(cateList);
 		} else {
@@ -171,7 +171,7 @@ public class SolController {
 //		System.out.println("SolController.classinfoFile");
 
 		String saveName = solservice.exeCompanyImg(file);
-		if(saveName != "") {
+		if (saveName != "") {
 			return JsonResult.success(saveName);
 		} else {
 			return JsonResult.fail(null);
@@ -185,10 +185,10 @@ public class SolController {
 	@PostMapping("insert")
 	public JsonResult classAdd(@ModelAttribute SolClassVo vo) {
 		System.out.println("SolController.classAdd");
-		System.out.println(vo);
+//		System.out.println(vo);
 		int count = solservice.exeInsertClass(vo);
-		
-		if(count > 0) {
+
+		if (count > 0) {
 			return JsonResult.success("");
 		} else {
 			return JsonResult.fail(null);
@@ -201,11 +201,25 @@ public class SolController {
 //		System.out.println("SolController.getUpdateClass");
 		int count = -1;
 		count = solservice.exeupdate(vo);
-		
+
 		if (count > 0) {
 			return JsonResult.success("수정되었습니다.");
 		} else {
 			return JsonResult.fail("");
+		}
+	}
+
+	// 수정할클래스 일정 리스트
+	@GetMapping("one/{classNo}")
+	public JsonResult getOneday(@PathVariable int classNo) {
+//			System.out.println("SolController.getOneday");
+		System.out.println(classNo);
+		List<SolScheduleVo> scheduleList = solservice.exeOneList(classNo);
+
+		if (scheduleList.size() > 0) {
+			return JsonResult.success(scheduleList);
+		} else {
+			return JsonResult.fail(null);
 		}
 	}
 
@@ -217,13 +231,13 @@ public class SolController {
 	public JsonResult classTypeList(@RequestParam(value = "classType") int classType,
 			@RequestParam(value = "companyNo") int companyNo) {
 //		System.out.println("SolController.classList");
-		
+
 		Map<String, Object> tempVo = new HashMap<String, Object>();
 		tempVo.put("classType", classType);
 		tempVo.put("companyNo", companyNo);
-		
+
 		List<SolClassVo> classList = solservice.exeClassTypeList(tempVo);
-		
+
 		if (classList != null) {
 			return JsonResult.success(classList);
 		} else {
@@ -236,9 +250,9 @@ public class SolController {
 	@GetMapping("member")
 	public JsonResult memberList(@ModelAttribute SolScheduleVo vo) {
 //		System.out.println("SolController.memberList");
-		
+
 		List<SolMemberVo> memberList = solservice.exeUserList(vo);
-		
+
 		if (memberList != null) {
 			return JsonResult.success(memberList);
 		}
@@ -249,23 +263,10 @@ public class SolController {
 	@GetMapping("getschedule/{no}")
 	public JsonResult getSchedule(@PathVariable int no) {
 //		System.out.println("SolController.getSchedule");
-		
+
 		List<SolScheduleVo> scheduleList = solservice.exeScheduleList(no);
-		
+
 		if (scheduleList != null) {
-			return JsonResult.success(scheduleList);
-		} else {
-			return JsonResult.fail(null);
-		}
-	}
-	//원데이 일정 리스트
-	@GetMapping("one/{classNo}")
-	public JsonResult getOneday(@PathVariable int classNo) {
-//		System.out.println("SolController.getOneday");
-		
-		List<SolScheduleVo> scheduleList = solservice.exeOneList(classNo);
-		
-		if(scheduleList.size() > 0) {
 			return JsonResult.success(scheduleList);
 		} else {
 			return JsonResult.fail(null);
@@ -279,13 +280,13 @@ public class SolController {
 	public JsonResult setCoupon(@RequestParam(value = "userNo") int userNo,
 			@RequestParam(value = "companyNo") int companyNo, @RequestParam(value = "couponPrice") int couponPrice) {
 //		System.out.println("SolController.setCoupon");
-		
+
 		Map<String, Object> tempVo = new HashMap<>();
 		tempVo.put("userNo", userNo);
 		tempVo.put("companyNo", companyNo);
 		tempVo.put("couponPrice", couponPrice);
 		int count = solservice.exeCoupon(tempVo);
-		
+
 		if (count > 0) {
 			return JsonResult.success("지급되었습니다");
 		} else {
@@ -299,43 +300,45 @@ public class SolController {
 	@GetMapping("classlist")
 	public JsonResult getClassList(@ModelAttribute SolListVo vo) {
 //		System.out.println("SolController.getClassList");
-		
+
 		List<SolListVo> classList = solservice.exeFindClassList(vo);
-		
-		if(classList.size() > 0) {
+
+		if (classList.size() > 0) {
 			return JsonResult.success(classList);
 		} else {
 			return JsonResult.fail(null);
 		}
 	}
-	//위시
+
+	// 위시
 	@PostMapping("wish/{classNo}")
 	public JsonResult wishPlus(@PathVariable int classNo, HttpServletRequest request) {
 //		System.out.println("SolController.wishPlus");
-		
+
 		int userNo = JwtUtil.getNoFromHeader(request);
 		Map<String, Object> tempVo = new HashMap<String, Object>();
 		tempVo.put("classNo", classNo);
 		tempVo.put("userNo", userNo);
 		int count = solservice.exeWishP(tempVo);
-		
-		if(count > 0) {
+
+		if (count > 0) {
 			return JsonResult.success(tempVo);
 		} else {
 			return JsonResult.fail(null);
 		}
 	}
+
 	@DeleteMapping("wish/{classNo}")
 	public JsonResult wishM(@PathVariable int classNo, HttpServletRequest request) {
 //		System.out.println("SolController.wishM0");
-		
+
 		int userNo = JwtUtil.getNoFromHeader(request);
 		Map<String, Object> tempVo = new HashMap<String, Object>();
 		tempVo.put("classNo", classNo);
 		tempVo.put("userNo", userNo);
 		int count = solservice.exeWishM(tempVo);
-		
-		if(count > 0) {
+
+		if (count > 0) {
 			return JsonResult.success(tempVo);
 		} else {
 			return JsonResult.fail(null);

@@ -173,6 +173,13 @@
 	where class_no = #{classNo}
 	]]>
 	</update>
+	<!-- 수정할 일정 -->
+	<select id="updateScheduleSelect" parameterType="int" resultType="int">
+	<![CDATA[
+	select schedule_no from schedule
+    where class_no = #{classNo}
+	]]>
+	</select>
 	<!-- 일정수정 -->
 	<update id="scheduleUpdate" parameterType="com.javaex.vo.SolScheduleVo">
 	<![CDATA[
@@ -224,6 +231,7 @@
 	from schedule
 	where class_no = #{classNo}
 	and end_date > now()
+	or end_date = null
 	]]>
 	</select>
 
