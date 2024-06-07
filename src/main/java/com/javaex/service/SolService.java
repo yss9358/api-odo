@@ -139,12 +139,12 @@ public class SolService {
 		if(vo.getClassType() == 1) {
 			for(int i = 0; i < vo.getStartDateList().size(); i++) {
 				count++;
-				SolScheduleVo temp = new SolScheduleVo(vo.getScheduleNo(), vo.getStartDateList().get(i),vo.getEndDate());
+				SolScheduleVo temp = new SolScheduleVo(vo.getClassNo(), vo.getStartDateList().get(i),vo.getEndDate());
 				solDao.updateSchedule(temp);
 			}
 		} else {
 			count++;
-			SolScheduleVo temp = new SolScheduleVo(vo.getScheduleNo(), vo.getStartDate(),vo.getEndDate());
+			SolScheduleVo temp = new SolScheduleVo(vo.getClassNo(), vo.getStartDate(),vo.getEndDate());
 			solDao.updateSchedule(temp);
 		}
 		

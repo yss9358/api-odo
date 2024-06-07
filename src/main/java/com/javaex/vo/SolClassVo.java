@@ -45,11 +45,9 @@ public class SolClassVo {
 		return scheduleNo;
 	}
 
-
 	public void setScheduleNo(int scheduleNo) {
 		this.scheduleNo = scheduleNo;
 	}
-
 
 	public int getClassNo() {
 		return classNo;
