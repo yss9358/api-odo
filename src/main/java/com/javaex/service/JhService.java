@@ -126,7 +126,7 @@ public class JhService {
 		Map<String, Object> payment = new HashMap<>();
 		payment.put("pv", pv);
 		payment.put("couponList", couponList);
-		System.out.println(pv);
+		//System.out.println(pv);
 
 		return payment;
 	}
@@ -135,7 +135,7 @@ public class JhService {
 	public JsonResult pay(PayVo pv) {
 		int a = jd.pay(pv);
 
-		System.out.println(pv.getCouponNo());
+		//System.out.println(pv.getCouponNo());
 
 		if (pv.getCouponNo() == 0) {
 			if (a > 0) {
@@ -189,7 +189,7 @@ public class JhService {
 			rc.setClassNo(d);
 			rList.add(rc);
 		}
-		System.out.println(rList);
+		//System.out.println(rList);
 
 		Map<String, Object> payMap = new HashMap<>();
 		payMap.put("pv", pv);
@@ -257,7 +257,7 @@ public class JhService {
 	public int wishDelete(Map<String, Integer> intMap) {
 		
 		int a = jd.wishDelete(intMap);
-		System.out.println(a);
+		//System.out.println(a);
 		return a;
 	}
 	
@@ -275,7 +275,7 @@ public class JhService {
 
 	// 업체수정
 	public int update(SolCompanyVo solVo) {
-		System.out.println(solVo);
+		//System.out.println(solVo);
 		// 파일 저장
 		MultipartFile file = solVo.getCompanyFile();
 		if(file != null) {	//받아온 파일이 없으면 파일 저장 없음
@@ -309,7 +309,7 @@ public class JhService {
 			solVo.setCompanyImage(saveName);
 		}
 		
-		System.out.println(solVo);
+		//System.out.println(solVo);
 
 		// db저장
 		jd.update(solVo);
@@ -342,7 +342,7 @@ public class JhService {
 			int attenCount = jd.AndroidList2(schedulNo);
 			
 			AndroidVo an = new AndroidVo(className, classAddress, classType, schedulNo, attenCount);
-			System.out.println(an);
+			//System.out.println(an);
 			AnList.add(an);
 		}
 		

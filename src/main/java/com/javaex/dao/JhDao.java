@@ -114,7 +114,7 @@ public class JhDao {
 			return 0;
 		}else {
 			int b = sqlSession.selectOne("jh.getCoupon", a);
-			System.out.println(b);
+			//System.out.println(b);
 			return b;
 		}
 	}
