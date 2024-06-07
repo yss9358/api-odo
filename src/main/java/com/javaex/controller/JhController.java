@@ -20,9 +20,11 @@ import com.javaex.util.JwtUtil;
 import com.javaex.vo.AndroidVo;
 import com.javaex.vo.PayVo;
 import com.javaex.vo.SolCompanyVo;
+import com.javaex.vo.UserJoinVo;
 import com.javaex.vo.WishCompanyVo;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 public class JhController {
@@ -232,4 +234,17 @@ public class JhController {
 		return js.AndroidCheck(no);
 	}
 	
+	//안드로이드 로그인
+	@PostMapping("odo/android/log")
+	public JsonResult AndroidLog(@RequestBody UserJoinVo uv, HttpServletResponse response) {
+		
+		UserJoinVo authVo = js.AndroidLog(uv);
+		if(authVo != null) {
+			JwtUtil.createTokenAndSetHeader(response, ""+authVo.getUserNo());
+			return JsonResult.success(authVo);
+		} else {
+			return JsonResult.fail("아이디와 비밀번호를 확인하세요.");
+		}
+		
+	}
 }

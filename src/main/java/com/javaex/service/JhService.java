@@ -25,6 +25,7 @@ import com.javaex.vo.PayendVo;
 import com.javaex.vo.PaymentVo;
 import com.javaex.vo.ReClassVo;
 import com.javaex.vo.SolCompanyVo;
+import com.javaex.vo.UserJoinVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
 import com.javaex.vo.WishCompanyVo2;
@@ -75,13 +76,14 @@ public class JhService {
 
 			int companyNo = wishCompany.get(i).getCompanyNo();
 
-			int no2 = wishCompany.get(i).getNo();
+			int no2 = wishCompany.get(i).getCompanyNo();
+			//System.out.println(no2);
 
-			int classCount = jd.classCount(no);
+			int classCount = jd.classCount(no2);
 
-			int reviewCount = jd.reviewCount(no);
+			int reviewCount = jd.reviewCount(no2);
 
-			int wishCount = jd.wishCount(no);
+			int wishCount = jd.wishCount(no2);
 
 			WishCompanyVo2 wVo = new WishCompanyVo2(companyImage, companyName, companyNo, no2, classCount, reviewCount,
 					wishCount);
@@ -365,4 +367,14 @@ public class JhService {
 		//jd.AndroidCheck2(no);
 	}
 	
+	//안드로이드 로그인
+	public UserJoinVo AndroidLog(UserJoinVo uv) {
+		
+		UserJoinVo vo = jd.AndroidLog(uv);
+		if(vo != null) {
+			return vo;
+		} else {
+			return null;
+		}
+	}
 }

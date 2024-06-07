@@ -310,4 +310,15 @@
 		insert into attendance
 		value(null, #{no}, 1, '출석', now());
 	</insert>
+	
+	<select id="androidLog" parameterType="com.javaex.vo.UserJoinVo" resultType="com.javaex.vo.UserJoinVo">
+		select	user_no userNo,
+				user_nickname userNickname,
+				user_id userId,
+				user_image userImage,
+				user_type userType
+		from user
+		where user_id = #{userId}
+		and user_pw = #{userPw}
+	</select>
 </mapper>

@@ -15,6 +15,7 @@ import com.javaex.vo.PayendVo;
 import com.javaex.vo.PaymentVo;
 import com.javaex.vo.ReClassVo;
 import com.javaex.vo.SolCompanyVo;
+import com.javaex.vo.UserJoinVo;
 import com.javaex.vo.WishClassVo;
 import com.javaex.vo.WishCompanyVo;
 
@@ -227,8 +228,14 @@ public class JhDao {
 	
 	//안드로이드 출석체크2
 	public void AndroidCheck2(int no) {
-		System.out.println("Rrrr");
+
 		sqlSession.insert("jh.androidCheck2", no);
 		
+	}
+	
+	//안드로이드 로그인
+	public UserJoinVo AndroidLog(UserJoinVo uv ) {
+		
+		return sqlSession.selectOne("jh.androidLog", uv);
 	}
 }
