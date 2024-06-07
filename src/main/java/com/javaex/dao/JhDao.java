@@ -203,9 +203,9 @@ public class JhDao {
 	}
 	
 	//안드로이드 수강신청한 업체리스트
-	public List<AndroidVo> AndroidList1() {
+	public List<AndroidVo> AndroidList1(int a) {
 		
-		List<AndroidVo> aList = sqlSession.selectList("jh.androidList1");
+		List<AndroidVo> aList = sqlSession.selectList("jh.androidList1", a);
 		
 		return aList;
 	}

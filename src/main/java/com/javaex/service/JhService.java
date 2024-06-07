@@ -323,9 +323,9 @@ public class JhService {
 	}
 	
 	//안드로이드 수강신청한 업체 리스트
-	public List<AndroidVo> AndroidList() {
+	public List<AndroidVo> AndroidList(int a) {
 		
-		List<AndroidVo> aList = jd.AndroidList1();
+		List<AndroidVo> aList = jd.AndroidList1(a);
 		
 		List<AndroidVo> AnList = new ArrayList<>();
 		

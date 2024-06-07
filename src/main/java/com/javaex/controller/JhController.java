@@ -210,7 +210,7 @@ public class JhController {
 		int no = JwtUtil.getNoFromHeader(request);
 		
 		if(no > 0) {
-			solVo.setCompanyNo(no);
+			//solVo.setCompanyNo(no);
 			//System.out.println(solVo);
 			js.update(solVo);
 			return JsonResult.success(solVo);
@@ -220,16 +220,23 @@ public class JhController {
 	}
 	
 	//안드로이드 회원의 학원 등록 리스트
-	@GetMapping("odo/android/list")
-	public List<AndroidVo> AndroidList() {
+	@PostMapping("odo/android/list")
+	public List<AndroidVo> AndroidList(@RequestBody UserJoinVo uv) {
 		
-		return js.AndroidList();
+		//System.out.println(uv.getUserNo());
+		
+		int a = uv.getUserNo();
+		
+		return js.AndroidList(a);
 	}
 	
 	@PostMapping("odo/android/check")
-	public String AndroidCheck(@RequestBody int no) {
+	public String AndroidCheck(@RequestBody AndroidVo a) {
 		
 		//System.out.println(no);
+		System.out.println(a.getScheduleNo());
+		
+		int no = a.getScheduleNo();
 		
 		return js.AndroidCheck(no);
 	}

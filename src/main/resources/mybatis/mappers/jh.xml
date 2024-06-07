@@ -279,7 +279,7 @@
 		where company_no = #{companyNo}
 	</update>
 	
-	<select id="androidList1" resultType="com.javaex.vo.AndroidVo">
+	<select id="androidList1" parameterType="int" resultType="com.javaex.vo.AndroidVo">
 		select	class_name className,
 				class_name_address classAddress,
 		        class_type classType,
@@ -288,7 +288,7 @@
 		where user.user_no = pay.user_no
 		and pay.schedule_no = schedule.schedule_no
 		and schedule.class_no = class.class_no
-		and user.user_no = 1;	
+		and user.user_no = #{no}	
 	</select>
 	
 	<select id="androidList2" parameterType="int" resultType="int">
