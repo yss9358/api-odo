@@ -56,10 +56,7 @@ public class SolService {
 		return solDao.selectAllClass(tempVo);
 	}
 
-	// 수정할 클래스불러오기
-	public SolClassVo exeGetClass(Map<String, Object> tempVo) {
-		return solDao.selectClass(tempVo);
-	}
+	
 
 	// 기존클래스
 	public List<SolClassVo> exegetRClass(int no) {
@@ -93,6 +90,7 @@ public class SolService {
 		
 		// 일정등록
 		int count = -1;
+		System.out.println(vo.getStartDateList());
 		if (vo.getClassType() == 1) {
 			for (int i = 0; i < vo.getStartDateList().size(); i++) {
 				if (vo.getStartDateList().get(i) != null) {
@@ -101,21 +99,37 @@ public class SolService {
 				}
 			}
 
-		} else if (vo.getClassType() == 2 || vo.getClassType() == 3) {
+		} else {
 			count = solDao.insertClassSchedul(new SolScheduleVo(vo.getCompanyNo(), vo.getStartDate(), vo.getEndDate()));
 		}
 		
 		return count;
 	}
+	
+	// 수정할 클래스불러오기
+		public SolClassVo exeGetClass(Map<String, Object> tempVo) {
+			SolClassVo vo = solDao.selectClass(tempVo);
+//			List<SolScheduleVo> scheduleList = solDao.updateScheduleSelect(vo.getClassNo());
+			return vo;
+		}
 
 	// 클래스 수정
 	public int exeupdate(SolClassVo vo) {
 		
-		String saveName = exeCompanyImg(vo.getClassImageFile());
-		vo.setClassImage(saveName);
+		// 파일값이 들어있을때만 실행
+		if(vo.getClassImageFile() != null) {			
+			String saveName = exeCompanyImg(vo.getClassImageFile());
+			vo.setClassImage(saveName);
+		}
+		
+		// 클래스 업데이트
 		int count = solDao.updateClass(vo);
 		
-		for(int i = 0; i < vo.getStartDateList().size(); i++) {
+		// 수정클래스 일정 불러오기
+		List<SolScheduleVo> scheduleList = solDao.updateScheduleSelect(vo.getClassNo());
+		System.out.println(scheduleList);
+		// 일정수정
+		for(int i = 0; i < scheduleList.size(); i++) {
 			count++;
 			SolScheduleVo temp = new SolScheduleVo(vo.getScheduleNo(), vo.getStartDateList().get(i),vo.getEndDate());
 			solDao.updateSchedule(temp);

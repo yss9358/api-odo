@@ -41,20 +41,18 @@ public class SolDao {
 	/********************************************
 	 * 클래스
 	 */
+	// 회사별 클래스 리스트
 	public List<SolClassVo> selectAllClass(Map<Object, String> tempVo) {
 		return sqlSession.selectList("sr.companyClassList", tempVo);
 	}
 
-	// 클래스 불러오기
-	public SolClassVo selectClass(Map<String, Object> tempVo) {
-		return sqlSession.selectOne("sr.getClass", tempVo);
-	}
-	//최근일정 불러오기
-	public SolScheduleVo selectSchedule(int classNo){
+	// 최근일정 불러오기
+	public SolScheduleVo selectSchedule(int classNo) {
 		return sqlSession.selectOne("sr.maxSchedule", classNo);
 	}
-	//원데이 일정 불러오기
-	public List<SolScheduleVo> selectAllOneday(int classNo){
+
+	// 원데이 일정 불러오기
+	public List<SolScheduleVo> selectAllOneday(int classNo) {
 		return sqlSession.selectList("sr.ondayScheduleList", classNo);
 	}
 
@@ -88,12 +86,25 @@ public class SolDao {
 		return sqlSession.insert("sr.scheduleInsert", vo);
 	}
 
+	// 수정할 클래스 불러오기
+	public SolClassVo selectClass(Map<String, Object> tempVo) {
+		return sqlSession.selectOne("sr.getClass", tempVo);
+	}
+
 	// 클래스 수정
 	public int updateClass(SolClassVo vo) {
+		System.out.println("클래스 수정");
 		return sqlSession.update("sr.classUpdate", vo);
 	}
-	//일정수정
+
+	// 수정할일정
+	public List<SolScheduleVo> updateScheduleSelect(int classNo) {
+		return sqlSession.selectList("sr.updateScheduleSelect", classNo);
+	}
+
+	// 일정수정
 	public int updateSchedule(SolScheduleVo vo) {
+		System.out.println("일정수정");
 		return sqlSession.update("sr.scheduleUpdate", vo);
 	}
 
@@ -114,33 +125,35 @@ public class SolDao {
 	public List<SolMemberVo> selectOndUser(int schedule) {
 		return sqlSession.selectList("sr.oneMeberList", schedule);
 	}
-	//운영중인 클래스리스트
-	public List<SolScheduleVo> selectAllSchedule(int no){
+
+	// 운영중인 클래스리스트
+	public List<SolScheduleVo> selectAllSchedule(int no) {
 		return sqlSession.selectList("sr.selectSchedule", no);
 	}
 
-	
 	/****************************************
 	 * 쿠폰지급
 	 */
 	public int insertCoupon(Map<String, Object> tempVo) {
-		return sqlSession.insert("sr.insertCoupon",tempVo);
+		return sqlSession.insert("sr.insertCoupon", tempVo);
 	}
-	
-	
+
 	/****************************************
 	 * 검색
 	 */
-	public List<SolListVo> selectAddressList(SolListVo vo){
+	// 검색리스트
+	public List<SolListVo> selectAddressList(SolListVo vo) {
 		return sqlSession.selectList("sr.addressList", vo);
 	}
-	//위시추가
+
+	// 위시추가
 	public int insertWish(Map<String, Object> vo) {
 		return sqlSession.insert("sr.insertWish", vo);
 	}
-	//위시삭제
+
+	// 위시삭제
 	public int deleteWish(Map<String, Object> vo) {
 		return sqlSession.delete("sr.deleteWish", vo);
 	}
-	
+
 }
