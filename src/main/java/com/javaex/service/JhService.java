@@ -312,10 +312,10 @@ public class JhService {
 		//System.out.println(solVo);
 
 		// db저장
-		jd.update(solVo);
+		int i = jd.update(solVo);
+		
 
-		if (jd.update(solVo) > 0) {
-
+		if (i != 0) {
 			return jd.update(solVo);
 		} else {
 			return 0;

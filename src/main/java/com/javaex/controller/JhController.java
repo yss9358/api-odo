@@ -210,10 +210,10 @@ public class JhController {
 		int no = JwtUtil.getNoFromHeader(request);
 		
 		if(no > 0) {
-			//solVo.setCompanyNo(no);
+			solVo.setCompanyNo(no);
 			//System.out.println(solVo);
-			js.update(solVo);
-			return JsonResult.success(solVo);
+			
+			return JsonResult.success(js.update(solVo));
 		}else {
 			return JsonResult.fail("fail");
 		}

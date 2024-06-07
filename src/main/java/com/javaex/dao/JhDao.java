@@ -198,8 +198,13 @@ public class JhDao {
 	
 	//업체정보 수정
 	public int update(SolCompanyVo solVo) {
+		//System.out.println("sdf");
 		
-		return sqlSession.update("jh.update", solVo);
+		int i = sqlSession.update("jh.update", solVo);
+		
+		System.out.println(solVo);
+		System.out.println(i);
+		return i;
 	}
 	
 	//안드로이드 수강신청한 업체리스트
