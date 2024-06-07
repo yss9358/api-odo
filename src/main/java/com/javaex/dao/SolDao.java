@@ -50,6 +50,10 @@ public class SolDao {
 	public SolScheduleVo selectSchedule(int classNo) {
 		return sqlSession.selectOne("sr.maxSchedule", classNo);
 	}
+	//일정선택
+	public SolScheduleVo selectSchedule1(Map<String, Object> temp) {
+		return sqlSession.selectOne("sr.maxSchedule1", temp);
+	}
 
 	// 원데이 일정 불러오기
 	public List<SolScheduleVo> selectAllOneday(int classNo) {

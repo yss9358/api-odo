@@ -176,7 +176,7 @@
 	<!-- 수정할 일정 -->
 	<select id="updateScheduleSelect" resultType="string" parameterType="int">
 	<![CDATA[
-	select start_datefrom schedule
+	select start_date from schedule
     where class_no = #{classNo}
 	]]>
 	</select>
@@ -365,6 +365,15 @@
 	and c.class_no = #{classNo}
 	order by s.start_date desc
 	limit 1	
+	]]>
+	</select>
+	<select id="maxSchedule1" parameterType="map" resultMap="rmScheduleVo">
+	<![CDATA[
+	select s.schedule_no, s.start_date
+	from schedule s, class c
+	where s.class_no = c.class_no
+	and c.class_no = #{classNo}
+	and s.start_date like #{startDate}
 	]]>
 	</select>
 	<!-- 원데이 일정표 불러오기 -->

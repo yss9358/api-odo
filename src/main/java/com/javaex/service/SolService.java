@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -198,9 +199,17 @@ public class SolService {
 
 	// 유저리스트
 	public List<SolMemberVo> exeUserList(SolScheduleVo vo) {
-		
+		SolScheduleVo sVo;
+		System.out.println(vo);
 		if (vo.getClassType() == 1) {
-			SolScheduleVo sVo = solDao.selectSchedule(vo.getClassNo());
+			if(vo.getStart() != null) {
+				Map<String, Object> temp = new HashMap<String, Object>();
+				temp.put("startDate",("%"+ vo.getStart())+"%");
+				temp.put("classNo", vo.getClassNo());
+				sVo = solDao.selectSchedule1(temp);
+			} else {
+				sVo = solDao.selectSchedule(vo.getClassNo());
+			}
 			if(sVo != null) {				
 				return solDao.selectOndUser(sVo.getScheduleNo());
 			}else {
