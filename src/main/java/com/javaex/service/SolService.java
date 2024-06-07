@@ -56,10 +56,7 @@ public class SolService {
 		return solDao.selectAllClass(tempVo);
 	}
 
-	// 수정할 클래스불러오기
-	public SolClassVo exeGetClass(Map<String, Object> tempVo) {
-		return solDao.selectClass(tempVo);
-	}
+	
 
 	// 기존클래스
 	public List<SolClassVo> exegetRClass(int no) {
@@ -108,6 +105,13 @@ public class SolService {
 		
 		return count;
 	}
+	
+	// 수정할 클래스불러오기
+		public SolClassVo exeGetClass(Map<String, Object> tempVo) {
+			SolClassVo vo = solDao.selectClass(tempVo);
+//			List<SolScheduleVo> scheduleList = solDao.updateScheduleSelect(vo.getClassNo());
+			return vo;
+		}
 
 	// 클래스 수정
 	public int exeupdate(SolClassVo vo) {
@@ -122,7 +126,7 @@ public class SolService {
 		int count = solDao.updateClass(vo);
 		
 		// 수정클래스 일정 불러오기
-		List<Integer> scheduleList = solDao.updateScheduleSelect(vo.getClassNo());
+		List<SolScheduleVo> scheduleList = solDao.updateScheduleSelect(vo.getClassNo());
 		System.out.println(scheduleList);
 		// 일정수정
 		for(int i = 0; i < scheduleList.size(); i++) {

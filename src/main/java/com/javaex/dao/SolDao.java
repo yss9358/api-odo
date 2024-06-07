@@ -98,7 +98,7 @@ public class SolDao {
 	}
 
 	// 수정할일정
-	public List<Integer> updateScheduleSelect(int classNo) {
+	public List<SolScheduleVo> updateScheduleSelect(int classNo) {
 		return sqlSession.selectList("sr.updateScheduleSelect", classNo);
 	}
 
