@@ -105,6 +105,7 @@ public class SolService {
 		return count;
 	}
 	
+	
 	// 수정할 클래스불러오기
 		public SolClassVo exeGetClass(Map<String, Object> tempVo) {
 //			System.out.println("exeGetClass");
