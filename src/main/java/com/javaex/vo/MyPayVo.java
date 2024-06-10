@@ -17,7 +17,7 @@ public class MyPayVo {
 	private int attenCount;
 	private int scheduleNo;
 	private int reviewNo;
-	private String classUrl;
+	private int companyNo;
 	private int recClassNo;
 	private String recClassImage;
 	private String recClassName;
@@ -28,7 +28,7 @@ public class MyPayVo {
 
 	public MyPayVo(int userNo, int classType, int classNo, String classImage, String endDate, int wishClassNo,
 			int starScore, int payNo, String payDate, String className, String classIntro, int payPrice, int attenCount,
-			int scheduleNo, int reviewNo, String classUrl, int recClassNo, String recClassImage, String recClassName) {
+			int scheduleNo, int reviewNo, int companyNo, int recClassNo, String recClassImage, String recClassName) {
 		this.userNo = userNo;
 		this.classType = classType;
 		this.classNo = classNo;
@@ -44,7 +44,7 @@ public class MyPayVo {
 		this.attenCount = attenCount;
 		this.scheduleNo = scheduleNo;
 		this.reviewNo = reviewNo;
-		this.classUrl = classUrl;
+		this.companyNo = companyNo;
 		this.recClassNo = recClassNo;
 		this.recClassImage = recClassImage;
 		this.recClassName = recClassName;
@@ -170,12 +170,12 @@ public class MyPayVo {
 		this.reviewNo = reviewNo;
 	}
 
-	public String getClassUrl() {
-		return classUrl;
+	public int getCompanyNo() {
+		return companyNo;
 	}
 
-	public void setClassUrl(String classUrl) {
-		this.classUrl = classUrl;
+	public void setCompanyNo(int companyNo) {
+		this.companyNo = companyNo;
 	}
 
 	public int getRecClassNo() {
@@ -208,7 +208,7 @@ public class MyPayVo {
 				+ classImage + ", endDate=" + endDate + ", wishClassNo=" + wishClassNo + ", starScore=" + starScore
 				+ ", payNo=" + payNo + ", payDate=" + payDate + ", className=" + className + ", classIntro="
 				+ classIntro + ", payPrice=" + payPrice + ", attenCount=" + attenCount + ", scheduleNo=" + scheduleNo
-				+ ", reviewNo=" + reviewNo + ", classUrl=" + classUrl + ", recClassNo=" + recClassNo
+				+ ", reviewNo=" + reviewNo + ", companyNo=" + companyNo + ", recClassNo=" + recClassNo
 				+ ", recClassImage=" + recClassImage + ", recClassName=" + recClassName + "]";
 	}
 	

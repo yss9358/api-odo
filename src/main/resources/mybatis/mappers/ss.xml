@@ -117,7 +117,7 @@
 			        IFNULL(a.attenCount, 0) attenCount,
 			        p.schedule_no scheduleNo,
 			        IFNULL(r.review_no, 0) reviewNo,
-			        c.class_url classUrl,
+			        c.company_no companyNo,
 			        IFNULL(selfC.class_no,0) recClassNo,
 			        selfC.class_image recClassImage,
 			        selfC.class_name recClassName
