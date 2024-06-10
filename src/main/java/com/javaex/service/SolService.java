@@ -57,8 +57,6 @@ public class SolService {
 		return solDao.selectAllClass(tempVo);
 	}
 
-	
-
 	// 기존클래스
 	public List<SolClassVo> exegetRClass(int no) {
 		return solDao.selectRClass(no);
@@ -93,73 +91,71 @@ public class SolService {
 		if (vo.getClassType() == 1) {
 			for (int i = 0; i < vo.getStartDateList().size(); i++) {
 				if (vo.getStartDateList().get(i) != null) {
-					count = solDao
-							.insertClassSchedul(new SolScheduleVo(vo.getClassNo(), vo.getStartDateList().get(i)));
+					count = solDao.insertClassSchedul(new SolScheduleVo(vo.getClassNo(), vo.getStartDateList().get(i)));
 				}
 			}
 
 		} else {
 			count = solDao.insertClassSchedul(new SolScheduleVo(vo.getClassNo(), vo.getStartDate(), vo.getEndDate()));
 		}
-		
+
 		return count;
 	}
-	
-	
+
 	// 수정할 클래스불러오기
-		public SolClassVo exeGetClass(Map<String, Object> tempVo) {
+	public SolClassVo exeGetClass(Map<String, Object> tempVo) {
 //			System.out.println("exeGetClass");
-			SolClassVo vo = solDao.selectClass(tempVo);
-			if(vo.getClassType() == 1) {				
-				List<String> scheduleList = solDao.updateScheduleSelect(vo.getClassNo());
-				vo.setStartDateList(scheduleList);
-			} else {
-				System.out.println("=======================");
-				SolClassVo date = solDao.updateScheduleSelect2(vo.getClassNo());
-				System.out.println(date);
-				vo.setStartDate(date.getStartDate());
-				vo.setEndDate(date.getEndDate());
-			}
-			return vo;
+		SolClassVo vo = solDao.selectClass(tempVo);
+		if (vo.getClassType() == 1) {
+			List<String> scheduleList = solDao.updateScheduleSelect(vo.getClassNo());
+			vo.setStartDateList(scheduleList);
+		} else {
+			System.out.println("=======================");
+			SolClassVo date = solDao.updateScheduleSelect2(vo.getClassNo());
+			System.out.println(date);
+			vo.setStartDate(date.getStartDate());
+			vo.setEndDate(date.getEndDate());
 		}
+		return vo;
+	}
 
 	// 클래스 수정
 	public int exeupdate(SolClassVo vo) {
-		
+
 		// 파일값이 들어있을때만 실행
-		if(vo.getClassImageFile() != null) {			
+		if (vo.getClassImageFile() != null) {
 			String saveName = exeCompanyImg(vo.getClassImageFile());
 			vo.setClassImage(saveName);
 		}
 		System.out.println(vo);
-		
+
 		// 클래스 업데이트
 		int count = solDao.updateClass(vo);
-		
-		//일정 업데이트
-		if(vo.getClassType() == 1) {
-			for(int i = 0; i < vo.getStartDateList().size(); i++) {
+
+		// 일정 업데이트
+		if (vo.getClassType() == 1) {
+			for (int i = 0; i < vo.getStartDateList().size(); i++) {
 				count++;
-				SolScheduleVo temp = new SolScheduleVo(vo.getClassNo(), vo.getStartDateList().get(i),vo.getEndDate());
+				SolScheduleVo temp = new SolScheduleVo(vo.getClassNo(), vo.getStartDateList().get(i), vo.getEndDate());
 				solDao.updateSchedule(temp);
 			}
 		} else {
 			count++;
-			SolScheduleVo temp = new SolScheduleVo(vo.getClassNo(), vo.getStartDate(),vo.getEndDate());
+			SolScheduleVo temp = new SolScheduleVo(vo.getClassNo(), vo.getStartDate(), vo.getEndDate());
 			solDao.updateSchedule(temp);
 		}
-		
+
 		return count;
 	}
 
 	// 파일업로드
 	public String exeCompanyImg(MultipartFile file) {
-		
-		//운영체계가져오기
+
+		// 운영체계가져오기
 		String osName = System.getProperty("os.name").toLowerCase();
-		String saveDir;	//저장공간
-		
-		//운영체제 확인
+		String saveDir; // 저장공간
+
+		// 운영체제 확인
 		if (osName.contains("linux")) {
 			saveDir = "/app/upload/"; // Linux 경로. username을 실제 사용자 이름으로 변경하세요.
 
@@ -167,7 +163,7 @@ public class SolService {
 			saveDir = "C:\\uploadImages\\";
 		}
 
-		//파일명 뒤져서 저장명 꺼내기
+		// 파일명 뒤져서 저장명 꺼내기
 		String orgName = file.getOriginalFilename();
 		String exName = orgName.substring(orgName.lastIndexOf("."));
 		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
@@ -201,22 +197,26 @@ public class SolService {
 	// 유저리스트
 	public List<SolMemberVo> exeUserList(SolScheduleVo vo) {
 		SolScheduleVo sVo;
+
 		System.out.println(vo);
+
 		if (vo.getClassType() == 1) {
-			if(vo.getStart() != null) {
-				Map<String, Object> temp = new HashMap<String, Object>();
-				temp.put("startDate",("%"+ vo.getStart())+"%");
-				temp.put("classNo", vo.getClassNo());
-				sVo = solDao.selectSchedule1(temp);
+			// 원데이 회원 불러오기
+			if (vo.getStart() != null) {
+				// 날짜 선택
+				sVo = solDao.selectSchedule1(vo);
 			} else {
-				sVo = solDao.selectSchedule(vo.getClassNo());
+				// 선택한 일정이 없으면 최근날짜 불러오기ㅣ
+				sVo = solDao.selectSchedule(vo.getScheduleNo());
 			}
-			if(sVo != null) {				
+			if (sVo != null) {
+				// 원데이 회원 불러오기ㅣ
 				return solDao.selectOndUser(sVo.getScheduleNo());
-			}else {
+			} else {
 				return null;
 			}
 		} else {
+			// 정규회원 불러오기
 			return solDao.selectRUser(vo.getScheduleNo());
 		}
 
@@ -226,12 +226,12 @@ public class SolService {
 	public List<SolScheduleVo> exeScheduleList(int no) {
 		return solDao.selectAllSchedule(no);
 	}
-	//원데이 일정불러오기
-	public List<SolScheduleVo> exeOneList(int classNo){
+
+	// 원데이 일정불러오기
+	public List<SolScheduleVo> exeOneList(int classNo) {
 		return solDao.selectAllOneday(classNo);
 	}
-	
-	
+
 	/********************************************
 	 * 쿠폰지급
 	 */
@@ -247,34 +247,27 @@ public class SolService {
 		// 키워드 설정
 		vo.setKeyword("%" + vo.getKeyword() + "%");
 //		System.out.println(vo.getClassType()+vo.getKeyword());
-		
+
 		// 페이지당 보일 리스트 갯수
-		int page = vo.getPage() > 0 ? vo.getPage() : (page = 1);
+		int page = vo.getPage() > 0 ? vo.getPage() : (page = 0);
 		vo.setPage(page);
 		vo.setListCount(15);
 		vo.setStartRow((vo.getPage() - 1) * vo.getListCount());
 
 		// Dao;
-		List<SolListVo> list = solDao.selectAddressList(vo);
-		if(list == null) {
-			return null; 
-		} else {
-			return list;
-		}
-
+		return solDao.selectAddressList(vo);
 	}
-	
-	
+
 	// 위시 추가
 	public int exeWishP(Map<String, Object> vo) {
 		System.out.println("SolService.exeWish");
 		return solDao.insertWish(vo);
 	}
-	//위시삭제
+
+	// 위시삭제
 	public int exeWishM(Map<String, Object> vo) {
 		System.out.println("SolService.exeWishM");
 		return solDao.deleteWish(vo);
 	}
-	
-	
+
 }

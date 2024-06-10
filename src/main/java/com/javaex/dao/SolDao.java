@@ -47,12 +47,12 @@ public class SolDao {
 	}
 
 	// 최근일정 불러오기
-	public SolScheduleVo selectSchedule(int classNo) {
-		return sqlSession.selectOne("sr.maxSchedule", classNo);
+	public SolScheduleVo selectSchedule(int scheduleNo) {
+		return sqlSession.selectOne("sr.maxSchedule", scheduleNo);
 	}
 	//일정선택
-	public SolScheduleVo selectSchedule1(Map<String, Object> temp) {
-		return sqlSession.selectOne("sr.maxSchedule1", temp);
+	public SolScheduleVo selectSchedule1(SolScheduleVo vo) {
+		return sqlSession.selectOne("sr.maxSchedule1", vo.getScheduleNo());
 	}
 
 	// 원데이 일정 불러오기
@@ -130,8 +130,8 @@ public class SolDao {
 	}
 
 	// 원데이회원리스트
-	public List<SolMemberVo> selectOndUser(int schedule) {
-		return sqlSession.selectList("sr.oneMeberList", schedule);
+	public List<SolMemberVo> selectOndUser(int scheduleNo) {
+		return sqlSession.selectList("sr.oneMeberList", scheduleNo);
 	}
 
 	// 운영중인 클래스리스트

@@ -239,6 +239,7 @@ public class SolController {
 
 		List<SolClassVo> classList = solservice.exeClassTypeList(tempVo);
 
+		System.out.println(classList);
 		if (classList != null) {
 			return JsonResult.success(classList);
 		} else {
@@ -250,7 +251,7 @@ public class SolController {
 	// 유저리스트
 	@GetMapping("member")
 	public JsonResult memberList(@ModelAttribute SolScheduleVo vo) {
-//		System.out.println("SolController.memberList");
+		System.out.println("SolController.memberList");
 
 		List<SolMemberVo> memberList = solservice.exeUserList(vo);
 
@@ -300,10 +301,10 @@ public class SolController {
 	 */
 	@GetMapping("classlist")
 	public JsonResult getClassList(@ModelAttribute SolListVo vo) {
-//		System.out.println("SolController.getClassList");
-
+		System.out.println("SolController.getClassList");
+		System.out.println(vo);
 		List<SolListVo> classList = solservice.exeFindClassList(vo);
-
+		System.out.println(classList);
 		if (classList.size() > 0) {
 			return JsonResult.success(classList);
 		} else {

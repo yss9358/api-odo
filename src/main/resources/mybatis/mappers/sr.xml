@@ -280,9 +280,10 @@
 	<![CDATA[
 	select c.class_no, c.company_no, c.class_name, 
 		c.class_intro, c.class_type,c.class_image,
-         c.class_max, coalesce(const.class_min, 0) class_min
+         c.class_max, coalesce(const.class_min, 0) class_min,
+         const.schedule_no
 	from class c left join
-    (select class_no, count(class_no) class_min
+    (select class_no, max(s.schedule_no) schedule_no, count(class_no) class_min
 	 from pay p join schedule s
      on p.schedule_no = s.schedule_no
      where s.class_no in (
@@ -362,11 +363,10 @@
 	select s.schedule_no, s.start_date
 	from schedule s, class c
 	where s.class_no = c.class_no
-	and c.class_no = #{classNo}
-	order by s.start_date desc
-	limit 1	
+	and s.schedule_no = #{scheduleNo}	
 	]]>
 	</select>
+	<!-- 날짜선택 -->
 	<select id="maxSchedule1" parameterType="map" resultMap="rmScheduleVo">
 	<![CDATA[
 	select s.schedule_no, s.start_date
@@ -428,21 +428,25 @@
 	<if test="isFind == 2">
 	<![CDATA[
 	and class_name_address like #{keyword}
-	and class_num_address like #{keyword}
-	order by abs(c.class_latitude-#{}),
-		 	 abs(c.class_longitutde-#{})
+	or class_num_address like #{keyword}
+	order by abs(c.class_latitude - #{classLatitude}),
+		 	 abs(c.class_longitutde - #{classLongitutde})
 	]]>
 	</if>
+	
 	<if test="isFind == 1">
 	<![CDATA[
 	and class_name like #{keyword}
+	or class_intro like #{keyword}
 	]]>
 	</if>
+	
 	<if test="classType != 4">
 	<![CDATA[
 	and c.class_type = #{classType}
 	]]>
 	</if>
+	
 	<![CDATA[
 	limit #{startRow}, #{listCount}
 	]]>
