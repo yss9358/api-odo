@@ -168,10 +168,17 @@
     	class_min = #{classMin},
     	class_max = #{classMax},
     	class_info = #{classInfo},
-    	rec_class_no = #{recClassNo},
-    	class_image = #{classImage}
+    	rec_class_no = #{recClassNo}
+    ]]>
+    <if test="classImageFile != null">
+    <![CDATA[
+    	,class_image = #{classImage}
+   	]]>
+   	</if>
+   	<![CDATA[
 	where class_no = #{classNo}
 	]]>
+	
 	</update>
 	<!-- 수정할 일정 -->
 	<select id="updateScheduleSelect" resultType="string" parameterType="int">
@@ -186,6 +193,7 @@
     where class_no = #{classNo}
 	]]>
 	</select>
+	
 	<!-- 일정수정 -->
 	<update id="scheduleUpdate" parameterType="com.javaex.vo.SolScheduleVo">
 	<![CDATA[
@@ -201,6 +209,7 @@
 	where schedule_no = #{scheduleNo}
 	]]>
 	</update>
+	
 	<!-- 회사별 클래스리스트 -->
 	<select id="companyClassList" parameterType="map"
 		resultType="classVo">

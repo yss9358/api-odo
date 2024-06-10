@@ -200,6 +200,7 @@ public class SolController {
 	@PutMapping("update")
 	public JsonResult getUpdateClass(@ModelAttribute SolClassVo vo) {
 //		System.out.println("SolController.getUpdateClass");
+//		System.out.println(vo);
 		int count = -1;
 		count = solservice.exeupdate(vo);
 
@@ -214,7 +215,7 @@ public class SolController {
 	@GetMapping("one/{classNo}")
 	public JsonResult getOneday(@PathVariable int classNo) {
 //			System.out.println("SolController.getOneday");
-		System.out.println(classNo);
+//		System.out.println(classNo);
 		List<SolScheduleVo> scheduleList = solservice.exeOneList(classNo);
 
 		if (scheduleList.size() > 0) {

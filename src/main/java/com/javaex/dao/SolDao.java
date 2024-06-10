@@ -98,7 +98,7 @@ public class SolDao {
 
 	// 클래스 수정
 	public int updateClass(SolClassVo vo) {
-		System.out.println("클래스 수정");
+//		System.out.println("클래스 수정");
 		return sqlSession.update("sr.classUpdate", vo);
 	}
 
@@ -112,7 +112,7 @@ public class SolDao {
 
 	// 일정수정
 	public int updateSchedule(SolScheduleVo vo) {
-		System.out.println("일정수정");
+//		System.out.println("일정수정");
 		return sqlSession.update("sr.scheduleUpdate", vo);
 	}
 
