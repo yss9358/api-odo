@@ -5,6 +5,9 @@
 	<!-- 쿼리문작성 -->
 	<!-- <![CDATA[]]> -->
 	
+	
+	
+	
 	<resultMap id="attenMap" type="java.util.Map">
 		<result property="className" column="className"/>
 		<result property="startDate" column="startDate"/>
