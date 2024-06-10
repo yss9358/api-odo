@@ -222,7 +222,7 @@
 		c.class_detail_address, c.class_latitude, c.class_longitutde,
 		c.cate2_no, t.cate1_no, c.class_type,
 		c.class_price, c.class_min, c.class_max,
-		c.class_info, c.rec_class_no
+		c.class_info, c.rec_class_no, c.class_image
 	from class c, cate1 t, cate2 t2
 	where c.company_no = #{companyNo}
 	and c.class_no = #{classNo}

@@ -113,6 +113,7 @@ public class SolController {
 		tempVo.put("companyNo", companyNo);
 		tempVo.put("classNo", classNo);
 		SolClassVo classVo = solservice.exeGetClass(tempVo);
+		System.out.println(classVo);
 
 		if (classVo != null) {
 			return JsonResult.success(classVo);
