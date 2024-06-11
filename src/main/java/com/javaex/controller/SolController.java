@@ -107,13 +107,13 @@ public class SolController {
 	@GetMapping("getclass")
 	public JsonResult getSelectClass(@RequestParam(value = "companyNo") int companyNo,
 			@RequestParam(value = "classNo") int classNo) {
-		System.out.println("SolController.getClass()");
+//		System.out.println("SolController.getClass()");
 
 		Map<String, Object> tempVo = new HashMap<String, Object>();
 		tempVo.put("companyNo", companyNo);
 		tempVo.put("classNo", classNo);
 		SolClassVo classVo = solservice.exeGetClass(tempVo);
-		System.out.println(classVo);
+//		System.out.println(classVo);
 
 		if (classVo != null) {
 			return JsonResult.success(classVo);
@@ -240,7 +240,7 @@ public class SolController {
 
 		List<SolClassVo> classList = solservice.exeClassTypeList(tempVo);
 
-		System.out.println(classList);
+//		System.out.println(classList);
 		if (classList != null) {
 			return JsonResult.success(classList);
 		} else {
@@ -252,14 +252,17 @@ public class SolController {
 	// 유저리스트
 	@GetMapping("member")
 	public JsonResult memberList(@ModelAttribute SolScheduleVo vo) {
-		System.out.println("SolController.memberList");
-
+//		System.out.println("SolController.memberList");
+//		System.out.println(vo);
+		
 		List<SolMemberVo> memberList = solservice.exeUserList(vo);
-
+//		System.out.println(memberList);
 		if (memberList != null) {
 			return JsonResult.success(memberList);
+		} else {
+			return JsonResult.fail("불러올 리스트가 없습니다.");
 		}
-		return null;
+		
 	}
 
 	// 스케줄리스트

@@ -197,7 +197,7 @@ public class SolService {
 	public List<SolMemberVo> exeUserList(SolScheduleVo vo) {
 		SolScheduleVo sVo;
 
-		System.out.println(vo);
+//		System.out.println(vo);
 
 		if (vo.getClassType() == 1) {
 			// 원데이 회원 불러오기
