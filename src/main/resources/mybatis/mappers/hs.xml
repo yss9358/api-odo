@@ -373,7 +373,7 @@
 		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
 		WHERE c.class_price = 0
 		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no, w.w_class_no
-		ORDER BY AVG(r.review_point) DESC
+		ORDER BY AVG(r.review_point) DESC, COUNT(r.review_point) desc
 		LIMIT 4
    ]]>
 	</select>
@@ -393,7 +393,7 @@
 		left join review r on sch.schedule_no = r.schedule_no
 		where class_price = 0
 		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
-		order by avg(r.review_point) desc
+		order by avg(r.review_point) desc, COUNT(r.review_point) desc
 		limit 4
    ]]>
 	</select>
@@ -425,7 +425,7 @@
 		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
 		WHERE c.class_price != 0
 		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no, w.w_class_no
-		ORDER BY AVG(r.review_point) DESC
+		ORDER BY AVG(r.review_point) DESC, COUNT(r.review_point) desc
 		LIMIT 4
    ]]>
 	</select>
@@ -445,7 +445,7 @@
 		left join review r on sch.schedule_no = r.schedule_no
 		where class_price != 0
 		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
-		order by avg(r.review_point) desc
+		order by avg(r.review_point) desc, COUNT(r.review_point) desc
 		limit 4
    ]]>
 	</select>
@@ -476,7 +476,7 @@
 		LEFT JOIN schedule sch ON c.class_no = sch.class_no
 		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
 		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no, w.w_class_no
-		ORDER BY c.class_no DESC
+		ORDER BY c.class_no DESC, COUNT(r.review_point) desc
 		LIMIT 0, 4
    ]]>
 	</select>
@@ -495,7 +495,7 @@
 		left join schedule sch on c.class_no = sch.class_no
 		left join review r on sch.schedule_no = r.schedule_no
 		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
-		order by c.class_no desc
+		order by c.class_no desc, COUNT(r.review_point) desc
 		limit 0, 4
    ]]>
 	</select>
