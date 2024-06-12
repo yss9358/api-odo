@@ -476,7 +476,7 @@
 		LEFT JOIN schedule sch ON c.class_no = sch.class_no
 		LEFT JOIN review r ON sch.schedule_no = r.schedule_no
 		GROUP BY c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price, w.user_no, w.w_class_no
-		ORDER BY c.class_no DESC, COUNT(r.review_point) desc
+		ORDER BY c.class_no DESC
 		LIMIT 0, 4
    ]]>
 	</select>
@@ -495,7 +495,7 @@
 		left join schedule sch on c.class_no = sch.class_no
 		left join review r on sch.schedule_no = r.schedule_no
 		group by c.class_no, c.class_name, c.class_name_address, c.class_image, c.class_price
-		order by c.class_no desc, COUNT(r.review_point) desc
+		order by c.class_no desc
 		limit 0, 4
    ]]>
 	</select>
