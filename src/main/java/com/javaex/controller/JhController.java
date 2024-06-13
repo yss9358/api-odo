@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaex.service.JhService;
 import com.javaex.util.JsonResult;
 import com.javaex.util.JwtUtil;
+import com.javaex.vo.Android2Vo;
 import com.javaex.vo.AndroidVo;
 import com.javaex.vo.PayVo;
 import com.javaex.vo.SolCompanyVo;
@@ -231,14 +232,16 @@ public class JhController {
 	}
 	
 	@PostMapping("odo/android/check")
-	public String AndroidCheck(@RequestBody AndroidVo a) {
+	public String AndroidCheck(@RequestBody Android2Vo a) {
 		
+		//System.out.println(a);
 		//System.out.println(no);
-		System.out.println(a.getScheduleNo());
+		//System.out.println(a.getScheduleNo());
 		
 		int no = a.getScheduleNo();
 		
-		return js.AndroidCheck(no);
+		//return "";
+		return js.AndroidCheck(a);
 	}
 	
 	//안드로이드 로그인

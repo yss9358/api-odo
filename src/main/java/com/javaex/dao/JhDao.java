@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.Android2Vo;
 import com.javaex.vo.AndroidVo;
 import com.javaex.vo.CompanyInfoVo;
 import com.javaex.vo.CompanyInfoVo2;
@@ -224,17 +225,19 @@ public class JhDao {
 	}
 	
 	//안드로이드 출석체크
-	public int AndroidCheck(int no) {
+	public int AndroidCheck(Android2Vo vo) {
 		
-		int a = sqlSession.selectOne("jh.androidCheck", no);
+		int userNo = vo.getUserNo();
+		
+		int a = sqlSession.selectOne("jh.androidCheck", userNo);
 
 		return a;
 	}
 	
 	//안드로이드 출석체크2
-	public void AndroidCheck2(int no) {
+	public void AndroidCheck2(Android2Vo a) {
 
-		sqlSession.insert("jh.androidCheck2", no);
+		sqlSession.insert("jh.androidCheck2", a);
 		
 	}
 	

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.JhDao;
 import com.javaex.util.JsonResult;
+import com.javaex.vo.Android2Vo;
 import com.javaex.vo.AndroidVo;
 import com.javaex.vo.CompanyInfoVo;
 import com.javaex.vo.CompanyInfoVo2;
@@ -350,15 +351,15 @@ public class JhService {
 	}
 	
 	//안드로이드 출석체크
-	public String AndroidCheck(int no) {
+	public String AndroidCheck(Android2Vo a) {
 		
 		//오늘 출석했는지
-		int a = jd.AndroidCheck(no);
+		int b = jd.AndroidCheck(a);
 		
-		if(a > 0) {
+		if(b > 0) {
 			return "오늘 출석체크를 하셨습니다";
 		}else {
-			jd.AndroidCheck2(no);
+			jd.AndroidCheck2(a);
 			
 			
 			return "출석체크 되었습니다";

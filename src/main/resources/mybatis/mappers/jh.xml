@@ -306,9 +306,9 @@
 		and  user_no = 1;
 	</select>
 	
-	<insert id="androidCheck2" parameterType="int">
+	<insert id="androidCheck2" parameterType="com.javaex.vo.Android2Vo">
 		insert into attendance
-		value(null, #{no}, 1, '출석', now());
+		value(null, #{scheduleNo}, #{userNo}, '출석', now());
 	</insert>
 	
 	<select id="androidLog" parameterType="com.javaex.vo.UserJoinVo" resultType="com.javaex.vo.UserJoinVo">
