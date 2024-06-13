@@ -355,7 +355,7 @@ public class JhService {
 		
 		//오늘 출석했는지
 		int b = jd.AndroidCheck(a);
-		
+		System.out.println(b);
 		if(b > 0) {
 			return "오늘 출석체크를 하셨습니다";
 		}else {

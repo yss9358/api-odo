@@ -297,13 +297,13 @@
 		where schedule_no = #{no}
 	</select>
 	
-	<select id="androidCheck" parameterType="int" resultType="int">
+	<select id="androidCheck" parameterType="com.javaex.vo.Android2Vo" resultType="int">
 		select	count(atten_no)
 		from attendance, schedule
 		where date_format(atten_date, "%Y-%m-%d") = curdate()
 		and attendance.schedule_no = schedule.schedule_no
-		and attendance.schedule_no = #{no}
-		and  user_no = 1;
+		and attendance.schedule_no = #{scheduleNo}
+		and  user_no = #{userNo}
 	</select>
 	
 	<insert id="androidCheck2" parameterType="com.javaex.vo.Android2Vo">

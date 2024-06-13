@@ -227,9 +227,7 @@ public class JhDao {
 	//안드로이드 출석체크
 	public int AndroidCheck(Android2Vo vo) {
 		
-		int userNo = vo.getUserNo();
-		
-		int a = sqlSession.selectOne("jh.androidCheck", userNo);
+		int a = sqlSession.selectOne("jh.androidCheck", vo);
 
 		return a;
 	}
